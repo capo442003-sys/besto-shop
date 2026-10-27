@@ -1,0 +1,17 @@
+# Cloudflare Tunnel — BMB Gestion
+# 1. cloudflared tunnel login
+# 2. cloudflared tunnel create bmbgestion
+# 3. Copiez l'UUID du tunnel ci-dessous
+# 4. cloudflared tunnel route dns bmbgestion bmbgestion.uk
+# 5. cloudflared tunnel route dns bmbgestion www.bmbgestion.uk
+# 6. sudo cp ce fichier vers /etc/cloudflared/config.yml
+
+tunnel: REMPLACEZ_PAR_UUID_TUNNEL
+credentials-file: /root/.cloudflared/REMPLACEZ_PAR_UUID_TUNNEL.json
+
+ingress:
+  - hostname: bmbgestion.uk
+    service: http://127.0.0.1:3001
+  - hostname: www.bmbgestion.uk
+    service: http://127.0.0.1:3001
+  - service: http_status:404

@@ -1,0 +1,143 @@
+/* ============================================================
+   BMB — Tableau de bord PWA mobile (admin / gestionnaire)
+   ============================================================ */
+
+html.app-pwa-mobile .bmb-v2 .bmb-page:has(.bmb-dash-erp) {
+  padding: 0 0 calc(4.5rem + env(safe-area-inset-bottom, 0px)) !important;
+  background: #f4f7f5 !important;
+}
+
+html.app-pwa-mobile .bmb-dash-erp {
+  gap: 1rem;
+  padding: 0.85rem 1rem 1.25rem;
+}
+
+html.app-pwa-mobile .bmb-dash-erp__hero {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.65rem;
+}
+
+html.app-pwa-mobile .bmb-dash-erp__title {
+  font-size: 1.35rem;
+}
+
+html.app-pwa-mobile .bmb-dash-erp__hero-actions {
+  width: 100%;
+}
+
+html.app-pwa-mobile .bmb-dash-erp__quick {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 0.15rem;
+  scrollbar-width: none;
+}
+
+html.app-pwa-mobile .bmb-dash-erp__quick::-webkit-scrollbar {
+  display: none;
+}
+
+html.app-pwa-mobile .bmb-dash-erp__quick-link {
+  flex-shrink: 0;
+  white-space: nowrap;
+  font-size: 0.78rem;
+  padding: 0.55rem 0.9rem;
+}
+
+html.app-pwa-mobile .bmb-dash-erp__kpis {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.65rem;
+}
+
+html.app-pwa-mobile .bmb-dash-erp-kpi {
+  min-height: 128px;
+  padding: 0.95rem 1rem 0.75rem;
+  border-radius: 12px;
+}
+
+html.app-pwa-mobile .bmb-dash-erp-kpi__value {
+  font-size: 1.15rem;
+}
+
+html.app-pwa-mobile .bmb-dash-erp-kpi__link {
+  font-size: 0.72rem;
+}
+
+html.app-pwa-mobile .bmb-dash-erp__kpis-secondary {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.55rem;
+}
+
+html.app-pwa-mobile .bmb-dash-erp-stat {
+  padding: 0.75rem 0.85rem;
+  border-radius: 10px;
+}
+
+html.app-pwa-mobile .bmb-dash-erp-stat__value {
+  font-size: 1rem;
+}
+
+html.app-pwa-mobile .bmb-dash-erp__main,
+html.app-pwa-mobile .bmb-dash-erp__row {
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+}
+
+html.app-pwa-mobile .bmb-dash-erp-panel {
+  padding: 0.95rem 1rem 1rem;
+  border-radius: 12px;
+}
+
+html.app-pwa-mobile .bmb-dash-erp-chart__y-axis {
+  display: none;
+}
+
+html.app-pwa-mobile .bmb-dash-erp-chart__plot {
+  margin-left: 0;
+}
+
+html.app-pwa-mobile .bmb-dash-erp-chart__bars {
+  height: 160px;
+}
+
+html.app-pwa-mobile .bmb-dash-erp-table thead th:nth-child(2),
+html.app-pwa-mobile .bmb-dash-erp-table tbody td:nth-child(2) {
+  display: none;
+}
+
+html.app-pwa-mobile .bmb-dash-erp-trust {
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+  padding: 1rem;
+}
+
+html.app-pwa-mobile .bmb-dash-erp-alerts .alert {
+  font-size: 0.82rem;
+  padding: 0.65rem 0.85rem;
+}
+
+html.app-pwa-mobile .bmb-dash-erp-panel--full {
+  grid-column: auto;
+}
+
+html.app-pwa-mobile .bmb-role-home__btn {
+  border-radius: 14px;
+}
+
+html.app-pwa-mobile .bmb-page .module-shell {
+  padding: 0 0 0.5rem;
+}
+
+html.app-pwa-mobile .module-tabs {
+  overflow-x: auto;
+  flex-wrap: nowrap;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 0.25rem;
+  scrollbar-width: none;
+}
+
+html.app-pwa-mobile .module-tab {
+  flex-shrink: 0;
+}

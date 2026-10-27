@@ -1,0 +1,127 @@
+/* BMB v1.2 — adaptation multi-écrans (mobile, tablette, desktop, large) */
+
+html {
+  font-size: var(--font-root, 18px);
+  -webkit-text-size-adjust: 100%;
+}
+
+img, video, svg {
+  max-width: 100%;
+  height: auto;
+}
+
+.app-shell,
+.main-content,
+.page-panel,
+.card,
+.table-main {
+  min-width: 0;
+}
+
+.bmb-data-table-wrap,
+.table-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.bmb-data-table {
+  min-width: 520px;
+}
+
+.toolbar-actions,
+.table-main-toolbar,
+.inline-form-grid {
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.btn,
+.nav-link,
+input,
+select,
+textarea,
+button {
+  min-height: 2.5rem;
+}
+
+@media (max-width: 1200px) {
+  .stat-grid {
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  }
+  .closure-grid {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  }
+}
+
+@media (max-width: 960px) {
+  .main-content {
+    padding: 0.75rem 0.85rem 1.25rem;
+  }
+  .bmb-v2 .bmb-main .bmb-page {
+    padding-bottom: calc(4.85rem + env(safe-area-inset-bottom, 0px));
+  }
+  .page-header h1 {
+    font-size: clamp(1.15rem, 4vw, 1.5rem);
+  }
+  .table-main-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .table-main-toolbar h3 {
+    margin-bottom: 0.25rem;
+  }
+  .pos-layout {
+    grid-template-columns: 1fr !important;
+  }
+  .pos-cart-panel {
+    max-height: none;
+  }
+  .import-grid {
+    grid-template-columns: 1fr;
+  }
+  .global-search-dropdown {
+    left: 0.5rem;
+    right: 0.5rem;
+    max-width: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .stat-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .inline-form-grid.form-compact {
+    grid-template-columns: 1fr;
+  }
+  .toolbar-actions .btn:not(.btn-sm) {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+  .table-main-toolbar .toolbar-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 100%;
+  }
+  .module-tabs {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+@media (min-width: 1920px) {
+  .main-content:not(.bmb-main) {
+    max-width: 1600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+/* Mode caisse tactile */
+@media (pointer: coarse) {
+  .pos-key-hint,
+  .btn-pos-add {
+    min-height: 3rem;
+    font-size: 1rem;
+  }
+}

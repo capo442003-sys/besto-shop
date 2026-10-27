@@ -1,0 +1,337 @@
+/* ============================================================
+   BMB Gestion — Maquettes 2026 (login, accueil rôle, mobile)
+   ============================================================ */
+
+/* Login : voir login.css (flyers réels intégrés) */
+
+/* ——— Accueil par rôle (desktop + mobile) ——— */
+.bmb-role-home {
+  position: relative;
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 0.5rem 1.25rem 2.5rem;
+  text-align: left;
+}
+
+.bmb-role-home__flyer-bg {
+  position: absolute;
+  top: -1rem;
+  right: -2rem;
+  width: min(280px, 45vw);
+  opacity: 0.12;
+  pointer-events: none;
+  z-index: 0;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.bmb-role-home__flyer-bg img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.bmb-role-home__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0 0 1rem;
+  padding: 0.4rem 1rem;
+  border-radius: 999px;
+  background: rgba(27, 122, 61, 0.1);
+  color: #1b7a3d;
+  font-size: 0.82rem;
+  font-weight: 700;
+  border: 1px solid rgba(27, 122, 61, 0.15);
+}
+
+.bmb-role-home__badge svg {
+  width: 14px;
+  height: 14px;
+}
+
+.bmb-role-home__title {
+  font-size: clamp(1.75rem, 4.5vw, 2.35rem);
+  font-weight: 800;
+  color: #1b7a3d;
+  margin: 0 0 0.5rem;
+  line-height: 1.15;
+}
+
+.bmb-role-home__title-accent {
+  display: block;
+  width: 48px;
+  height: 4px;
+  margin: 0.65rem 0 1.75rem;
+  border-radius: 99px;
+  background: linear-gradient(90deg, #f5a623, #e09410);
+}
+
+.bmb-role-home__tagline {
+  /* Affiché via bmb-premium-2026.css */
+}
+
+.bmb-role-home__actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  margin-bottom: 1.5rem;
+  max-width: none;
+}
+
+.bmb-role-home__btn {
+  justify-content: flex-start;
+  text-align: left;
+  padding: 1.1rem 1.25rem;
+  border-radius: 16px;
+  min-height: 72px;
+  gap: 1rem;
+  box-shadow: 0 6px 20px rgba(15, 31, 23, 0.12);
+}
+
+.bmb-role-home__btn-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.bmb-role-home__btn-icon svg {
+  width: 24px;
+  height: 24px;
+}
+
+.bmb-role-home__btn-text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.bmb-role-home__btn-text strong {
+  font-size: 1.05rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.bmb-role-home__btn-text small {
+  font-size: 0.78rem;
+  font-weight: 500;
+  opacity: 0.88;
+}
+
+.bmb-role-home__btn-chevron {
+  flex-shrink: 0;
+  opacity: 0.85;
+}
+
+.bmb-role-home__btn--primary {
+  background: linear-gradient(135deg, #1b7a3d 0%, #228b47 100%);
+}
+
+.bmb-role-home__btn--blue {
+  background: linear-gradient(135deg, #1a4f8b 0%, #2563eb 100%);
+}
+
+.bmb-role-home__btn--gray {
+  background: linear-gradient(135deg, #4a5568 0%, #64748b 100%);
+}
+
+.bmb-role-home__summary {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.25rem 1.5rem;
+  border-radius: 18px;
+  background: linear-gradient(135deg, rgba(27, 122, 61, 0.1) 0%, rgba(27, 122, 61, 0.04) 100%);
+  border: 1px solid rgba(27, 122, 61, 0.15);
+  color: #1b7a3d;
+  text-align: left;
+}
+
+.bmb-role-home__summary-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #1b7a3d;
+  color: #fff;
+}
+
+.bmb-role-home__summary-text {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.2rem;
+}
+
+.bmb-role-home__summary-text > span {
+  font-size: 0.88rem;
+  font-weight: 600;
+  opacity: 0.9;
+}
+
+.bmb-role-home__summary-amount {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #1b7a3d;
+}
+
+/* ——— Topbar mobile (header vert maquette) ——— */
+@media (max-width: 960px) {
+  .bmb-v2 .bmb-topbar {
+    background: linear-gradient(135deg, #145a2e 0%, #1b7a3d 55%, #228b47 100%);
+    border-bottom: none;
+    box-shadow: 0 4px 20px rgba(20, 90, 46, 0.25);
+    color: #fff;
+    padding-left: 0.85rem;
+    padding-right: 0.85rem;
+  }
+
+  .bmb-v2 .bmb-topbar__menu-btn.sidebar-toggle {
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+  }
+
+  .bmb-v2 .bmb-topbar__menu-btn.sidebar-toggle span {
+    background: #fff;
+  }
+
+  .bmb-topbar__mobile-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-width: 0;
+    flex: 1;
+  }
+
+  .bmb-topbar__mobile-logo .brand-logo__name {
+    color: #fff !important;
+    font-size: 0.95rem !important;
+    font-weight: 800 !important;
+  }
+
+  .bmb-topbar__mobile-logo .brand-logo__tagline {
+    display: none;
+  }
+
+  .bmb-topbar__mobile-logo .brand-logo__img,
+  .bmb-topbar__mobile-logo .brand-logo__mark {
+    width: 32px !important;
+    height: 32px !important;
+  }
+
+  .bmb-topbar__store {
+    display: none !important;
+  }
+
+  .bmb-topbar__role-pill {
+    background: rgba(255, 255, 255, 0.15);
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.2);
+    max-width: none;
+  }
+
+  .bmb-topbar__role-pill svg {
+    stroke: #fff;
+  }
+
+  .bmb-topbar__notif {
+    color: #fff;
+  }
+
+  .bmb-topbar__notif:hover {
+    background: rgba(255, 255, 255, 0.12);
+  }
+
+  .bmb-v2 .bmb-page {
+    padding-top: 0.5rem;
+    background: #fff;
+  }
+
+  .bmb-role-home {
+    padding: 0.75rem 1rem 2rem;
+  }
+
+  /* hero styles → mobile-premium-2026.css */
+
+  .mobile-bottom-nav {
+    background: #fff;
+    border-top: 1px solid #e8ece9;
+    box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.06);
+  }
+
+  .mobile-bottom-nav__item--active {
+    color: #1b7a3d;
+    background: rgba(27, 122, 61, 0.08);
+  }
+}
+
+/* ——— Dashboard admin (maquette ERP) ——— */
+.bmb-dash-v2 .bmb-dash-hero {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 0.75rem 1.5rem;
+  margin-bottom: 0.25rem;
+}
+
+.bmb-dash-hero__title {
+  margin: 0;
+  font-size: 1.65rem;
+  font-weight: 800;
+  color: #0d2847;
+  letter-spacing: -0.02em;
+}
+
+.bmb-dash-hero__date {
+  margin: 0.2rem 0 0;
+  font-size: 0.88rem;
+  color: #6b7c74;
+}
+
+.bmb-dash-trust-bar {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 0.65rem;
+  padding: 1rem 1.25rem;
+  border-radius: 16px;
+  background: linear-gradient(135deg, rgba(245, 166, 35, 0.12) 0%, rgba(27, 122, 61, 0.08) 100%);
+  border: 1px solid rgba(245, 166, 35, 0.2);
+}
+
+.bmb-dash-trust-bar__item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #1a2e24;
+}
+
+.bmb-dash-trust-bar__item svg {
+  flex-shrink: 0;
+  color: #1b7a3d;
+}
+
+.bmb-kpi-row .bmb-kpi {
+  border-radius: 16px;
+  padding: 1.15rem 1.25rem;
+  box-shadow: 0 4px 16px rgba(15, 31, 23, 0.06);
+}
+
+@media (max-width: 1024px) {
+  /* Login mobile → mobile-premium-2026.css */
+}
+
+@media (min-width: 961px) {
+  .bmb-topbar__mobile-logo {
+    display: none;
+  }
+}

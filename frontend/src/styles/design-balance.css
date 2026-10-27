@@ -1,0 +1,153 @@
+/* ============================================================
+   BMB Gestion — Équilibre global du design (2026)
+   ============================================================ */
+
+.bmb-v2 .bmb-page {
+  padding: var(--page-padding-y) var(--page-padding-x) var(--space-8);
+  background:
+    radial-gradient(ellipse 90% 60% at 100% 0%, rgba(27, 122, 61, 0.04) 0%, transparent 55%),
+    radial-gradient(ellipse 60% 40% at 0% 100%, rgba(245, 166, 35, 0.03) 0%, transparent 50%),
+    var(--bg);
+}
+
+.bmb-v2 .bmb-page:has(.bmb-dash-erp) {
+  padding: var(--page-padding-y) var(--page-padding-x) var(--space-8);
+  background:
+    radial-gradient(ellipse 80% 50% at 50% 0%, rgba(27, 122, 61, 0.06) 0%, transparent 60%),
+    linear-gradient(180deg, #eef2ef 0%, var(--bg) 140px, var(--bg) 100%);
+}
+
+.bmb-v2 .bmb-page:has(.module-shell) {
+  padding-top: var(--space-4);
+}
+
+.module-shell {
+  max-width: var(--content-max);
+  margin: 0 auto;
+  width: 100%;
+}
+
+.module-shell__header.bmb-page-head {
+  margin-bottom: var(--space-2);
+  padding-bottom: var(--space-2);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.module-shell__title,
+.bmb-page-head__title {
+  font-size: var(--text-2xl);
+  font-weight: var(--font-extrabold);
+  color: var(--text);
+  letter-spacing: var(--tracking-tight);
+}
+
+.module-shell__subtitle,
+.bmb-page-head__subtitle {
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  margin-top: var(--space-2);
+  line-height: var(--leading-normal);
+}
+
+.module-tabs {
+  gap: var(--space-2);
+  margin-bottom: var(--space-2);
+  padding: var(--space-1);
+  background: var(--surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-xs);
+  flex-wrap: wrap;
+}
+
+.module-tab {
+  border-radius: 999px;
+  padding: 0.45rem 0.95rem;
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--text-muted);
+  transition: background var(--duration-fast), color var(--duration-fast), border-color var(--duration-fast);
+}
+
+.module-tab:hover {
+  color: var(--primary);
+  background: var(--primary-soft);
+}
+
+.module-tab--active {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-mid) 100%);
+  border-color: transparent;
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(27, 122, 61, 0.25);
+}
+
+.card,
+.bmb-dash-card,
+.bmb-dash-erp-panel,
+.bmb-surface-card {
+  border-color: var(--border-subtle);
+  box-shadow: var(--shadow-xs);
+}
+
+.card {
+  border-radius: var(--radius-lg);
+  padding: var(--space-5) var(--space-6);
+}
+
+.card:hover {
+  box-shadow: var(--shadow-sm);
+}
+
+.table-main-toolbar {
+  margin-bottom: 0;
+  padding: 0;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.inventaire-ventes-filters,
+.bmb-filters-panel {
+  background: var(--surface);
+  border-color: var(--border-subtle);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-xs);
+}
+
+.bmb-data-table thead th {
+  background: var(--surface-inset, var(--bg-subtle));
+  font-size: var(--text-xs);
+  font-weight: var(--font-semibold);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border);
+}
+
+.bmb-topbar {
+  min-height: var(--topbar-height);
+  box-shadow: var(--shadow-xs);
+}
+
+.dash-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40vh;
+  color: var(--text-muted);
+  font-weight: var(--font-medium);
+}
+
+@media (max-width: 960px) {
+  .bmb-v2 .bmb-page {
+    padding: var(--space-4) var(--space-4) var(--space-8);
+  }
+
+  .module-shell__title,
+  .bmb-page-head__title {
+    font-size: var(--text-xl);
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "name": "besto-shop",
+  "version": "1.2.0",
+  "description": "BESTO SHOP — gestion magasin (base BMB)",
+  "private": true,
+  "scripts": {
+    "start": "npm run start:cloud --prefix backend",
+    "install:all": "npm install --include=dev && cd backend && npm install && cd ../frontend && npm install --include=dev",
+    "dev": "npm run stop:ports && concurrently -k -n backend,frontend -c blue,green \"npm run dev:backend\" \"wait-on tcp:127.0.0.1:3001 -t 60000 && npm run dev:frontend\"",
+    "dev:backend": "cd backend && cross-env NODE_ENV=development CLIENT_URL=http://localhost:5173 SERVE_CLIENT=0 npm run dev",
+    "dev:frontend": "cd frontend && npm run dev",
+    "app": "npm run build --prefix frontend && cross-env SERVE_CLIENT=1 electron .",
+    "web": "npm run build --prefix frontend && cross-env SERVE_CLIENT=1 NODE_ENV=production CLIENT_URL=http://localhost:3001 concurrently -k \"npm run web:server\" \"npm run web:open\"",
+    "web:server": "cd backend && npm start",
+    "web:open": "wait-on http://localhost:3001/api/health -t 120000 && node scripts/open-browser.js",
+    "app:dev": "concurrently -k \"npm run dev:backend\" \"npm run dev:frontend\" \"wait-on http://localhost:5173 http://localhost:3001/api/health && cross-env DESKTOP_DEV=1 electron .\"",
+    "stop:ports": "powershell -NoProfile -Command \"$p=3001,5173; foreach($port in $p){ Get-NetTCPConnection -LocalPort $port -State Listen -ErrorAction SilentlyContinue | ForEach-Object { Stop-Process -Id $_.OwningProcess -Force -ErrorAction SilentlyContinue } }; Write-Host 'Ports 3001 et 5173 liberes.'\"",
+    "db:migrate": "cd backend && npm run db:migrate",
+    "db:seed": "cd backend && npm run db:seed",
+    "db:clear": "cd backend && npm run db:clear",
+    "test:api": "node backend/scripts/smoke-test.js",
+    "test:modules": "node backend/scripts/module-test.js",
+    "test:e2e": "playwright test",
+    "backup:db": "node backend/scripts/backup-local.js",
+    "build:prod": "npm run build --prefix frontend",
+    "deploy:server": "node scripts/deploy-server.js",
+    "deploy:update": "node scripts/deploy-server.js",
+    "deploy:ubuntu": "bash deploy/ubuntu-update.sh",
+    "deploy:verify": "node backend/scripts/post-deploy-check.js",
+    "deploy:cloud": "powershell -ExecutionPolicy Bypass -File deploy/apply-cloud-config.ps1",
+    "release": "node scripts/create-distribution.js",
+    "ssl:generate": "node scripts/generate-ssl-cert.mjs",
+    "web:https": "npm run ssl:generate && npm run build --prefix frontend && cross-env SERVE_CLIENT=1 NODE_ENV=production BMB_URL=https://localhost:3001 concurrently -k \"npm run web:server\" \"wait-on https://localhost:3001/api/health -t 120000 --insecure && cross-env BMB_URL=https://localhost:3001 node scripts/open-browser.js\""
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.49.1",
+    "concurrently": "^8.2.2",
+    "cross-env": "^7.0.3",
+    "wait-on": "^8.0.1"
+  }
+}

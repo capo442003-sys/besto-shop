@@ -1,0 +1,176 @@
+/* ============================================================
+   BMB — Module Ventes : scroll interne, mobile, caisse PWA
+   (complément design-harmony — corrections post-déploiement)
+   ============================================================ */
+
+/* ——— Module Ventes : pas de scroll page, scroll dans les tableaux ——— */
+html:not(.app-caisse-active) .bmb-v2 .bmb-page:has(.module-shell--ventes) {
+  overflow: hidden !important;
+  display: flex !important;
+  flex-direction: column !important;
+  min-height: 0 !important;
+  flex: 1 1 auto !important;
+  padding-bottom: var(--space-4) !important;
+}
+
+.bmb-v2 .module-shell--ventes {
+  flex: 1 1 auto;
+  min-height: 0;
+  max-height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.bmb-v2 .module-shell--ventes .module-shell__body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.bmb-v2 .module-shell--ventes .module-shell__body > * {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.bmb-v2 .inventaire-ventes,
+.bmb-v2 .reglement-page {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.bmb-v2 .inventaire-ventes .inventaire-ventes-table-wrap,
+.bmb-v2 .reglement-page .reglement-ventes-data,
+.bmb-v2 .reglement-page .bmb-data-table-wrap {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.bmb-v2 .stocks-page .stocks-table-wrap,
+.bmb-v2 .liste-produits-page .liste-produits-table-wrap {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* ——— Module Produits : scroll dans les tableaux ——— */
+html:not(.app-caisse-active) .bmb-v2 .bmb-page:has(.module-shell--produits) {
+  overflow: hidden !important;
+  display: flex !important;
+  flex-direction: column !important;
+  min-height: 0 !important;
+  flex: 1 1 auto !important;
+}
+
+.bmb-v2 .module-shell--produits {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.bmb-v2 .module-shell--produits .module-shell__body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.bmb-v2 .module-shell--produits .module-shell__body > * {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ——— Règlement mobile : toolbar empilée, cartes pleine largeur ——— */
+@media (max-width: 960px) {
+  .bmb-v2 .reglement-page .table-main-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-3);
+  }
+
+  .bmb-v2 .reglement-page .table-main-toolbar .toolbar-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-2);
+    width: 100%;
+  }
+
+  .bmb-v2 .reglement-page .table-main-toolbar .toolbar-actions .btn {
+    width: 100%;
+    min-height: 2.5rem;
+  }
+
+  .bmb-v2 .reglement-page .reglement-section-bar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-2);
+  }
+
+  .bmb-v2 .reglement-page .reglement-summary-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-2);
+  }
+
+  .bmb-v2 .reglement-page .reglement-client-panel {
+    grid-template-columns: 1fr;
+  }
+
+  .bmb-v2 .reglement-ventes-data .bmb-data-card {
+    width: 100%;
+  }
+
+  .bmb-v2 .reglement-ventes-data .bmb-data-card .btn {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+}
+
+/* ——— Caisse PWA : une seule zone encaissement (panier), pas le 3e panneau ——— */
+@media (max-width: 960px) {
+  html.app-caisse-active .pos-pro--v3 .pos-pro__pay-panel {
+    display: none !important;
+  }
+
+  html.app-caisse-active .pos-pro--v3 .pos-pro__select-hint--legacy {
+    display: none !important;
+  }
+
+  html.app-caisse-active .pos-pro--v3 .pos-pro__workspace {
+    grid-template-columns: 1fr !important;
+    grid-template-rows: minmax(0, 1fr) auto !important;
+  }
+
+  html.app-caisse-active .pos-pro--v3 .pos-pro__cart-panel {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: calc(3.85rem + env(safe-area-inset-bottom, 0px));
+    max-height: min(55vh, 420px);
+    z-index: 40;
+    transform: translateY(110%);
+    transition: transform 0.22s ease;
+    box-shadow: 0 -8px 32px rgba(15, 31, 23, 0.18);
+  }
+
+  html.app-caisse-active .pos-pro--v3.pos-pro--cart-open .pos-pro__cart-panel {
+    transform: translateY(0);
+  }
+}

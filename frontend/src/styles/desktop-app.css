@@ -1,0 +1,355 @@
+/* ============================================================
+   BMB — Mode application de bureau (PWA standalone / desktop)
+   ============================================================ */
+
+html.app-standalone.app-desktop-pc,
+html.app-standalone.app-desktop-pc body {
+  height: 100%;
+  overflow: hidden;
+}
+
+html.app-pwa-mobile,
+html.app-pwa-mobile body {
+  height: 100%;
+  min-height: 100dvh;
+  min-height: -webkit-fill-available;
+  overflow: hidden;
+}
+
+html.app-standalone {
+  --bmb-titlebar-h: 0px;
+}
+
+html.app-standalone .app-layout--pwa {
+  flex-direction: column;
+  height: 100dvh;
+  max-height: 100dvh;
+  overflow: hidden;
+  background: var(--bg);
+}
+
+html.app-standalone.app-desktop-pc .app-layout--pwa {
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.08),
+    0 12px 40px rgba(0, 0, 0, 0.12);
+}
+
+html.app-pwa-mobile .app-layout--pwa {
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+  height: -webkit-fill-available;
+  max-height: 100dvh;
+  overflow: hidden;
+  background: #fff;
+}
+
+html.app-pwa-mobile .app-layout__workspace {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+html.app-pwa-mobile .bmb-main {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  margin-left: 0 !important;
+  width: 100% !important;
+}
+
+html.app-pwa-mobile .bmb-page {
+  flex: 1;
+  min-height: 0;
+  overflow-x: hidden;
+  overflow-y: auto !important;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+}
+
+.app-layout__workspace {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  min-width: 0;
+  overflow: hidden;
+  align-items: stretch;
+}
+
+html.app-standalone .app-layout__workspace {
+  height: 100%;
+  position: relative;
+}
+
+html:not(.app-standalone) .app-layout__workspace {
+  flex: 1;
+  min-height: 0;
+  height: 100%;
+}
+
+/* ——— Desktop : sidebar fixe (navigateur + PWA) ——— */
+@media (min-width: 961px) {
+  html:has(.app-layout.bmb-v2:not(.app-layout--fullscreen)),
+  body:has(.app-layout.bmb-v2:not(.app-layout--fullscreen)) {
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .app-layout.bmb-v2:not(.app-layout--fullscreen) {
+    height: 100dvh;
+    max-height: 100dvh;
+    overflow: hidden;
+    width: 100%;
+  }
+
+  .app-layout.bmb-v2:not(.app-layout--fullscreen) .app-layout__workspace {
+    flex: 1;
+    width: 100%;
+    min-height: 0;
+  }
+
+  .bmb-v2 .sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 260px;
+    height: auto;
+    max-height: none;
+    z-index: 100;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+
+  html.app-standalone .bmb-v2 .sidebar {
+    width: 248px;
+  }
+
+  .bmb-v2 .bmb-sidebar-nav {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .app-layout__workspace > .bmb-main {
+    margin-left: 260px;
+    width: calc(100% - 260px);
+    max-width: none;
+  }
+
+  html.app-standalone .app-layout__workspace > .bmb-main {
+    margin-left: 248px;
+    width: calc(100% - 248px);
+  }
+
+  .bmb-v2 .bmb-main {
+    flex: 1;
+    min-width: 0;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .bmb-v2 .bmb-page,
+  .bmb-v2 .page.bmb-page {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* ——— Sidebar sombre (style ERP) en mode PWA ——— */
+@media (min-width: 961px) {
+  html.app-standalone .bmb-v2 .sidebar {
+    background: var(--sidebar-bg);
+    background-image:
+      radial-gradient(ellipse 120% 80% at 0% 0%, rgba(45, 143, 111, 0.14) 0%, transparent 55%),
+      linear-gradient(180deg, #0a2820 0%, var(--sidebar-bg) 45%, #051610 100%);
+    color: #fff;
+    border-right: 1px solid var(--sidebar-border);
+    box-shadow: none;
+  }
+
+  html.app-standalone .bmb-v2 .sidebar-brand {
+    border-bottom-color: var(--sidebar-border);
+  }
+
+  html.app-standalone .bmb-v2 .sidebar-brand .brand-logo__name {
+    color: #fff;
+  }
+
+  html.app-standalone .bmb-v2 .bmb-sidebar__tagline {
+    color: rgba(255, 255, 255, 0.45);
+  }
+
+  html.app-standalone .bmb-v2 .bmb-nav-item {
+    color: rgba(255, 255, 255, 0.68);
+  }
+
+  html.app-standalone .bmb-v2 .bmb-nav-item:hover {
+    background: rgba(255, 255, 255, 0.06);
+    color: #fff;
+  }
+
+  html.app-standalone .bmb-v2 .bmb-nav-item--active {
+    background: linear-gradient(90deg, rgba(45, 143, 111, 0.32) 0%, rgba(45, 143, 111, 0.1) 100%);
+    color: #fff;
+    box-shadow: inset 3px 0 0 var(--accent);
+  }
+
+  html.app-standalone .bmb-v2 .sidebar-footer {
+    border-top-color: var(--sidebar-border);
+  }
+
+  html.app-standalone .bmb-v2 .sidebar-logout-btn {
+    color: rgba(255, 255, 255, 0.72);
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+
+  html.app-standalone .bmb-v2 .sidebar-logout-btn:hover {
+    background: rgba(220, 38, 38, 0.18);
+    border-color: rgba(248, 113, 113, 0.35);
+    color: #fecaca;
+  }
+}
+
+.bmb-sidebar__version {
+  display: block;
+  margin-top: 0.55rem;
+  padding-top: 0.55rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.35);
+  text-align: center;
+}
+
+html:not(.app-standalone) .bmb-sidebar__version {
+  color: var(--text-subtle);
+  border-top-color: var(--border);
+}
+
+/* ——— Zone de travail (PWA desktop PC) ——— */
+html.app-standalone.app-desktop-pc .bmb-v2 .bmb-topbar {
+  flex-shrink: 0;
+  background: #fafaf9;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border-bottom: 1px solid #ddd8ce;
+  box-shadow: none;
+  min-height: 48px;
+  padding-top: 0.55rem;
+  padding-bottom: 0.55rem;
+}
+
+html.app-standalone.app-desktop-pc .bmb-v2 .bmb-page {
+  padding-bottom: 1.25rem;
+}
+
+html.app-standalone.app-desktop-pc .mobile-bottom-nav {
+  display: none !important;
+}
+
+/* ——— Composants plus « logiciel » ——— */
+html.app-standalone .card {
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+}
+
+html.app-standalone .card:hover {
+  box-shadow: var(--shadow-sm);
+  transform: none;
+}
+
+html.app-standalone .module-tabs {
+  border-radius: var(--radius);
+  box-shadow: none;
+  background: #fafaf9;
+}
+
+html.app-standalone .module-shell__title {
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+html.app-standalone .bmb-data-table thead th {
+  background: #f3f4f2;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
+/* ——— Grand écran (navigateur ou app) ——— */
+@media (min-width: 1024px) {
+  html.app-desktop-wide .bmb-v2 .bmb-topbar__menu-btn {
+    display: none;
+  }
+
+  html.app-desktop-wide .card {
+    border-radius: var(--radius);
+  }
+
+  html.app-desktop-wide .bmb-page {
+    padding: var(--page-padding-y) var(--page-padding-x);
+  }
+}
+
+/* ——— Modales : centrées dans la zone utile (pas collées à la sidebar) ——— */
+@media (min-width: 961px) {
+  html:has(.app-layout.bmb-v2:not(.app-layout--fullscreen)) {
+    --bmb-modal-sidebar-offset: 260px;
+  }
+
+  html.app-standalone:has(.app-layout.bmb-v2:not(.app-layout--fullscreen)) {
+    --bmb-modal-sidebar-offset: 248px;
+  }
+
+  html:has(.app-layout.bmb-v2:not(.app-layout--fullscreen)) .bmb-print-modal-overlay,
+  html:has(.app-layout.bmb-v2:not(.app-layout--fullscreen)) .bmb-form-overlay,
+  html:has(.app-layout.bmb-v2:not(.app-layout--fullscreen)) .confirm-overlay {
+    display: grid;
+    grid-template-columns: var(--bmb-modal-sidebar-offset) minmax(0, 1fr);
+    align-items: center;
+    justify-items: center;
+    padding: 1rem;
+    padding-left: 0;
+  }
+
+  html:has(.app-layout.bmb-v2:not(.app-layout--fullscreen)) .bmb-print-modal-overlay > .bmb-print-modal,
+  html:has(.app-layout.bmb-v2:not(.app-layout--fullscreen)) .bmb-form-overlay > .bmb-form-overlay__panel,
+  html:has(.app-layout.bmb-v2:not(.app-layout--fullscreen)) .confirm-overlay > .confirm-dialog {
+    grid-column: 2;
+    width: min(calc(100% - 2rem), 1100px);
+    max-width: 1100px;
+    justify-self: center;
+    align-self: center;
+  }
+
+  html:has(.app-layout.bmb-v2:not(.app-layout--fullscreen)) .bmb-form-overlay > .bmb-form-overlay__panel {
+    width: min(calc(100% - 2rem), 640px);
+    max-width: 640px;
+  }
+
+  html:has(.app-layout.bmb-v2:not(.app-layout--fullscreen)) .bmb-form-overlay > .bmb-encaisse-modal-panel {
+    width: min(calc(100% - 2rem), 480px);
+    max-width: 480px;
+  }
+
+  html:has(.app-layout.bmb-v2:not(.app-layout--fullscreen)) .confirm-overlay > .confirm-dialog {
+    width: min(calc(100% - 2rem), 420px);
+    max-width: 420px;
+  }
+}

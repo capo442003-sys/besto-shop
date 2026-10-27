@@ -1,0 +1,236 @@
+/* ============================================================
+   BMB Gestion — Opérations mobile / PWA (listes, formulaires, nav)
+   ============================================================ */
+
+/* ——— Pages modules : padding latéral (pas edge-to-edge) ——— */
+@media (max-width: 960px) {
+  .bmb-v2 .bmb-page:has(.module-shell),
+  .bmb-v2 .bmb-page:has(.bmb-dash-erp) {
+    padding: 0.75rem 0.85rem calc(4.85rem + env(safe-area-inset-bottom, 0px)) !important;
+    background: var(--bg) !important;
+  }
+
+  .module-shell__header {
+    margin-bottom: 0.5rem;
+  }
+
+  .module-shell__title {
+    font-size: 1.12rem;
+    line-height: 1.25;
+  }
+
+  .module-shell__subtitle {
+    font-size: 0.8rem;
+    line-height: 1.35;
+  }
+
+  .module-tabs {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    gap: 0.35rem;
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.2rem;
+    mask-image: linear-gradient(90deg, #000 90%, transparent);
+    -webkit-mask-image: linear-gradient(90deg, #000 90%, transparent);
+  }
+
+  .module-tab {
+    flex-shrink: 0;
+    scroll-snap-align: start;
+    padding: 0.5rem 0.85rem;
+    min-height: 2.5rem;
+  }
+
+  /* Modales : centrées (voir styles/modals.css) — actions tactiles */
+  .confirm-dialog__actions {
+  .bmb-data-table-wrap,
+  .table-scroll {
+    position: relative;
+  }
+
+  .bmb-data-table .actions-cell {
+    position: sticky;
+    right: 0;
+    z-index: 2;
+    white-space: normal;
+    min-width: 6.5rem;
+    background: var(--surface, #fff);
+    box-shadow: -8px 0 14px rgba(15, 23, 42, 0.06);
+  }
+
+  .bmb-data-table thead th:last-child {
+    position: sticky;
+    right: 0;
+    z-index: 3;
+    background: var(--table-head-bg, #eef2ef);
+  }
+
+  .actions-cell .btn-sm {
+    min-height: 2.35rem;
+    padding-left: 0.65rem;
+    padding-right: 0.65rem;
+  }
+
+  .table-main-toolbar .btn,
+  .toolbar-actions .btn {
+    min-height: 2.65rem;
+  }
+
+  /* Palette de commandes : centrée */
+  .cmd-palette-backdrop {
+    align-items: center;
+    justify-content: center;
+    padding: var(--bmb-modal-safe-padding, 1rem);
+  }
+
+  .cmd-palette {
+    width: min(100%, 520px);
+    max-width: 100%;
+    border-radius: var(--bmb-modal-radius, 14px);
+    max-height: min(85dvh, 640px);
+    margin: auto;
+  }
+
+  .cmd-palette__hint {
+    display: none;
+  }
+
+  /* Confirmations */
+  .confirm-dialog__actions {
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+
+  .confirm-dialog__actions .btn {
+    width: 100%;
+    min-height: 2.75rem;
+  }
+
+  /* Bannières / toasts au-dessus de la bottom nav */
+  .pwa-banners {
+    bottom: calc(4.85rem + env(safe-area-inset-bottom, 0px));
+  }
+
+  .toast-stack {
+    bottom: calc(4.85rem + env(safe-area-inset-bottom, 0px));
+    right: 0.75rem;
+    left: 0.75rem;
+    max-width: none;
+  }
+
+  /* Formulaires */
+  .inline-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .inline-form-grid.form-compact {
+    grid-template-columns: 1fr;
+  }
+
+  .btn-group {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .btn-group .btn {
+    width: 100%;
+    min-height: 2.75rem;
+  }
+
+  /* SearchSelect dans modales */
+  .search-select__list {
+    z-index: 10100;
+    max-height: min(240px, 42vh);
+  }
+
+  .card,
+  .table-main {
+    border-radius: 12px;
+  }
+}
+
+@media (pointer: coarse) {
+  .confirm-dialog__hint {
+    display: none;
+  }
+}
+
+/* ——— PWA installée : renforts ——— */
+html.app-pwa-mobile .bmb-page:has(.module-shell),
+html.app-pwa-mobile .bmb-page:has(.bmb-dash-erp) {
+  padding: 0.75rem 0.85rem calc(4.85rem + env(safe-area-inset-bottom, 0px)) !important;
+  background: var(--bg) !important;
+}
+
+html.app-pwa-mobile .bmb-topbar__pwa-search {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 2.35rem;
+  height: 2.35rem;
+  margin-left: auto;
+  margin-right: 0.35rem;
+  border: none;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.18);
+  color: #fff;
+  cursor: pointer;
+}
+
+html.app-pwa-mobile .bmb-topbar__pwa-search:active {
+  background: rgba(255, 255, 255, 0.28);
+}
+
+html.app-pwa-mobile .mobile-bottom-nav__item {
+  font-size: 0.58rem;
+  padding-left: 0.1rem;
+  padding-right: 0.1rem;
+}
+
+html.app-pwa-mobile .mobile-bottom-nav__item span {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Recherche mobile (navigateur, pas PWA) */
+.bmb-topbar__search-btn {
+  display: none;
+}
+
+@media (max-width: 960px) {
+  .bmb-topbar__search-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    margin-left: 0.25rem;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: var(--surface);
+    color: var(--text-muted);
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+
+  .bmb-topbar__search-btn:active {
+    background: var(--bg-subtle);
+  }
+}
+
+@media (max-width: 640px) {
+  .bmb-data-table {
+    min-width: 480px;
+    font-size: 0.84rem;
+  }
+
+  .bmb-data-table th,
+  .bmb-data-table td {
+    padding: 0.55rem 0.5rem;
+  }
+}

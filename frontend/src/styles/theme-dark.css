@@ -1,0 +1,34 @@
+[data-theme='dark'] {
+  --bg: #0f1510;
+  --surface: #1a221c;
+  --surface-elevated: #222b24;
+  --border: #2e3a32;
+  --text: #eef2ed;
+  --text-muted: #9aa89e;
+  --primary: #5cb87a;
+  --primary-light: #7dd49a;
+  --accent: #f0c84a;
+  --danger: #f87171;
+  --warning: #e8a04a;
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.45);
+}
+
+[data-theme='dark'] .sidebar {
+  background: var(--surface);
+  border-color: var(--border);
+}
+
+[data-theme='dark'] .card,
+[data-theme='dark'] .table-main,
+[data-theme='dark'] .stat-card {
+  background: var(--surface);
+  color: var(--text);
+}
+
+[data-theme='dark'] input,
+[data-theme='dark'] select,
+[data-theme='dark'] textarea {
+  background: var(--surface-elevated);
+  color: var(--text);
+  border-color: var(--border);
+}

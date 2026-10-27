@@ -1,0 +1,923 @@
+/**
+ * Caisse POS — design professionnel (override global.css)
+ */
+
+.pos-page {
+  margin: -1.5rem -2rem;
+  min-height: calc(100vh - 52px);
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+}
+
+.pos-page--centered {
+  margin: 0;
+  min-height: min(72vh, 640px);
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem;
+  background: var(--bg);
+  box-sizing: border-box;
+  border-radius: var(--radius);
+}
+
+/* ——— Chargement ——— */
+.vente-pos--loading {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  background: var(--bg);
+  color: var(--text-muted);
+  font-size: 0.875rem;
+}
+
+.vente-pos--loading::before {
+  content: '';
+  width: 28px;
+  height: 28px;
+  border: 2px solid var(--border);
+  border-top-color: var(--primary);
+  border-radius: 50%;
+  animation: posSpin 0.7s linear infinite;
+}
+
+@keyframes posSpin {
+  to { transform: rotate(360deg); }
+}
+
+/* ——— Ouverture caisse ——— */
+.vente-pos-setup {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  margin: 0 !important;
+  padding: 2rem 1.75rem !important;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  border-radius: var(--radius-lg) !important;
+  box-shadow: var(--shadow) !important;
+  border: 1px solid var(--border) !important;
+  border-top: 3px solid var(--accent) !important;
+  background: var(--surface) !important;
+}
+
+.vente-pos-setup__back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  align-self: flex-start;
+  margin-bottom: 0.75rem;
+  padding: 0.4rem 0.75rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-decoration: none;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--bg);
+  transition: var(--transition);
+}
+
+.vente-pos-setup__back:hover {
+  color: var(--primary);
+  border-color: var(--primary-light);
+  background: var(--primary-soft);
+}
+
+.vente-pos-setup__icon {
+  display: none !important;
+}
+
+.vente-pos-setup h3 {
+  margin: 0 0 0.25rem !important;
+  font-size: 1.125rem !important;
+  font-weight: 600 !important;
+  letter-spacing: -0.02em;
+  color: var(--primary) !important;
+}
+
+.vente-pos-setup__hint {
+  color: var(--text-muted) !important;
+  font-size: 0.8125rem !important;
+  margin-bottom: 1.5rem !important;
+  line-height: 1.5;
+}
+
+.vente-pos-setup__seller,
+.vente-pos-setup__seller-readonly {
+  max-width: 300px;
+  margin: 0 auto 1rem !important;
+  text-align: center !important;
+}
+
+.vente-pos-setup__seller label,
+.vente-pos-setup__seller-readonly label {
+  text-align: center !important;
+  font-size: 0.75rem !important;
+}
+
+.vente-pos-setup__seller .search-select__input {
+  text-align: center;
+}
+
+.vente-pos-setup__seller-name {
+  background: var(--bg-subtle) !important;
+  border: 1px solid var(--border) !important;
+  color: var(--text) !important;
+  font-weight: 500 !important;
+  text-align: center;
+}
+
+.vente-pos-setup .form-group {
+  max-width: 300px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: left;
+}
+
+.vente-pos-setup__auto {
+  max-width: 300px;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  font-size: 0.8125rem !important;
+  color: var(--text-muted) !important;
+}
+
+.vente-pos-setup__btn {
+  max-width: 300px;
+  margin: 1rem auto 0 !important;
+  padding: 0.625rem 1rem !important;
+  background: var(--primary) !important;
+  background-image: none !important;
+  border-radius: var(--radius-sm) !important;
+  font-weight: 600 !important;
+  font-size: 0.875rem !important;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.vente-pos-setup__btn:hover:not(:disabled) {
+  background: var(--primary-mid) !important;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+/* ——— Alertes ——— */
+.vente-pos-alert {
+  margin: 0 !important;
+  border-radius: 0 !important;
+  border-left: none !important;
+  border-right: none !important;
+  border-top: none !important;
+  font-size: 0.8125rem;
+  padding: 0.625rem 1.25rem !important;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.vente-pos-alert .alert-banner__close {
+  float: right;
+  margin: -0.125rem -0.25rem 0 0.5rem;
+  background: none;
+  border: none;
+  font-size: 1.25rem;
+  line-height: 1;
+  cursor: pointer;
+  opacity: 0.65;
+  color: inherit;
+}
+
+.vente-pos-alert .alert-banner__close:hover {
+  opacity: 1;
+}
+
+.vente-pos-alert__close:hover {
+  opacity: 1;
+  background: rgba(0, 0, 0, 0.06);
+}
+
+/* ——— Shell POS ——— */
+.vente-pos {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 52px);
+  background: var(--bg);
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  overflow: hidden;
+}
+
+/* ——— Barre supérieure ——— */
+.vente-pos__shortcuts-hint {
+  margin: 0;
+  padding: 0.4rem 1.25rem;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  background: var(--bg-subtle, rgba(0, 0, 0, 0.03));
+  border-bottom: 1px solid var(--border);
+}
+
+.vente-pos__shortcuts-hint kbd {
+  display: inline-block;
+  padding: 0.1rem 0.35rem;
+  font-size: 0.72rem;
+  font-family: inherit;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: var(--surface);
+}
+
+.vente-pos__header {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: end;
+  gap: 1rem 1.25rem;
+  padding: 0.75rem 1.25rem;
+  background: var(--surface) !important;
+  background-image: none !important;
+  color: var(--text) !important;
+  border-bottom: 1px solid var(--border) !important;
+}
+
+.vente-pos__header-left {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.vente-pos__badge {
+  padding: 0.35rem 0.75rem;
+  background: var(--bg-subtle) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: var(--radius-sm);
+  backdrop-filter: none;
+}
+
+.vente-pos__badge-label {
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-subtle) !important;
+  opacity: 1 !important;
+}
+
+.vente-pos__badge strong {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--text) !important;
+}
+
+.vente-pos__meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.vente-pos__meta-label {
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--text-subtle);
+}
+
+.vente-pos__meta-value {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--text);
+  max-width: 140px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.vente-pos__type-toggle {
+  display: flex;
+  padding: 2px;
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  gap: 0;
+}
+
+.vente-pos__type-btn {
+  padding: 0.35rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-muted) !important;
+  border-radius: calc(var(--radius-sm) - 2px);
+  background: transparent !important;
+}
+
+.vente-pos__type-btn--active {
+  background: var(--surface) !important;
+  color: var(--primary) !important;
+  box-shadow: var(--shadow-sm) !important;
+  font-weight: 600;
+}
+
+.vente-pos__header-mid {
+  min-width: 0;
+}
+
+.vente-pos__header-mid .search-select label,
+.vente-pos__header-right .form-group label {
+  color: var(--text-muted) !important;
+  font-size: 0.6875rem !important;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.vente-pos__header-mid .search-input,
+.vente-pos__header-right select {
+  background: var(--surface) !important;
+  border: 1px solid var(--border) !important;
+  font-size: 0.8125rem;
+}
+
+.vente-pos__header-right {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.5rem;
+  margin-left: 0;
+}
+
+.vente-pos__cancel-btn {
+  padding: 0.4375rem 0.75rem;
+  border: 1px solid #fecaca !important;
+  background: #fef2f2 !important;
+  color: var(--danger) !important;
+  border-radius: var(--radius-sm);
+  font-size: 0.75rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.vente-pos__cancel-btn:hover:not(:disabled) {
+  background: #fee2e2 !important;
+}
+
+/* ——— Corps ——— */
+.vente-pos__body {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  min-height: 0;
+  background: var(--bg) !important;
+}
+
+.vente-pos__main {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* ——— Saisie produit ——— */
+.vente-pos__scan {
+  padding: 1rem 1.25rem;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  box-shadow: none;
+}
+
+.vente-pos__scan-title {
+  margin-bottom: 0.75rem;
+}
+
+.vente-pos__scan-icon {
+  display: none !important;
+}
+
+.vente-pos__scan-title h4 {
+  font-size: 0.6875rem !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-subtle) !important;
+  margin: 0 !important;
+}
+
+.vente-pos__scan-title p {
+  display: none;
+}
+
+.vente-pos__scan-grid {
+  display: grid;
+  grid-template-columns: 1fr 72px 80px 100px auto;
+  gap: 0.625rem;
+  align-items: end;
+}
+
+.vente-pos__scan-product .search-select label,
+.vente-pos__scan-grid .form-group label {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-subtle);
+  margin-bottom: 0.3rem;
+}
+
+.vente-pos__scan-product .search-input {
+  font-size: 0.9375rem;
+  padding: 0.5rem 0.75rem;
+  height: 40px;
+}
+
+.vente-pos__scan-grid input {
+  height: 40px;
+  font-variant-numeric: tabular-nums;
+}
+
+.vente-pos__scan-pu {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  height: 40px;
+  padding-bottom: 0.35rem;
+}
+
+.vente-pos__scan-pu span {
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-subtle);
+}
+
+.vente-pos__scan-pu strong {
+  font-size: 0.875rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--text);
+}
+
+.vente-pos__scan-add {
+  height: 40px;
+  padding: 0 1.125rem;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: var(--primary) !important;
+  background-image: none !important;
+  color: #fff;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s;
+}
+
+.vente-pos__scan-add:hover:not(:disabled) {
+  background: var(--primary-mid) !important;
+  transform: none !important;
+}
+
+.vente-pos__scan-add:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.vente-pos__stock {
+  margin-top: 0.625rem;
+  padding: 0.4rem 0.65rem;
+  font-size: 0.75rem;
+  border-radius: var(--radius-sm);
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+}
+
+.vente-pos__stock--warn {
+  background: #fef2f2;
+  border-color: #fecaca;
+  color: var(--danger);
+}
+
+/* ——— Liste panier (table) ——— */
+.vente-pos__lines {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+  background: var(--surface);
+}
+
+.vente-pos__lines-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.625rem 1.25rem;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-subtle);
+}
+
+.vente-pos__lines-head h4 {
+  font-size: 0.6875rem !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-subtle) !important;
+  margin: 0 !important;
+}
+
+.vente-pos__lines-count {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  background: transparent !important;
+  padding: 0 !important;
+}
+
+.vente-pos__lines-table-wrap {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.vente-pos__lines-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8125rem;
+}
+
+.vente-pos__lines-table thead th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--text-subtle);
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+}
+
+.vente-pos__lines-table thead th.col-num,
+.vente-pos__lines-table tbody td.col-num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.vente-pos__lines-table tbody td {
+  padding: 0.625rem 0.75rem;
+  border-bottom: 1px solid var(--border-subtle);
+  vertical-align: middle;
+}
+
+.vente-pos__lines-table tbody tr:hover {
+  background: var(--bg-subtle);
+}
+
+.vente-pos__line-name {
+  font-weight: 500;
+  color: var(--text);
+  display: block;
+}
+
+.vente-pos__line-ref {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.vente-pos__line-del {
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+  font-size: 1rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.vente-pos__line-del:hover:not(:disabled) {
+  background: #fef2f2;
+  border-color: #fecaca;
+  color: var(--danger);
+}
+
+.vente-pos__empty {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1.5rem;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+.vente-pos__empty-icon {
+  display: none !important;
+}
+
+.vente-pos__empty p {
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--text);
+  margin: 0 0 0.25rem;
+}
+
+.vente-pos__empty span {
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+}
+
+/* Legacy list hidden if table used */
+.vente-pos__line-list {
+  display: none;
+}
+
+/* ——— Panneau latéral totaux ——— */
+.vente-pos__aside {
+  display: flex;
+  flex-direction: column;
+  background: var(--surface) !important;
+  background-image: none !important;
+  border-left: 1px solid var(--border);
+  padding: 0 !important;
+}
+
+.vente-pos__summary {
+  padding: 1.25rem 1.25rem 1rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.vente-pos__summary-label {
+  font-size: 0.6875rem !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-subtle) !important;
+  margin-bottom: 0.35rem !important;
+}
+
+.vente-pos__summary-total {
+  font-size: 1.75rem !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+  color: var(--text) !important;
+  line-height: 1.15;
+  margin: 0 !important;
+}
+
+.vente-pos__summary-rows {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.vente-pos__summary-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+}
+
+.vente-pos__summary-row strong {
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.vente-pos__summary-row--due strong {
+  color: var(--danger);
+}
+
+.vente-pos__summary-chips {
+  display: none;
+}
+
+.vente-pos__header-mid--required .search-select__input {
+  border-color: var(--accent) !important;
+  box-shadow: 0 0 0 1px rgba(201, 147, 26, 0.28);
+}
+
+.vente-pos__client-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.5rem;
+  align-items: end;
+}
+
+.vente-pos__comptoir-btn {
+  height: 40px;
+  padding: 0 0.875rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--text-muted);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.vente-pos__comptoir-btn:hover:not(:disabled) {
+  background: var(--bg-subtle);
+  color: var(--text);
+}
+
+.vente-pos__comptoir-btn--active {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #fff;
+}
+
+.vente-pos__comptoir-btn--active:hover:not(:disabled) {
+  background: var(--primary-mid);
+  color: #fff;
+}
+
+.vente-pos__comptoir-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.vente-pos__credit-hint--warn {
+  border-left-color: var(--accent-warm) !important;
+  background: var(--accent-warm-soft) !important;
+  color: #7c3a12 !important;
+}
+
+.vente-pos__credit-hint {
+  margin-top: 0.75rem !important;
+  padding: 0.5rem 0.65rem !important;
+  font-size: 0.6875rem !important;
+  line-height: 1.45;
+  color: var(--text-muted) !important;
+  background: var(--bg-subtle) !important;
+  border: 1px solid var(--border) !important;
+  border-left: 3px solid var(--primary) !important;
+  border-radius: var(--radius-sm);
+}
+
+.vente-pos__aside-actions {
+  padding: 1rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: auto;
+}
+
+.vente-pos__btn-validate {
+  width: 100%;
+  padding: 0.75rem 1rem !important;
+  border: none !important;
+  border-radius: var(--radius-sm) !important;
+  background: var(--primary) !important;
+  background-image: none !important;
+  color: #fff !important;
+  font-size: 0.875rem !important;
+  font-weight: 600 !important;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.vente-pos__btn-validate:hover:not(:disabled) {
+  background: var(--primary-mid) !important;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.vente-pos__btn-validate:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.vente-pos__btn-pay {
+  width: 100%;
+  padding: 0.5625rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--text-muted);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.vente-pos__btn-pay:hover {
+  background: var(--bg-subtle);
+  color: var(--text);
+}
+
+.vente-pos__pay-panel {
+  padding: 1rem 1.25rem;
+  border-top: 1px solid var(--border);
+  background: var(--bg-subtle);
+}
+
+.vente-pos__pay-panel-title {
+  margin: 0 0 0.75rem;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-subtle);
+}
+
+.vente-pos__pay-done {
+  margin: 0;
+  font-size: 0.8125rem;
+  color: var(--primary);
+  font-weight: 500;
+}
+
+.vente-pos__pay-hint {
+  margin: 0.5rem 0 0;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.vente-pos__pay-panel label {
+  display: block;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-subtle);
+  margin: 0.75rem 0 0.35rem;
+}
+
+.vente-pos__pay-panel input,
+.vente-pos__pay-panel select {
+  width: 100%;
+  height: 38px;
+  font-size: 0.875rem;
+  margin-bottom: 0.35rem;
+}
+
+.vente-pos__pay-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.vente-pos__pay-actions .btn {
+  flex: 1;
+}
+
+/* ——— Responsive ——— */
+@media (max-width: 1024px) {
+  .pos-page:not(.pos-page--centered) {
+    margin: -1rem;
+  }
+
+  .vente-pos__body {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr auto;
+  }
+
+  .vente-pos__aside {
+    border-left: none;
+    border-top: 1px solid var(--border);
+  }
+
+  .vente-pos__scan-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .vente-pos__scan-product {
+    grid-column: 1 / -1;
+  }
+
+  .vente-pos__scan-add {
+    grid-column: 1 / -1;
+  }
+
+  .vente-pos__header {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .vente-pos__scan-grid {
+    grid-template-columns: 1fr;
+  }
+}

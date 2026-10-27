@@ -1,0 +1,7 @@
+# Fichiers générés ou contenant des secrets — ne pas commiter
+.deploy.env
+.cloud.env
+generated/
+frontend/.env.production
+nginx-bmb-active.conf
+cloudflared-config.active.yml

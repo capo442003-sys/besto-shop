@@ -1,0 +1,628 @@
+/* ============================================================
+   BMB Gestion — Tableau de bord ERP (maquette admin)
+   ============================================================ */
+
+.bmb-dash-erp {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  max-width: 1400px;
+}
+
+.bmb-dash-erp__hero {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 0.75rem 1.5rem;
+}
+
+.bmb-dash-erp__title {
+  margin: 0;
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: #0d2847;
+  letter-spacing: -0.02em;
+}
+
+.bmb-dash-erp__date {
+  margin: 0.25rem 0 0;
+  font-size: 0.9rem;
+  color: #6b7c74;
+  text-transform: capitalize;
+}
+
+/* ——— KPI cards ——— */
+.bmb-dash-erp__kpis {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.bmb-dash-erp-kpi {
+  position: relative;
+  background: #fff;
+  border: 1px solid #e8ece9;
+  border-radius: 14px;
+  padding: 1.15rem 1.2rem 0.85rem;
+  box-shadow: 0 4px 18px rgba(15, 31, 23, 0.06);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  min-height: 148px;
+}
+
+.bmb-dash-erp-kpi::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--kpi-accent, #28a745);
+}
+
+.bmb-dash-erp-kpi--green { --kpi-accent: #28a745; --kpi-icon-bg: rgba(40, 167, 69, 0.12); --kpi-icon: #28a745; }
+.bmb-dash-erp-kpi--blue { --kpi-accent: #007bff; --kpi-icon-bg: rgba(0, 123, 255, 0.12); --kpi-icon: #007bff; }
+.bmb-dash-erp-kpi--yellow { --kpi-accent: #ffc107; --kpi-icon-bg: rgba(255, 193, 7, 0.18); --kpi-icon: #c99200; }
+.bmb-dash-erp-kpi--red { --kpi-accent: #dc3545; --kpi-icon-bg: rgba(220, 53, 69, 0.12); --kpi-icon: #dc3545; }
+
+.bmb-dash-erp-kpi__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.65rem;
+}
+
+.bmb-dash-erp-kpi__label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #6b7c74;
+  line-height: 1.35;
+  max-width: 9rem;
+}
+
+.bmb-dash-erp-kpi__icon {
+  flex-shrink: 0;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: var(--kpi-icon-bg);
+  color: var(--kpi-icon);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bmb-dash-erp-kpi__value {
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: #0f1f17;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+.bmb-dash-erp-kpi__trend {
+  margin-top: 0.35rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #28a745;
+}
+
+.bmb-dash-erp-kpi__trend.is-down {
+  color: #dc3545;
+}
+
+.bmb-dash-erp-kpi__sub {
+  margin-top: 0.35rem;
+  font-size: 0.78rem;
+  color: #6b7c74;
+}
+
+.bmb-dash-erp-kpi__link {
+  margin-top: auto;
+  padding-top: 0.75rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #007bff;
+  text-decoration: none;
+}
+
+.bmb-dash-erp-kpi__link:hover {
+  text-decoration: underline;
+}
+
+/* ——— Main panels ——— */
+.bmb-dash-erp__main {
+  display: grid;
+  grid-template-columns: 1.35fr 1fr;
+  gap: 1rem;
+  align-items: stretch;
+}
+
+.bmb-dash-erp-panel {
+  background: #fff;
+  border: 1px solid #e8ece9;
+  border-radius: 14px;
+  padding: 1.15rem 1.25rem 1.25rem;
+  box-shadow: 0 4px 18px rgba(15, 31, 23, 0.05);
+  min-width: 0;
+}
+
+.bmb-dash-erp-panel__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.bmb-dash-erp-panel__title {
+  margin: 0;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: #0d2847;
+}
+
+.bmb-dash-erp-panel__action,
+.bmb-dash-erp-panel__select {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #007bff;
+  text-decoration: none;
+  background: none;
+  border: 1px solid #dce3df;
+  border-radius: 8px;
+  padding: 0.3rem 0.65rem;
+  cursor: default;
+}
+
+.bmb-dash-erp-panel__action:hover {
+  text-decoration: underline;
+}
+
+/* ——— Chart ERP ——— */
+.bmb-dash-erp-chart {
+  position: relative;
+}
+
+.bmb-dash-erp-chart__y-axis {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 1.75rem;
+  width: 3.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-size: 0.62rem;
+  color: #9aa8a2;
+  pointer-events: none;
+}
+
+.bmb-dash-erp-chart__plot {
+  margin-left: 3.75rem;
+  padding-top: 0.25rem;
+}
+
+.bmb-dash-erp-chart__bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.45rem;
+  height: 200px;
+  border-bottom: 1px solid #e8ece9;
+  padding-bottom: 0.35rem;
+}
+
+.bmb-dash-erp-chart__col {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+}
+
+.bmb-dash-erp-chart__bar-wrap {
+  flex: 1;
+  width: 100%;
+  max-width: 44px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.bmb-dash-erp-chart__bar {
+  width: 100%;
+  border-radius: 6px 6px 2px 2px;
+  min-height: 4px;
+  background: linear-gradient(180deg, #34c759 0%, #28a745 100%);
+  transition: height 0.35s ease;
+}
+
+.bmb-dash-erp-chart__label {
+  margin-top: 0.45rem;
+  font-size: 0.62rem;
+  color: #6b7c74;
+  text-align: center;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+/* ——— Top products table ——— */
+.bmb-dash-erp-table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.bmb-dash-erp-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.82rem;
+}
+
+.bmb-dash-erp-table thead th {
+  text-align: left;
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #6b7c74;
+  padding: 0.5rem 0.65rem;
+  border-bottom: 1px solid #e8ece9;
+  white-space: nowrap;
+}
+
+.bmb-dash-erp-table tbody td {
+  padding: 0.65rem;
+  border-bottom: 1px solid #f0f3f1;
+  vertical-align: middle;
+}
+
+.bmb-dash-erp-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.bmb-dash-erp-table .col-num {
+  text-align: right;
+  white-space: nowrap;
+}
+
+.bmb-dash-erp-product {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  min-width: 0;
+}
+
+.bmb-dash-erp-product__thumb {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #f4f7f5 0%, #e8ece9 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: #1b7a3d;
+}
+
+.bmb-dash-erp-product__name {
+  font-weight: 600;
+  color: #0f1f17;
+  line-height: 1.25;
+}
+
+.bmb-dash-erp-product__ref {
+  display: block;
+  font-size: 0.68rem;
+  color: #9aa8a2;
+  margin-top: 0.1rem;
+}
+
+.bmb-dash-erp-table__ca {
+  font-weight: 700;
+  color: #28a745;
+}
+
+/* ——— Trust footer ——— */
+.bmb-dash-erp-trust {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1rem;
+  padding: 1.15rem 1.35rem;
+  border-radius: 14px;
+  background: linear-gradient(135deg, rgba(255, 193, 7, 0.14) 0%, rgba(255, 248, 230, 0.95) 100%);
+  border: 1px solid rgba(255, 193, 7, 0.28);
+}
+
+.bmb-dash-erp-trust__item {
+  display: flex;
+  gap: 0.65rem;
+  align-items: flex-start;
+  min-width: 0;
+}
+
+.bmb-dash-erp-trust__icon {
+  flex-shrink: 0;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: rgba(255, 193, 7, 0.35);
+  color: #c99200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bmb-dash-erp-trust__text strong {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #0f1f17;
+  margin-bottom: 0.15rem;
+}
+
+.bmb-dash-erp-trust__text span {
+  font-size: 0.72rem;
+  color: #5a6b63;
+  line-height: 1.35;
+}
+
+/* ——— En-tête actions ——— */
+.bmb-dash-erp__hero {
+  align-items: center;
+}
+
+.bmb-dash-erp__store {
+  margin: 0.2rem 0 0;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #1b7a3d;
+}
+
+.bmb-dash-erp__hero-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  flex-wrap: wrap;
+}
+
+.bmb-dash-erp__refresh-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.45rem 0.85rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #0d2847;
+  background: #fff;
+  border: 1px solid #dce3df;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.bmb-dash-erp__refresh-btn:hover:not(:disabled) {
+  background: #f4f7f5;
+  border-color: #1b7a3d;
+}
+
+.bmb-dash-erp__refresh-btn:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+/* ——— Actions rapides ——— */
+.bmb-dash-erp__quick {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+}
+
+.bmb-dash-erp__quick-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.55rem 1rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #fff;
+  background: linear-gradient(135deg, #145a2e 0%, #1b7a3d 100%);
+  border-radius: 999px;
+  text-decoration: none;
+  box-shadow: 0 4px 14px rgba(27, 122, 61, 0.22);
+  transition: transform 0.12s, box-shadow 0.12s;
+}
+
+.bmb-dash-erp__quick-link:hover {
+  color: #fff;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(27, 122, 61, 0.3);
+}
+
+.bmb-dash-erp__quick-link--muted {
+  background: #fff;
+  color: #0d2847;
+  border: 1px solid #dce3df;
+  box-shadow: 0 2px 8px rgba(15, 31, 23, 0.05);
+}
+
+.bmb-dash-erp__quick-link--muted:hover {
+  color: #1b7a3d;
+  border-color: #1b7a3d;
+}
+
+.bmb-dash-erp-alerts {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* ——— KPI secondaires ——— */
+.bmb-dash-erp__kpis-secondary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 0.75rem;
+}
+
+.bmb-dash-erp-stat {
+  background: #fff;
+  border: 1px solid #e8ece9;
+  border-radius: 12px;
+  padding: 0.85rem 1rem;
+  box-shadow: 0 2px 10px rgba(15, 31, 23, 0.04);
+}
+
+.bmb-dash-erp-stat__label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #6b7c74;
+  margin-bottom: 0.3rem;
+}
+
+.bmb-dash-erp-stat__value {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #0f1f17;
+  line-height: 1.2;
+}
+
+.bmb-dash-erp-stat__sub {
+  font-size: 0.72rem;
+  color: #6b7c74;
+  margin-top: 0.2rem;
+}
+
+/* ——— Grilles ——— */
+.bmb-dash-erp__row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.bmb-dash-erp__row--3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.bmb-dash-erp-panel--full {
+  grid-column: 1 / -1;
+}
+
+.bmb-dash-erp-chart__bar--blue {
+  background: linear-gradient(180deg, #4dabf7 0%, #007bff 100%);
+}
+
+/* ——— Stock résumé visuel ——— */
+.bmb-dash-erp-stock-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.65rem;
+}
+
+.bmb-dash-erp-stock-cell {
+  text-align: center;
+  padding: 0.85rem 0.5rem;
+  border-radius: 10px;
+  background: #f4f7f5;
+  border: 1px solid #e8ece9;
+}
+
+.bmb-dash-erp-stock-cell strong {
+  display: block;
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: #0f1f17;
+}
+
+.bmb-dash-erp-stock-cell span {
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: #6b7c74;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.bmb-dash-erp-stock-cell--ok strong { color: #28a745; }
+.bmb-dash-erp-stock-cell--warn strong { color: #ea580c; }
+.bmb-dash-erp-stock-cell--danger strong { color: #dc3545; }
+
+.bmb-dash-erp-badge {
+  display: inline-block;
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.bmb-dash-erp-badge--critique {
+  background: rgba(220, 53, 69, 0.12);
+  color: #dc3545;
+}
+
+.bmb-dash-erp-badge--faible {
+  background: rgba(234, 88, 12, 0.12);
+  color: #ea580c;
+}
+
+.bmb-dash-erp-empty {
+  text-align: center;
+  padding: 2rem 1rem;
+  color: #6b7c74;
+  font-size: 0.88rem;
+}
+
+.bmb-dash-erp-empty svg {
+  display: block;
+  margin: 0 auto 0.65rem;
+  opacity: 0.35;
+}
+
+@media (max-width: 1100px) {
+  .bmb-dash-erp__kpis {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .bmb-dash-erp__main,
+  .bmb-dash-erp__row,
+  .bmb-dash-erp__row--3 {
+    grid-template-columns: 1fr;
+  }
+
+  .bmb-dash-erp-trust {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .bmb-dash-erp__kpis {
+    grid-template-columns: 1fr;
+  }
+
+  .bmb-dash-erp-trust {
+    grid-template-columns: 1fr;
+  }
+
+  .bmb-dash-erp-kpi__value {
+    font-size: 1.25rem;
+  }
+
+  .bmb-dash-erp-chart__y-axis {
+    display: none;
+  }
+
+  .bmb-dash-erp-chart__plot {
+    margin-left: 0;
+  }
+}

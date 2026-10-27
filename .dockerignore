@@ -1,0 +1,16 @@
+**/node_modules
+.git
+electron
+docs
+deploy
+e2e
+frontend/src
+frontend/public
+frontend/scripts
+frontend/node_modules
+backend/uploads
+backend/backups
+backend/certs
+*.bat
+*.md
+_archive*

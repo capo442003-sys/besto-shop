@@ -1,0 +1,126 @@
+/* ============================================================
+   BMB — Caisse plein écran : mobile / PWA uniquement
+   Desktop : layout standard (sidebar + topbar visibles)
+   ============================================================ */
+
+@media (max-width: 960px) {
+  html.app-caisse-active,
+  html.app-caisse-active body {
+    height: 100% !important;
+    overflow: hidden !important;
+  }
+
+  html.app-caisse-active .app-layout.bmb-v2 {
+    height: 100dvh !important;
+    max-height: 100dvh !important;
+    min-height: 0 !important;
+    overflow: hidden !important;
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
+  html.app-caisse-active .app-layout__workspace {
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    height: 100% !important;
+    overflow: hidden !important;
+    display: flex !important;
+  }
+
+  html.app-caisse-active .sidebar {
+    display: none !important;
+  }
+
+  html.app-caisse-active .bmb-main,
+  html.app-caisse-active .app-layout__workspace > .bmb-main {
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    margin-left: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important;
+  }
+
+  html.app-caisse-active .bmb-page,
+  html.app-caisse-active .page.bmb-page {
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    height: 100% !important;
+    overflow: hidden !important;
+    padding: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
+  html.app-caisse-active .bmb-page__inner {
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    height: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important;
+    gap: 0 !important;
+  }
+
+  html.app-caisse-active .module-shell {
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    height: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    gap: 0 !important;
+    overflow: hidden !important;
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
+  html.app-caisse-active .module-shell__body {
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    height: 100% !important;
+    gap: 0 !important;
+    overflow: hidden !important;
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
+  html.app-caisse-active .module-shell__body .pos-pro,
+  html.app-caisse-active .pos-pro--v3 {
+    flex: 1 1 auto !important;
+    height: 100% !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    width: 100% !important;
+  }
+
+  html.app-caisse-active .pos-pro--v3 .pos-pro__workspace {
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    height: 100% !important;
+    display: grid !important;
+    align-items: stretch !important;
+  }
+
+  html.app-caisse-active .pos-pro--v3 .pos-pro__main-col,
+  html.app-caisse-active .pos-pro--v3 .pos-pro__cart-panel {
+    height: 100% !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    overflow: hidden !important;
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
+  html.app-caisse-active .pos-pro--v3 .pos-pro__pay-panel {
+    display: none !important;
+  }
+
+  html.app-caisse-active .pos-pro--v3 .pos-pro__body--cart,
+  html.app-caisse-active .pos-pro--v3 .pos-pro__pay-panel-body {
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    overflow-y: auto !important;
+  }
+}

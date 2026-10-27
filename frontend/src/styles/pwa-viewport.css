@@ -1,0 +1,163 @@
+/* ============================================================
+   BMB — Viewport & layout (sans zoom — pas de déformation)
+   ============================================================ */
+
+html.app-pwa-mobile,
+html.app-standalone {
+  overflow-x: hidden;
+  max-width: 100%;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+html.app-pwa-mobile body,
+html.app-standalone body {
+  overflow-x: hidden;
+  max-width: 100%;
+  margin: 0;
+}
+
+html.app-pwa-mobile #root,
+html.app-standalone #root {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+html.app-pwa-mobile .app-layout,
+html.app-pwa-mobile .app-layout__workspace,
+html.app-pwa-mobile .bmb-main,
+html.app-pwa-mobile .bmb-page,
+html.app-pwa-mobile .module-shell,
+html.app-standalone .app-layout__workspace,
+html.app-standalone .bmb-main,
+html.app-standalone .bmb-page {
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+/* PWA mobile : sidebar en overlay, pas de marge desktop */
+html.app-pwa-mobile .app-layout__workspace > .bmb-main {
+  margin-left: 0 !important;
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+html.app-pwa-mobile .bmb-v2 .sidebar {
+  position: fixed;
+  transform: translateX(-100%);
+  width: min(280px, 88vw);
+}
+
+html.app-pwa-mobile .app-layout--sidebar-open .bmb-v2 .sidebar {
+  transform: translateX(0);
+}
+
+/* Topbar PWA : pas de marge hamburger fantôme */
+html.app-pwa-mobile .bmb-v2 .bmb-topbar,
+html.app-pwa-mobile .topbar.bmb-topbar {
+  padding-left: 1rem !important;
+}
+
+html.app-pwa-mobile .bmb-topbar__pwa-role {
+  max-width: 42vw;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Tables : scroll interne uniquement */
+html.app-pwa-mobile .bmb-data-table-wrap,
+html.app-pwa-mobile .bmb-dash-erp-table-wrap,
+html.app-pwa-mobile .table-scroll {
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+html.app-pwa-mobile .bmb-dash-erp-table {
+  font-size: 0.8rem;
+}
+
+/* Inputs iOS : 16px évite le zoom auto au focus (navigateur, pas CSS zoom) */
+html.app-pwa-mobile input,
+html.app-pwa-mobile select,
+html.app-pwa-mobile textarea,
+html.app-pwa-mobile .search-select__input {
+  font-size: 16px !important;
+}
+
+html.app-pwa-mobile {
+  touch-action: manipulation;
+  --space-page-y: 0.65rem;
+  --space-page-x: 0.75rem;
+  --text-base: 0.875rem;
+  --text-sm: 0.78rem;
+  --text-xs: 0.68rem;
+  --control-height: 2.35rem;
+  --control-height-sm: 2rem;
+}
+
+html.app-pwa-mobile .module-shell__title,
+html.app-pwa-mobile .bmb-page-head__title {
+  font-size: 1.05rem !important;
+}
+
+html.app-pwa-mobile .module-tab {
+  padding: 0.35rem 0.65rem !important;
+  font-size: 0.78rem !important;
+}
+
+html.app-pwa-mobile .card.table-main {
+  padding: 0.75rem !important;
+}
+
+html.app-pwa-mobile .btn {
+  min-height: var(--control-height-sm);
+  padding: 0.35rem 0.75rem;
+  font-size: 0.82rem;
+}
+
+html.app-pwa-mobile .bmb-filters-panel {
+  gap: 0.5rem !important;
+  padding: 0.65rem !important;
+}
+
+/* Caisse mobile — scroll uniquement dans le panier */
+html.app-caisse-active .module-shell__body .pos-pro {
+  min-height: 0;
+  max-width: 100%;
+}
+
+html.app-caisse-active.app-pwa-mobile .bmb-page {
+  overflow: hidden !important;
+}
+
+html.app-pwa-mobile .pos-pro__header {
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+/* ——— PC : proportions équilibrées (sans zoom) ——— */
+@media (min-width: 961px) {
+  html:not(.app-pwa-mobile) .bmb-dash-erp {
+    max-width: 1320px;
+    margin: 0 auto;
+  }
+
+  html:not(.app-pwa-mobile) .module-shell {
+    max-width: 1360px;
+    margin: 0 auto;
+  }
+
+  html:not(.app-pwa-mobile) .bmb-v2 .bmb-page {
+    padding: 1rem 1.35rem 1.75rem;
+  }
+
+  html:not(.app-pwa-mobile) .bmb-topbar__store {
+    max-width: 28ch;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}

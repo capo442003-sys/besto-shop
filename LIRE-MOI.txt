@@ -1,0 +1,6 @@
+BESTO SHOP — boutique vêtements & chaussures (GNF)
+
+Connexion initiale : admin / admin123
+Production : https://besto-shop-production.up.railway.app
+
+Après mise à jour : Ctrl+F5 sur chaque poste.

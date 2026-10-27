@@ -1,0 +1,283 @@
+/* ============================================================
+   BMB — Caisse POS mobile / PWA (saisie client & articles)
+   ============================================================ */
+
+@media (max-width: 960px) {
+  /* Masquer la nav globale — la barre caisse la remplace */
+  html.app-caisse-active .mobile-bottom-nav {
+    display: none !important;
+  }
+
+  html.app-caisse-active .module-tabs {
+    display: none !important;
+  }
+
+  html.app-caisse-active .bmb-topbar {
+    display: none !important;
+  }
+
+  html.app-caisse-active .bmb-page {
+    padding: 0 !important;
+  }
+
+  /* Zone saisie = priorité écran */
+  html.app-caisse-active .pos-pro--v3 .pos-pro__workspace {
+    display: flex;
+    flex-direction: column;
+    grid-template-columns: unset;
+    grid-template-rows: unset;
+    padding-bottom: calc(3.85rem + env(safe-area-inset-bottom, 0px));
+    min-height: 0;
+    flex: 1;
+  }
+
+  html.app-caisse-active .pos-pro--v3 .pos-pro__main-col {
+    flex: 1;
+    min-height: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  html.app-caisse-active .pos-pro--v3 .pos-pro__panel-head {
+    padding: 0.4rem 0.65rem 0.25rem;
+  }
+
+  html.app-caisse-active .pos-pro--v3 .pos-pro__panel-hint {
+    display: none;
+  }
+
+  html.app-caisse-active .pos-pro--v3 .pos-pro__panel-head h2 {
+    font-size: 0.95rem;
+  }
+
+  /* Client : une colonne, champs compacts */
+  html.app-caisse-active .pos-pro--v3 .pos-pro__client-row {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.4rem;
+    padding: 0.45rem 0.65rem;
+  }
+
+  html.app-caisse-active .pos-pro--v3 .pos-pro__client-row .search-select {
+    width: 100%;
+  }
+
+  html.app-caisse-active .pos-pro--v3 .pos-pro__client-row .search-select label,
+  html.app-caisse-active .pos-pro--v3 .pos-pro__toolbar .search-select label,
+  html.app-caisse-active .pos-pro--v3 .pos-pro__field label {
+    font-size: 0.68rem;
+    margin-bottom: 0.15rem;
+  }
+
+  html.app-caisse-active .pos-pro--v3 .pos-pro__client-row .search-select--pos-client .search-select__input,
+  html.app-caisse-active .pos-pro--v3 .pos-pro__toolbar .search-select__input,
+  html.app-caisse-active .pos-pro--v3 .pos-pro__field input {
+    height: 40px !important;
+    min-height: 40px !important;
+    padding: 0.4rem 0.6rem;
+    font-size: 16px !important;
+  }
+
+  html.app-caisse-active .pos-pro--v3 .pos-pro__toolbar-product .search-select--pos-product .search-select__input {
+    width: 100% !important;
+    height: 42px !important;
+    min-height: 42px !important;
+    font-size: 16px !important;
+    padding: 0.45rem 0.65rem !important;
+  }
+
+  html.app-caisse-active .pos-pro--v3 .pos-pro__client-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.4rem;
+  }
+
+  html.app-caisse-active .pos-pro--v3 .pos-pro__client-btn {
+    height: 38px;
+    min-height: 38px;
+    padding: 0 0.5rem;
+    font-size: 0.72rem;
+    width: 100%;
+  }
+
+  /* Toolbar articles */
+  html.app-caisse-active .pos-pro--v3 .pos-pro__toolbar {
+    gap: 0.45rem;
+    padding: 0.45rem 0.65rem;
+  }
+
+  html.app-caisse-active .pos-pro--v3 .pos-pro__toolbar-line {
+    display: grid;
+    grid-template-columns: minmax(72px, 90px) minmax(0, 1fr) auto;
+    gap: 0.45rem;
+    align-items: end;
+  }
+
+  html.app-caisse-active .pos-pro--v3 .pos-pro__field input,
+  html.app-caisse-active .pos-pro--v3 .pos-pro__field--price input,
+  html.app-caisse-active .pos-pro--v3 .pos-pro__field--qty input {
+    height: 40px !important;
+    min-height: 40px !important;
+    font-size: 16px !important;
+    padding: 0.4rem 0.6rem !important;
+  }
+
+  html.app-caisse-active .pos-pro--v3 .pos-pro__field--price {
+    min-width: 0;
+  }
+
+  html.app-caisse-active .pos-pro--v3 .pos-pro__add-btn {
+    height: 56px !important;
+    min-height: 56px !important;
+  }
+
+  html.app-caisse-active .pos-pro--v3 .pos-pro__toolbar-product {
+    width: 100%;
+  }
+
+  html.app-caisse-active .pos-pro--v3 .pos-pro__add-btn {
+    min-height: 40px !important;
+    height: 40px;
+    padding: 0 0.85rem;
+    font-size: 0.78rem;
+    white-space: nowrap;
+  }
+
+  html.app-caisse-active .pos-pro--v3 .pos-pro__stock-line {
+    padding: 0.3rem 0.65rem;
+    font-size: 0.75rem;
+  }
+
+  /* Panier : tiroir repliable */
+  html.app-caisse-active .pos-pro--v3 .pos-pro__cart-panel {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: calc(3.85rem + env(safe-area-inset-bottom, 0px));
+    z-index: 195;
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    pointer-events: none;
+    border: none;
+    border-radius: 14px 14px 0 0;
+    box-shadow: none;
+    transition: max-height 0.22s ease, opacity 0.18s ease;
+  }
+
+  html.app-caisse-active .pos-pro--v3.pos-pro--cart-open .pos-pro__cart-panel {
+    max-height: min(52vh, 420px);
+    opacity: 1;
+    pointer-events: auto;
+    border-top: 1px solid var(--border);
+    box-shadow: 0 -8px 32px rgba(15, 31, 23, 0.14);
+    display: flex;
+    flex-direction: column;
+  }
+
+  html.app-caisse-active .pos-pro--v3 .pos-pro__cart-head {
+    padding: 0.45rem 0.65rem;
+    font-size: 0.85rem;
+  }
+
+  html.app-caisse-active .pos-pro--v3 .pos-pro__validate-btn {
+    display: none;
+  }
+
+  html.app-caisse-active .pos-pro--v3 .pos-pro__mobile-bar {
+    z-index: 200;
+    padding: 0.5rem 0.65rem calc(0.5rem + env(safe-area-inset-bottom, 0px));
+  }
+
+  html.app-caisse-active .pos-pro--v3 .pos-pro__mobile-bar-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.05rem;
+    border: none;
+    background: transparent;
+    padding: 0;
+    margin: 0;
+    text-align: left;
+    cursor: pointer;
+    min-width: 0;
+    flex: 1;
+  }
+
+  html.app-caisse-active .pos-pro--v3 .pos-pro__mobile-bar-info:disabled {
+    opacity: 0.55;
+    cursor: default;
+  }
+
+  html.app-caisse-active .pos-pro--v3 .pos-pro__mobile-bar-btn {
+    min-height: 44px;
+    min-width: 110px;
+    font-size: 0.88rem;
+  }
+
+  /* Header compact */
+  html.app-caisse-active .pos-pro--v3 .pos-pro__header {
+    padding: max(0.35rem, env(safe-area-inset-top, 0px)) 0.5rem 0.4rem;
+  }
+
+  html.app-caisse-active .pos-pro--v3 .pos-pro__back {
+    margin-left: 0.35rem;
+    padding: 0.35rem 0.65rem;
+    font-size: 0.72rem;
+  }
+
+  html.app-caisse-active .pos-pro--v3 .pos-pro__brand strong {
+    font-size: 0.82rem;
+  }
+
+  html.app-caisse-active .pos-pro--v3 .pos-pro__brand small {
+    display: none;
+  }
+
+  html.app-caisse-active .pos-pro--v3 .pos-pro__type-btn {
+    padding: 0.35rem 0.5rem;
+    font-size: 0.7rem;
+  }
+
+  html.app-caisse-active .pos-pro--v3 .pos-pro__mobile-total {
+    font-size: 0.75rem;
+    padding: 0.28rem 0.65rem;
+  }
+
+  .search-select__list--fixed {
+    margin: 0;
+    border-radius: 10px;
+    box-shadow: 0 14px 40px rgba(15, 23, 42, 0.22);
+  }
+
+  .search-select__list--fixed .search-select__option {
+    padding: 0.65rem 0.75rem;
+    font-size: 0.9rem;
+    min-height: 44px;
+  }
+
+  html.app-caisse-active .search-select__list--pos-product.search-select__list--fixed,
+  html.app-caisse-active .search-select__list--pos-client.search-select__list--fixed {
+    max-height: min(400px, 55vh) !important;
+  }
+
+  html.app-caisse-active .search-select__list--pos-product .search-select__option,
+  html.app-caisse-active .search-select__list--pos-client .search-select__option {
+    padding: 0.75rem 0.85rem;
+    font-size: 0.95rem;
+    min-height: 48px;
+  }
+}
+
+@media (max-width: 400px) {
+  html.app-caisse-active .pos-pro--v3 .pos-pro__toolbar {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  html.app-caisse-active .pos-pro--v3 .pos-pro__add-btn {
+    grid-column: 1 / -1;
+    width: 100%;
+  }
+}

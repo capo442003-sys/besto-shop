@@ -1,0 +1,219 @@
+/* ============================================================
+   BMB — POS raffinement (base premium, ajustements légers)
+   Pas de refonte : harmonie, lisibilité, équilibre des colonnes
+   ============================================================ */
+
+/* ——— Zone saisie unifiée (client + article) ——— */
+.pos-pro--v3 .pos-pro__entry-block {
+  flex-shrink: 0;
+  margin: 0 1.25rem;
+  background: var(--surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-xs);
+  overflow: visible;
+}
+
+.pos-pro--v3 .pos-pro__entry-block .pos-pro__client-row {
+  padding: 0.85rem 1rem;
+  margin: 0;
+  border-bottom: 1px solid var(--border-subtle);
+  background: transparent;
+}
+
+.pos-pro--v3 .pos-pro__entry-block .pos-pro__toolbar {
+  padding: 0.85rem 1rem;
+  margin: 0;
+  border-bottom: none;
+  box-shadow: none;
+  background: transparent;
+}
+
+/* ——— Recherche article : plein espace, champ large et lisible ——— */
+.pos-pro--v3 .pos-pro__toolbar-product {
+  width: 100%;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.pos-pro--v3 .pos-pro__toolbar-product .search-select,
+.pos-pro--v3 .pos-pro__toolbar-product .search-select-wrap {
+  width: 100%;
+  display: block;
+}
+
+.pos-pro--v3 .pos-pro__toolbar-product .search-select--pos-product .search-select__input {
+  width: 100%;
+  min-width: 100%;
+  height: 64px;
+  min-height: 64px;
+  font-size: 1.2rem;
+  padding: 0.75rem 1rem;
+  box-sizing: border-box;
+}
+
+.pos-pro--v3 .pos-pro__toolbar-line {
+  grid-template-columns: minmax(100px, 120px) minmax(240px, 1fr) auto;
+  gap: 0.75rem;
+}
+
+.pos-pro--v3 .pos-pro__field--price {
+  min-width: 240px;
+}
+
+.pos-pro--v3 .pos-pro__field input,
+.pos-pro--v3 .pos-pro__field--price input,
+.pos-pro--v3 .pos-pro__field--qty input {
+  height: 64px;
+  min-height: 64px;
+  font-size: 1.2rem;
+  padding: 0.75rem 1rem;
+}
+
+.pos-pro--v3 .pos-pro__add-btn {
+  height: 64px;
+  min-height: 64px;
+  padding: 0 0.7rem;
+  font-size: 0.85rem;
+  min-width: 0;
+  max-width: 5.5rem;
+}
+
+.pos-pro--v3 .pos-pro__client-row .search-select--pos-client .search-select__input {
+  height: 56px;
+  font-size: 1.1rem;
+  padding: 0.6rem 0.85rem;
+}
+
+.pos-pro--v3 .search-select__list--pos-product.search-select__list--fixed,
+.pos-pro--v3 .search-select__list--pos-client.search-select__list--fixed {
+  z-index: 10100;
+  max-height: min(440px, 55vh) !important;
+  min-width: min(100%, 560px);
+}
+
+.pos-pro--v3 .search-select__list--pos-product .search-select__option,
+.pos-pro--v3 .search-select__list--pos-client .search-select__option {
+  padding: 0.75rem 0.95rem;
+  font-size: 1rem;
+  line-height: 1.4;
+}
+
+.pos-pro--v3 .search-select__list--pos-product .search-select__empty,
+.pos-pro--v3 .search-select__list--pos-product .search-select__hint,
+.pos-pro--v3 .search-select__list--pos-client .search-select__empty,
+.pos-pro--v3 .search-select__list--pos-client .search-select__hint {
+  font-size: 0.88rem;
+  padding: 0.5rem 0.9rem;
+}
+
+/* ——— En-tête colonne saisie ——— */
+.pos-pro--v3 .pos-pro__panel-head {
+  padding: 0.75rem 1.25rem 0.5rem;
+  background: var(--bg);
+  border-bottom: none;
+}
+
+.pos-pro--v3 .pos-pro__panel-head h2 {
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.pos-pro--v3 .pos-pro__panel-hint {
+  font-size: 0.8125rem;
+}
+
+/* ——— Stock / alertes ——— */
+.pos-pro--v3 .pos-pro__stock-line {
+  margin: 0 1.25rem;
+  padding: 0.55rem 0.85rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-subtle);
+  border-bottom: 1px solid var(--border-subtle);
+  background: var(--primary-soft);
+  color: var(--primary);
+  font-size: 0.8125rem;
+  font-weight: 500;
+}
+
+.pos-pro--v3 .pos-pro__warn {
+  margin: 0 1.25rem;
+  border-radius: var(--radius-sm);
+}
+
+/* ——— Panier : lignes plus lisibles ——— */
+.pos-pro--v3 .pos-cart-line {
+  padding: 0.5rem 0.75rem;
+  min-height: 2.75rem;
+}
+
+.pos-pro--v3 .pos-cart-line__name {
+  font-size: 0.8125rem;
+}
+
+.pos-pro--v3 .pos-cart-line__meta {
+  font-size: 0.75rem;
+}
+
+.pos-pro--v3 .pos-cart-line__total {
+  font-size: 0.8125rem;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ——— Encaissement : total équilibré ——— */
+.pos-pro--v3 .pos-pro__checkout--pay .pos-pro__cart-total {
+  background: var(--bg-subtle);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius);
+  padding: 1rem 1.1rem;
+}
+
+.pos-pro--v3 .pos-pro__checkout--pay .pos-pro__total-amt {
+  font-size: 1.75rem;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+
+.pos-pro--v3 .pos-pro__pay-panel-foot .pos-pro__validate-btn {
+  min-height: 2.75rem;
+  font-size: 0.875rem;
+  letter-spacing: 0.02em;
+  border-radius: var(--radius-sm);
+}
+
+/* ——— Colonnes : proportions stables desktop ——— */
+@media (min-width: 1100px) {
+  .pos-pro--v3 .pos-pro__workspace {
+    grid-template-columns: minmax(0, 1.05fr) minmax(280px, 33%) minmax(250px, 25%);
+  }
+
+  .pos-pro--v3 .pos-pro__cart-panel,
+  .pos-pro--v3 .pos-pro__pay-panel {
+    border-left: 1px solid var(--border-subtle);
+  }
+
+  .pos-pro--v3 .pos-pro__pay-panel-head,
+  .pos-pro--v3 .pos-pro__cart-head {
+    min-height: 2.75rem;
+  }
+}
+
+/* ——— Hub caisse (simple) ——— */
+.bmb-hub__header h1 {
+  letter-spacing: -0.02em;
+}
+
+.bmb-hub-card {
+  border-color: var(--border-subtle);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.bmb-hub-card:hover {
+  border-color: color-mix(in srgb, var(--primary) 30%, var(--border));
+}
+
+.bmb-hub-card h2 {
+  font-weight: 700;
+}

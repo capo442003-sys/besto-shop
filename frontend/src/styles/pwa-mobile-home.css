@@ -1,0 +1,380 @@
+/* ============================================================
+   BMB Gestion — PWA mobile installée (maquette accueil vendeur)
+   html.app-pwa-mobile = standalone sur téléphone / tablette
+   ============================================================ */
+
+.bmb-role-home__title--pwa,
+.bmb-role-home__summary-amount--pwa,
+.bmb-role-home__summary-head,
+.bmb-role-home__summary-trend {
+  display: none;
+}
+
+html.app-pwa-mobile .bmb-role-home__title--pwa {
+  display: block;
+}
+
+html.app-pwa-mobile .bmb-role-home__summary-head {
+  display: flex;
+}
+
+html.app-pwa-mobile .bmb-role-home__summary-amount--pwa {
+  display: block;
+}
+
+html.app-pwa-mobile .bmb-role-home__summary-trend {
+  display: block;
+}
+
+html.app-pwa-mobile .mobile-bottom-nav {
+  display: flex !important;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 190;
+}
+
+html.app-standalone.app-desktop-pc .mobile-bottom-nav {
+  display: none !important;
+}
+
+/* ——— Header vert BMB GESTION ——— */
+html.app-pwa-mobile .bmb-v2 .bmb-topbar,
+html.app-pwa-mobile .topbar.bmb-topbar {
+  display: flex !important;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  min-height: 56px;
+  padding: max(0.65rem, env(safe-area-inset-top, 0px)) 1rem 0.65rem !important;
+  padding-left: 1rem !important;
+  background: linear-gradient(135deg, #004d2c 0%, #145a2e 50%, #1b7a3d 100%) !important;
+  border-bottom: none !important;
+  box-shadow: 0 4px 16px rgba(0, 77, 44, 0.28);
+  color: #fff;
+  flex-wrap: nowrap;
+  position: relative;
+  z-index: 100;
+}
+
+html.app-pwa-mobile .bmb-topbar__pwa-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  min-width: 0;
+}
+
+html.app-pwa-mobile .bmb-topbar__pwa-logo .brand-logo__img {
+  width: 34px !important;
+  height: 34px !important;
+  border-radius: 50%;
+  background: #fff;
+  padding: 2px;
+}
+
+html.app-pwa-mobile .bmb-topbar__pwa-title {
+  font-size: 0.92rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: #fff;
+  white-space: nowrap;
+}
+
+html.app-pwa-mobile .bmb-topbar__pwa-title strong {
+  font-weight: 800;
+}
+
+html.app-pwa-mobile .bmb-topbar__pwa-role {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  flex-shrink: 0;
+  padding: 0.4rem 0.75rem;
+  border: none;
+  border-radius: 999px;
+  background: #f5e6c8;
+  color: #3d2e14;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+}
+
+html.app-pwa-mobile .bmb-topbar__pwa-role svg {
+  flex-shrink: 0;
+  stroke: #3d2e14;
+}
+
+/* ——— Page accueil blanche (home uniquement) ——— */
+html.app-pwa-mobile .bmb-page:has(.bmb-role-home) {
+  padding: 0 0 calc(4.5rem + env(safe-area-inset-bottom, 0px)) !important;
+  padding-top: 0 !important;
+  background: #fff !important;
+}
+
+html.app-pwa-mobile .bmb-role-home {
+  max-width: none;
+  margin: 0;
+  padding: 0;
+}
+
+html.app-pwa-mobile .bmb-role-home__hero {
+  display: none;
+}
+
+html.app-pwa-mobile .bmb-role-home__body {
+  padding: 1.25rem 1rem 1.5rem;
+}
+
+html.app-pwa-mobile .bmb-role-home__features {
+  display: none;
+}
+
+/* Salutation */
+html.app-pwa-mobile .bmb-role-home__title {
+  font-size: 1.65rem;
+  font-weight: 700;
+  color: #1a2e24;
+  margin: 0 0 1.25rem;
+  text-align: left;
+}
+
+html.app-pwa-mobile .bmb-role-home__name {
+  color: #1b7a3d;
+  font-weight: 800;
+}
+
+html.app-pwa-mobile .bmb-role-home__title-accent {
+  display: none;
+}
+
+/* Cartes actions */
+html.app-pwa-mobile .bmb-role-home__actions {
+  gap: 0.75rem;
+  margin-bottom: 1.15rem;
+}
+
+html.app-pwa-mobile .bmb-role-home__btn {
+  min-height: 76px;
+  border-radius: 16px;
+  padding: 1rem 1.15rem;
+  box-shadow: 0 6px 18px rgba(15, 31, 23, 0.14);
+  color: #fff;
+}
+
+html.app-pwa-mobile .bmb-role-home__btn--primary {
+  background: linear-gradient(135deg, #004d2c 0%, #1b7a3d 100%);
+}
+
+html.app-pwa-mobile .bmb-role-home__btn--blue {
+  background: linear-gradient(135deg, #004a99 0%, #2563eb 100%);
+}
+
+html.app-pwa-mobile .bmb-role-home__btn--gray {
+  background: linear-gradient(135deg, #333f48 0%, #4a5568 100%);
+}
+
+html.app-pwa-mobile .bmb-role-home__btn-icon {
+  width: 44px;
+  height: 44px;
+  background: rgba(255, 255, 255, 0.18);
+}
+
+html.app-pwa-mobile .bmb-role-home__btn-text strong {
+  font-size: 1.02rem;
+}
+
+html.app-pwa-mobile .bmb-role-home__btn-chevron {
+  opacity: 0.9;
+}
+
+/* Résumé ventes (carte verte) */
+html.app-pwa-mobile .bmb-role-home__summary {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.65rem;
+  padding: 1.25rem 1.15rem;
+  min-height: 140px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, #004d2c 0%, #145a2e 55%, #1b7a3d 100%);
+  border: none;
+  color: #fff;
+  box-shadow: 0 10px 32px rgba(0, 77, 44, 0.28);
+  position: relative;
+  overflow: hidden;
+}
+
+html.app-pwa-mobile .bmb-role-home__summary::after {
+  content: '';
+  position: absolute;
+  right: -8px;
+  bottom: -20px;
+  width: 110px;
+  height: 110px;
+  opacity: 0.12;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='1.5'%3E%3Ccircle cx='9' cy='21' r='1'/%3E%3Ccircle cx='20' cy='21' r='1'/%3E%3Cpath d='M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6'/%3E%3C/svg%3E") center/contain no-repeat;
+  pointer-events: none;
+}
+
+html.app-pwa-mobile .bmb-role-home__summary-head {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  position: relative;
+  z-index: 1;
+}
+
+html.app-pwa-mobile .bmb-role-home__summary-icon {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  background: #f5a623;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+html.app-pwa-mobile .bmb-role-home__summary-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+html.app-pwa-mobile .bmb-role-home__summary-meta strong {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+html.app-pwa-mobile .bmb-role-home__summary-meta span {
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.75);
+  font-weight: 500;
+}
+
+html.app-pwa-mobile .bmb-role-home__summary-amount {
+  font-size: 1.85rem !important;
+  font-weight: 800 !important;
+  color: #fff !important;
+  position: relative;
+  z-index: 1;
+  letter-spacing: -0.02em;
+}
+
+html.app-pwa-mobile .bmb-role-home__summary-trend {
+  margin: 0;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #86efac;
+  position: relative;
+  z-index: 1;
+}
+
+html.app-pwa-mobile .bmb-role-home__summary-trend.is-down {
+  color: #fca5a5;
+}
+
+html.app-pwa-mobile .bmb-role-home__summary-text {
+  display: none;
+}
+
+html.app-pwa-mobile .bmb-role-home__analytics-link {
+  text-align: center;
+  margin-top: 1rem;
+  color: #1b7a3d;
+  font-weight: 600;
+}
+
+/* Bottom nav 4 icônes */
+html.app-pwa-mobile .mobile-bottom-nav {
+  background: #fff;
+  border-top: 1px solid #e8ece9;
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.06);
+  padding-top: 0.2rem;
+  z-index: 190;
+}
+
+html.app-pwa-mobile .mobile-bottom-nav__item {
+  min-height: 3.65rem;
+  font-size: 0.62rem;
+  font-weight: 700;
+  color: #94a89e;
+  gap: 0.2rem;
+}
+
+html.app-pwa-mobile .mobile-bottom-nav__item svg {
+  width: 1.35rem;
+  height: 1.35rem;
+}
+
+html.app-pwa-mobile .mobile-bottom-nav__item--active {
+  color: #1b7a3d;
+  background: transparent;
+}
+
+html.app-pwa-mobile .mobile-bottom-nav__item--active svg {
+  color: #1b7a3d;
+  stroke: #1b7a3d;
+}
+
+/* Masquer sidebar toggle fantôme */
+html.app-pwa-mobile .bmb-topbar__menu-btn,
+html.app-pwa-mobile .bmb-topbar__left,
+html.app-pwa-mobile .bmb-topbar__right {
+  display: none;
+}
+
+html.app-pwa-mobile .sidebar-toggle {
+  display: none !important;
+}
+
+html.app-pwa-mobile .bmb-main {
+  margin-left: 0 !important;
+  width: 100% !important;
+}
+
+html.app-pwa-mobile .sidebar {
+  z-index: 250;
+}
+
+/* Caisse plein écran PWA */
+html.app-pwa-mobile .app-layout--fullscreen .pos-pro--v3 {
+  min-height: 100dvh;
+}
+
+html.app-pwa-mobile .app-layout--fullscreen .mobile-bottom-nav {
+  display: none !important;
+}
+
+/* Fallback iOS : display-mode standalone si classes JS en retard */
+@media (display-mode: standalone) and (max-width: 960px) {
+  html:not(.app-desktop-pc) .mobile-bottom-nav {
+    display: flex !important;
+  }
+
+  html:not(.app-desktop-pc) .bmb-v2 .bmb-topbar,
+  html:not(.app-desktop-pc) .topbar.bmb-topbar {
+    display: flex !important;
+    align-items: center;
+    justify-content: space-between;
+    background: linear-gradient(135deg, #004d2c 0%, #145a2e 50%, #1b7a3d 100%) !important;
+    border-bottom: none !important;
+    color: #fff;
+  }
+
+  html:not(.app-desktop-pc) .bmb-role-home__hero {
+    display: none !important;
+  }
+
+  html:not(.app-desktop-pc) .bmb-role-home__title--pwa {
+    display: block;
+  }
+
+  html:not(.app-desktop-pc) .bmb-page:has(.bmb-role-home) {
+    background: #fff !important;
+    padding-top: 0 !important;
+  }
+}

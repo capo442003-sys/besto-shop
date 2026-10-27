@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#1a3d28" />
+    <title>BMB — Hors ligne</title>
+    <style>
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      body {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: Inter, system-ui, sans-serif;
+        background: #111113;
+        color: #e8e8ea;
+        padding: 1.5rem;
+      }
+      .card {
+        max-width: 24rem;
+        text-align: center;
+        background: #1a1a1d;
+        border: 1px solid #2a2a2e;
+        border-radius: 1rem;
+        padding: 2rem 1.5rem;
+      }
+      .card img { width: 4rem; height: 4rem; margin-bottom: 1rem; }
+      h1 { font-size: 1.25rem; margin-bottom: 0.5rem; }
+      p { color: #9a9aa3; font-size: 0.9rem; line-height: 1.5; margin-bottom: 1.25rem; }
+      button {
+        background: #1a3d28;
+        color: #fff;
+        border: none;
+        border-radius: 0.5rem;
+        padding: 0.65rem 1.25rem;
+        font-size: 0.9rem;
+        cursor: pointer;
+      }
+      button:hover { background: #0d9488; }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <img src="/apple-touch-icon.png" alt="BMB" />
+      <h1>Vous êtes hors ligne</h1>
+      <p>La connexion au serveur BMB est indisponible. Vérifiez votre réseau puis réessayez.</p>
+      <button type="button" onclick="location.reload()">Réessayer</button>
+    </div>
+  </body>
+</html>

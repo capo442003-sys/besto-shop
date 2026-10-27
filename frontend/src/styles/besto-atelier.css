@@ -1,0 +1,464 @@
+/* ============================================================
+   BESTO SHOP — confort & équilibre (refonte visuelle réelle)
+   Neutralise le bruit BMB · respiration · logo forêt/or
+   ============================================================ */
+
+html, body, #root {
+  font-family: var(--font) !important;
+  background: var(--bg) !important;
+  color: var(--text) !important;
+  font-size: var(--text-base) !important;
+  line-height: var(--leading-normal) !important;
+  letter-spacing: -0.01em;
+}
+
+/* ——— Neutraliser effets lourds ——— */
+.bmb-sidebar,
+.sidebar,
+.bmb-main,
+.main-content,
+.card,
+.panel,
+.bmb-dash-erp-panel,
+.bmb-filters-panel {
+  background-image: none !important;
+}
+
+.card,
+.panel,
+.bmb-dash-erp-panel,
+.bmb-dash-mgr-section,
+.bmb-filters-panel,
+.module-card,
+.bmb-onboarding-card {
+  box-shadow: none !important;
+  border: 1px solid var(--border) !important;
+  border-radius: var(--radius-lg) !important;
+  background: var(--surface) !important;
+}
+
+/* ——— Sidebar calme ——— */
+.bmb-sidebar,
+.sidebar {
+  width: var(--sidebar-width) !important;
+  background: #07110e !important;
+  border-right: 1px solid rgba(255, 255, 255, 0.06) !important;
+  box-shadow: none !important;
+}
+
+.bmb-sidebar__brand,
+.sidebar-brand {
+  padding: 1.35rem 1.1rem 1.1rem !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
+}
+
+.bmb-sidebar__brand .brand-logo__img,
+.sidebar-brand .brand-logo__img {
+  width: 2.75rem !important;
+  height: 2.75rem !important;
+  border-radius: 12px !important;
+  background: #000 !important;
+  object-fit: contain !important;
+}
+
+.bmb-sidebar__store-card {
+  margin: 0.85rem 0.9rem 1rem !important;
+  padding: 0.85rem 0.9rem !important;
+  border-radius: var(--radius) !important;
+  background: rgba(255, 255, 255, 0.04) !important;
+  border: 1px solid rgba(198, 160, 53, 0.2) !important;
+}
+
+.bmb-sidebar__store-card strong {
+  color: #f5f5f4 !important;
+  font-size: 0.9rem !important;
+  font-weight: 650 !important;
+}
+
+.bmb-sidebar__store-card span {
+  color: rgba(245, 245, 244, 0.45) !important;
+  font-size: 0.72rem !important;
+}
+
+.bmb-nav-item,
+.sidebar-nav a,
+.bmb-sidebar .nav-link {
+  margin: 0.15rem 0.55rem !important;
+  padding: 0.65rem 0.85rem !important;
+  border-radius: 10px !important;
+  font-size: 0.875rem !important;
+  font-weight: 500 !important;
+  color: rgba(255, 255, 255, 0.62) !important;
+  box-shadow: none !important;
+}
+
+.bmb-nav-item.is-active,
+.bmb-nav-item--active,
+.sidebar-nav a.active,
+.bmb-sidebar .nav-link.active {
+  background: rgba(198, 160, 53, 0.14) !important;
+  color: #fff !important;
+  box-shadow: inset 2.5px 0 0 #c6a035 !important;
+  border-radius: 10px !important;
+}
+
+.bmb-nav-item:hover:not(.is-active):not(.bmb-nav-item--active),
+.sidebar-nav a:hover:not(.active) {
+  background: rgba(255, 255, 255, 0.05) !important;
+  color: #fff !important;
+}
+
+.sidebar-footer {
+  padding: 0.85rem 0.9rem 1.1rem !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.06) !important;
+}
+
+.sidebar-logout-btn {
+  border-radius: 10px !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  background: transparent !important;
+  padding: 0.65rem 0.85rem !important;
+}
+
+/* ——— Topbar aérée ——— */
+.bmb-topbar,
+.topbar {
+  min-height: var(--topbar-height) !important;
+  padding: 0 1.5rem !important;
+  background: rgba(255, 252, 248, 0.88) !important;
+  backdrop-filter: blur(16px) !important;
+  border-bottom: 1px solid var(--border) !important;
+  box-shadow: none !important;
+}
+
+.bmb-topbar__role-pill,
+.bmb-topbar__pv-badge {
+  border-radius: 8px !important;
+  padding: 0.3rem 0.55rem !important;
+  background: var(--surface-inset) !important;
+  border: 1px solid var(--border) !important;
+  color: var(--text-muted) !important;
+  font-size: 0.68rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.bmb-topbar__avatar {
+  background: #0a3329 !important;
+  border-radius: 10px !important;
+  box-shadow: 0 0 0 2px rgba(198, 160, 53, 0.35) !important;
+}
+
+.topbar-search {
+  border-radius: 10px !important;
+  border: 1px solid var(--border) !important;
+  background: var(--surface-alt) !important;
+  min-height: 2.35rem !important;
+  padding: 0 0.85rem !important;
+}
+
+/* ——— Zone page : respiration ——— */
+.bmb-main,
+.main-content {
+  background: var(--bg) !important;
+}
+
+.bmb-page,
+.page {
+  padding: var(--page-padding-y) var(--page-padding-x) !important;
+}
+
+.bmb-page__inner {
+  max-width: var(--content-max) !important;
+  margin: 0 auto !important;
+  display: flex;
+  flex-direction: column;
+  gap: var(--section-gap) !important;
+}
+
+.page-header,
+.module-shell__header,
+.table-main-toolbar {
+  margin-bottom: 0 !important;
+  gap: 1rem !important;
+}
+
+.page-header h1,
+.module-shell__title,
+.table-main-toolbar h3 {
+  font-size: 1.4rem !important;
+  font-weight: 650 !important;
+  letter-spacing: var(--tracking-tight) !important;
+  color: var(--text) !important;
+  margin: 0 !important;
+  line-height: 1.25 !important;
+}
+
+.page-header p,
+.module-shell__subtitle,
+.table-main-toolbar__hint,
+.bmb-page-hint {
+  color: var(--text-subtle) !important;
+  font-size: 0.9rem !important;
+  line-height: 1.5 !important;
+  margin: 0.35rem 0 0 !important;
+  max-width: 42rem;
+}
+
+/* ——— Onglets équilibrés ——— */
+.module-tabs,
+.bmb-module-tabs,
+.tabs {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 0.35rem !important;
+  padding: 0.35rem !important;
+  margin: 0 0 0.25rem !important;
+  background: var(--surface) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: var(--radius) !important;
+  box-shadow: none !important;
+}
+
+.module-tab,
+.bmb-module-tabs a,
+.tabs a,
+.tabs button {
+  border-radius: 10px !important;
+  padding: 0.55rem 1rem !important;
+  font-size: 0.8125rem !important;
+  font-weight: 600 !important;
+  color: var(--text-muted) !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.module-tab--active,
+.module-tab.active,
+.bmb-module-tabs a.active,
+.tabs a.active,
+.tabs button.active {
+  background: #0a3329 !important;
+  color: #fff !important;
+  box-shadow: none !important;
+}
+
+/* ——— Filtres ——— */
+.bmb-filters-panel {
+  padding: 1.1rem 1.2rem !important;
+  gap: 0.85rem !important;
+  margin-bottom: 0.25rem !important;
+}
+
+.bmb-filters-panel__item label,
+.form-group label {
+  font-size: 0.68rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.07em !important;
+  text-transform: uppercase !important;
+  color: var(--text-subtle) !important;
+  margin-bottom: 0.4rem !important;
+}
+
+input:not([type="checkbox"]):not([type="radio"]):not([type="file"]),
+select,
+textarea,
+.form-control {
+  min-height: 2.65rem !important;
+  border-radius: 10px !important;
+  border: 1px solid var(--border) !important;
+  background: #fff !important;
+  padding: 0.55rem 0.85rem !important;
+  font-size: 0.9rem !important;
+  box-shadow: none !important;
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: #c6a035 !important;
+  box-shadow: var(--focus-ring) !important;
+  outline: none !important;
+}
+
+/* ——— Boutons ——— */
+.btn,
+button.btn {
+  border-radius: 10px !important;
+  font-weight: 600 !important;
+  min-height: 2.5rem !important;
+  padding: 0.5rem 1.05rem !important;
+  box-shadow: none !important;
+}
+
+.btn-primary,
+button.btn-primary {
+  background: #0a3329 !important;
+  border-color: #0a3329 !important;
+  color: #fff !important;
+}
+
+.btn-primary:hover {
+  background: #0e4336 !important;
+  border-color: #0e4336 !important;
+}
+
+.btn-secondary,
+.btn-outline {
+  background: #fff !important;
+  border: 1px solid var(--border) !important;
+  color: var(--text) !important;
+}
+
+/* ——— Tables lisibles ——— */
+.bmb-data-table-wrap,
+.table-scroll {
+  border: 1px solid var(--border) !important;
+  border-radius: var(--radius-lg) !important;
+  background: var(--surface) !important;
+  overflow: hidden !important;
+}
+
+.bmb-data-table,
+.table-full {
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
+}
+
+.bmb-data-table th,
+table thead th {
+  background: #f7f5f1 !important;
+  color: var(--text-subtle) !important;
+  font-size: 0.68rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.06em !important;
+  text-transform: uppercase !important;
+  padding: 0.85rem 1rem !important;
+  border: none !important;
+  border-bottom: 1px solid var(--border) !important;
+  box-shadow: none !important;
+}
+
+.bmb-data-table td,
+table tbody td {
+  padding: 0.9rem 1rem !important;
+  border-color: var(--border-subtle) !important;
+  font-size: 0.9rem !important;
+  color: var(--text) !important;
+  vertical-align: middle !important;
+}
+
+.bmb-data-table tbody tr:nth-child(even) td {
+  background: #faf9f6 !important;
+}
+
+.bmb-data-table tbody tr:hover td {
+  background: rgba(10, 51, 41, 0.04) !important;
+}
+
+.bmb-data-table-total-row td {
+  background: rgba(198, 160, 53, 0.08) !important;
+  font-weight: 700 !important;
+  border-top: 1px solid var(--border) !important;
+}
+
+/* ——— Hero / dashboard ——— */
+.bmb-role-home__hero--solid,
+.mgr-cockpit__header {
+  background: linear-gradient(145deg, #051c17 0%, #0a3329 55%, #0e4336 100%) !important;
+  border-radius: var(--radius-xl) !important;
+  border: 1px solid rgba(198, 160, 53, 0.22) !important;
+  box-shadow: none !important;
+  padding: 1.5rem 1.6rem !important;
+}
+
+.bmb-role-home__title,
+.mgr-cockpit__greeting {
+  font-size: clamp(1.35rem, 2vw, 1.75rem) !important;
+  font-weight: 650 !important;
+  letter-spacing: -0.03em !important;
+}
+
+.bmb-role-home__badge {
+  background: #c6a035 !important;
+  color: #07110e !important;
+  border-radius: 8px !important;
+  font-size: 0.65rem !important;
+  font-weight: 800 !important;
+}
+
+/* KPI cards */
+.bmb-dash-erp-panel,
+.mgr-cockpit .card,
+[class*="kpi"],
+[class*="stat-card"] {
+  border-radius: var(--radius-lg) !important;
+}
+
+/* ——— Alerts douces ——— */
+.alert {
+  border-radius: 12px !important;
+  border-width: 1px !important;
+}
+
+/* ——— Caisse : confort couleur (structure intacte) ——— */
+.pos-page,
+.vente-pos {
+  --primary: #0a3329;
+  --accent: #c6a035;
+}
+
+.pos-page .btn-primary,
+.vente-pos .btn-primary {
+  background: #0a3329 !important;
+  border-color: #0a3329 !important;
+}
+
+.vente-pos-setup--premium {
+  border-radius: var(--radius-xl) !important;
+  padding: 1.75rem !important;
+  max-width: 28rem;
+  margin: 0 auto;
+}
+
+.vente-pos-setup__logo {
+  width: 4.5rem !important;
+  height: 4.5rem !important;
+  border-radius: 14px !important;
+  background: #000 !important;
+  object-fit: contain !important;
+  margin-bottom: 1rem !important;
+}
+
+/* ——— Print ——— */
+.bmb-inv,
+.bmb-print-doc--invoice {
+  --inv-primary: #0a3329 !important;
+  --inv-primary-dark: #051c17 !important;
+  --inv-accent: #c6a035 !important;
+  --inv-head-bg: #07110e !important;
+}
+
+/* ——— Brand ——— */
+.brand-logo--default .brand-logo__img,
+.brand-logo__img--round {
+  background: #000 !important;
+  border-radius: 12px !important;
+}
+
+.bmb-nav-section__title {
+  margin: 0.85rem 0.9rem 0.35rem !important;
+  padding: 0 0.35rem !important;
+  font-size: 0.65rem !important;
+  font-weight: 750 !important;
+  letter-spacing: 0.1em !important;
+  text-transform: uppercase !important;
+  color: rgba(198, 160, 53, 0.72) !important;
+}
+
+@media (max-width: 1024px) {
+  .bmb-page,
+  .page {
+    padding: 1rem 0.9rem 1.25rem !important;
+  }
+}

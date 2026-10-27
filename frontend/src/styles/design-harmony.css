@@ -1,0 +1,393 @@
+/* ============================================================
+   BMB — Design Harmony (couche finale d’équilibre)
+   Objectif : plus d’air, moins de bruit, hiérarchie claire
+   ============================================================ */
+
+:root {
+  /* Réaffirme les tokens (gagne sur elite / brand) */
+  --radius-sm: 8px;
+  --radius: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --sidebar-width: 260px;
+  --topbar-height: 3.25rem;
+  --page-padding-x: 1.35rem;
+  --page-padding-y: 1.15rem;
+  --font: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --shadow-card: 0 1px 2px rgba(15, 37, 24, 0.04), 0 4px 16px rgba(15, 37, 24, 0.05);
+}
+
+/* ——— Page : rythme aéré, fond discret ——— */
+html:not(.app-caisse-active) .bmb-v2 .bmb-page,
+html:not(.app-caisse-active) .bmb-v2 .page.bmb-page {
+  padding: var(--page-padding-y) var(--page-padding-x) var(--space-8) !important;
+  background:
+    radial-gradient(ellipse 70% 45% at 100% -5%, rgba(27, 122, 61, 0.055) 0%, transparent 55%),
+    radial-gradient(ellipse 50% 35% at 0% 100%, rgba(245, 166, 35, 0.03) 0%, transparent 50%),
+    var(--bg) !important;
+}
+
+html:not(.app-caisse-active) .bmb-v2 .bmb-page:has(.module-shell) {
+  padding-top: var(--space-4) !important;
+}
+
+html:not(.app-caisse-active) .bmb-v2 .bmb-page:has(.bmb-dash-erp) {
+  background:
+    radial-gradient(ellipse 75% 40% at 50% 0%, rgba(27, 122, 61, 0.06) 0%, transparent 55%),
+    linear-gradient(180deg, #eef3f0 0%, var(--bg) 120px, var(--bg) 100%) !important;
+}
+
+body {
+  font-family: var(--font);
+  color: var(--text);
+  letter-spacing: -0.011em;
+}
+
+/* ——— Shell module ——— */
+.bmb-v2 .module-shell {
+  gap: var(--section-gap) !important;
+  max-width: var(--content-max);
+}
+
+.bmb-v2 .module-shell__header.bmb-page-head,
+.bmb-v2 .bmb-page-head {
+  margin-bottom: var(--space-3) !important;
+  padding-bottom: var(--space-3) !important;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.bmb-v2 .module-shell__title,
+.bmb-v2 .bmb-page-head__title {
+  font-size: var(--text-2xl) !important;
+  font-weight: var(--font-extrabold) !important;
+  letter-spacing: var(--tracking-tight);
+  line-height: var(--leading-tight);
+  color: var(--text);
+}
+
+.bmb-v2 .module-shell__subtitle,
+.bmb-v2 .bmb-page-head__subtitle,
+.bmb-v2 .bmb-page-hint {
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  line-height: var(--leading-normal);
+  font-weight: var(--font-medium);
+}
+
+/* ——— Onglets modules : sobres ——— */
+.bmb-v2 .module-tabs {
+  gap: var(--space-1) !important;
+  margin-bottom: var(--space-3) !important;
+  padding: 0.3rem !important;
+  background: var(--surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-xs);
+}
+
+.bmb-v2 .module-tab {
+  border-radius: var(--radius-sm) !important;
+  padding: 0.45rem 0.9rem !important;
+  font-size: var(--text-sm) !important;
+  font-weight: var(--font-semibold);
+}
+
+.bmb-v2 .module-tab--active,
+.bmb-v2 .tabs .tab.active {
+  background: var(--primary) !important;
+  color: #fff !important;
+  box-shadow: 0 2px 8px rgba(27, 122, 61, 0.22) !important;
+}
+
+.bmb-v2 .tabs.inventaire-subtabs {
+  gap: var(--space-1);
+  margin-bottom: var(--space-3);
+  padding: 0.3rem;
+  background: var(--surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius);
+}
+
+.bmb-v2 .tabs .tab {
+  border-radius: var(--radius-sm);
+  font-weight: var(--font-semibold);
+}
+
+/* ——— Cartes ——— */
+.bmb-v2 .card,
+.bmb-v2 .bmb-dash-card,
+.bmb-v2 .bmb-dash-erp-panel,
+.bmb-v2 .bmb-surface-card,
+.bmb-v2 .bmb-kpi {
+  border-radius: var(--radius-lg) !important;
+  border: 1px solid var(--border-subtle) !important;
+  box-shadow: var(--shadow-card) !important;
+  background: var(--surface);
+}
+
+.bmb-v2 .card:hover,
+.bmb-v2 .bmb-kpi:hover,
+.bmb-v2 .bmb-stat:hover {
+  box-shadow: var(--shadow-sm) !important;
+  transform: none !important;
+}
+
+.bmb-v2 .card.table-main,
+.bmb-v2 .card.table-main.inventaire-ventes {
+  padding: var(--space-5) var(--space-5) !important;
+  gap: var(--space-4) !important;
+}
+
+.bmb-v2 .card.table-main > .table-main-toolbar {
+  padding: 0 0 var(--space-3) !important;
+  margin: 0 !important;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.bmb-v2 .table-main-toolbar h3,
+.bmb-v2 .card.table-main > .table-main-toolbar h3 {
+  font-size: var(--text-xl) !important;
+  font-weight: var(--font-bold) !important;
+  letter-spacing: var(--tracking-tight);
+  margin: 0 0 var(--space-1);
+  color: var(--text);
+}
+
+.bmb-v2 .table-main-toolbar .toolbar-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+}
+
+/* ——— Filtres ——— */
+.bmb-v2 .bmb-filters-panel,
+.bmb-v2 .inventaire-ventes-filters,
+.bmb-v2 .reglement-client-panel,
+.bmb-v2 .reglement-recus-filters,
+.bmb-v2 .reglement-ventes-filters {
+  gap: var(--space-3) 0.85rem !important;
+  padding: var(--space-4) !important;
+  background: var(--surface) !important;
+  border: 1px solid var(--border-subtle) !important;
+  border-radius: var(--radius) !important;
+  box-shadow: var(--shadow-xs) !important;
+}
+
+.bmb-v2 .bmb-filters-panel__item label,
+.bmb-v2 .form-group label {
+  font-size: var(--text-xs);
+  font-weight: var(--font-bold);
+  letter-spacing: 0.02em;
+  color: var(--text-muted);
+  margin-bottom: 0.3rem;
+}
+
+.bmb-v2 .filter-select,
+.bmb-v2 input[type="text"],
+.bmb-v2 input[type="search"],
+.bmb-v2 input[type="date"],
+.bmb-v2 input[type="number"],
+.bmb-v2 .form-group input,
+.bmb-v2 .form-group select {
+  border-radius: var(--radius-sm) !important;
+  border-color: var(--border) !important;
+  background: #fafcfb;
+  font-size: var(--text-sm);
+  transition: border-color var(--duration-fast), box-shadow var(--duration-fast);
+}
+
+.bmb-v2 .filter-select:focus,
+.bmb-v2 input:focus,
+.bmb-v2 .form-group input:focus,
+.bmb-v2 .form-group select:focus {
+  border-color: var(--primary) !important;
+  box-shadow: var(--focus-ring);
+  outline: none;
+  background: #fff;
+}
+
+/* ——— Boutons : net, moins “pill / glow” ——— */
+.bmb-v2 .btn {
+  border-radius: var(--radius-sm) !important;
+  font-weight: var(--font-semibold);
+  font-size: var(--text-sm);
+  letter-spacing: -0.01em;
+  transition:
+    background var(--duration-fast),
+    border-color var(--duration-fast),
+    box-shadow var(--duration-fast),
+    transform var(--duration-fast);
+}
+
+.bmb-v2 .btn-primary {
+  background: var(--primary) !important;
+  border: 1px solid var(--primary-dark) !important;
+  color: #fff !important;
+  box-shadow: 0 2px 8px rgba(27, 122, 61, 0.22) !important;
+}
+
+.bmb-v2 .btn-primary:hover:not(:disabled) {
+  background: var(--primary-mid) !important;
+  box-shadow: 0 4px 14px rgba(27, 122, 61, 0.28) !important;
+  transform: translateY(-1px);
+}
+
+.bmb-v2 .btn-secondary {
+  background: var(--surface) !important;
+  border: 1px solid var(--border) !important;
+  color: var(--text) !important;
+  box-shadow: none !important;
+}
+
+.bmb-v2 .btn-secondary:hover:not(:disabled) {
+  background: var(--bg-subtle) !important;
+  border-color: color-mix(in srgb, var(--primary) 35%, var(--border)) !important;
+  color: var(--primary) !important;
+}
+
+.bmb-v2 .btn-danger {
+  border-radius: var(--radius-sm) !important;
+}
+
+/* ——— KPI / stats ——— */
+.bmb-v2 .reglement-summary-row,
+.bmb-v2 .bmb-stat-row,
+.bmb-v2 .bmb-kpi-row {
+  gap: var(--space-3) !important;
+}
+
+.bmb-v2 .reglement-summary-item,
+.bmb-v2 .bmb-stat,
+.bmb-v2 .bmb-kpi {
+  padding: var(--space-4) !important;
+  border-radius: var(--radius) !important;
+  background: linear-gradient(180deg, #fff 0%, #f9fbfa 100%) !important;
+}
+
+.bmb-v2 .reglement-summary-label,
+.bmb-v2 .bmb-stat__label,
+.bmb-v2 .bmb-kpi__label {
+  font-size: var(--text-xs);
+  font-weight: var(--font-semibold);
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.bmb-v2 .reglement-summary-value,
+.bmb-v2 .bmb-stat__value,
+.bmb-v2 .bmb-kpi__value {
+  font-size: var(--text-xl) !important;
+  font-weight: var(--font-extrabold) !important;
+  letter-spacing: var(--tracking-tight);
+  color: var(--primary);
+}
+
+/* ——— Tableaux ——— */
+.bmb-v2 .bmb-data-table-wrap,
+.bmb-v2 .table-scroll {
+  border-radius: var(--radius) !important;
+  border-color: var(--border-subtle) !important;
+}
+
+.bmb-v2 .bmb-data-table thead th,
+.bmb-v2 .table-full thead th {
+  font-size: 0.6875rem !important;
+  font-weight: var(--font-bold) !important;
+  letter-spacing: 0.06em !important;
+  text-transform: uppercase;
+  color: var(--text-muted) !important;
+  background: #eef2f0 !important;
+  border-bottom: 1px solid var(--border) !important;
+  padding: 0.7rem 0.9rem !important;
+}
+
+.bmb-v2 .bmb-data-table tbody td,
+.bmb-v2 .table-full tbody td {
+  padding: 0.75rem 0.9rem !important;
+  font-size: var(--text-sm);
+  border-bottom: 1px solid var(--border-subtle) !important;
+}
+
+.bmb-v2 .bmb-data-table tbody tr:hover td {
+  background: color-mix(in srgb, var(--primary) 4%, #fff) !important;
+}
+
+.bmb-v2 .bmb-data-table-total-row td {
+  background: #ecfdf5 !important;
+  border-top: 2px solid var(--primary-mid) !important;
+}
+
+/* ——— Topbar : plus calme ——— */
+.bmb-v2 .bmb-topbar {
+  min-height: var(--topbar-height) !important;
+  padding: 0 var(--space-4) !important;
+  background: rgba(255, 255, 255, 0.9) !important;
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border-subtle) !important;
+  box-shadow: var(--shadow-xs) !important;
+}
+
+.bmb-v2 .bmb-topbar__role-pill {
+  border-radius: var(--radius-sm) !important;
+  padding: 0.25rem 0.65rem !important;
+  font-size: 0.7rem !important;
+}
+
+/* ——— Sidebar : densités équilibrées ——— */
+.bmb-v2 .sidebar {
+  width: var(--sidebar-width);
+  box-shadow: 4px 0 24px rgba(0, 0, 0, 0.12) !important;
+}
+
+.bmb-v2 .sidebar-brand {
+  padding: 1.25rem 1.1rem 1rem !important;
+}
+
+.bmb-v2 .bmb-nav-item {
+  border-radius: var(--radius-sm) !important;
+  padding: 0.6rem 0.8rem !important;
+  font-size: 0.9rem !important;
+}
+
+.bmb-v2 .bmb-nav-item:hover {
+  transform: none !important;
+}
+
+.bmb-v2 .bmb-nav-item--active {
+  background: rgba(46, 204, 113, 0.16) !important;
+  box-shadow: inset 3px 0 0 var(--accent) !important;
+}
+
+/* ——— Badges ——— */
+.bmb-v2 .badge {
+  border-radius: var(--radius-sm);
+  font-weight: var(--font-semibold);
+  font-size: 0.7rem;
+  letter-spacing: 0.02em;
+}
+
+/* ——— Empty / hints ——— */
+.bmb-v2 .bmb-empty-state,
+.bmb-v2 .table-empty {
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+}
+
+@media (max-width: 960px) {
+  html:not(.app-caisse-active) .bmb-v2 .bmb-page,
+  html:not(.app-caisse-active) .bmb-v2 .page.bmb-page {
+    padding: var(--space-3) var(--space-3) var(--space-8) !important;
+  }
+
+  .bmb-v2 .card.table-main,
+  .bmb-v2 .card.table-main.inventaire-ventes {
+    padding: var(--space-4) !important;
+  }
+
+  .bmb-v2 .module-shell__title,
+  .bmb-v2 .bmb-page-head__title {
+    font-size: var(--text-xl) !important;
+  }
+}

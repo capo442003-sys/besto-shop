@@ -1,0 +1,526 @@
+/* ============================================================
+   BMB Gestion — Mobile Premium 2026 (aligné maquettes générées)
+   Chargé en dernier — overrides mobile uniquement
+   ============================================================ */
+
+@media (max-width: 960px) {
+
+  /* ——— LOGIN : hero flyer + bottom sheet ——— */
+  .login-page {
+    background: #061a14;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+  .login-shell {
+    display: flex;
+    flex-direction: column;
+    min-height: 100dvh;
+    grid-template-columns: unset;
+    grid-template-rows: unset;
+  }
+
+  .login-visual {
+    position: relative;
+    flex: 0 0 min(46vh, 420px);
+    min-height: min(46vh, 420px);
+    order: 1;
+  }
+
+  .login-visual__flyer-img {
+    object-fit: cover;
+    object-position: center 20%;
+  }
+
+  .login-visual__overlay {
+    inset: 0;
+    bottom: auto;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 1.5rem 1.25rem 2.5rem;
+    background:
+      linear-gradient(180deg, rgba(6, 26, 20, 0.15) 0%, rgba(6, 26, 20, 0.55) 55%, rgba(6, 26, 20, 0.82) 100%);
+  }
+
+  .login-visual__emblem {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto;
+  }
+
+  .login-visual__tagline {
+    font-size: 0.82rem;
+    max-width: 28ch;
+    margin: 0 auto;
+  }
+
+  .login-visual__features {
+    display: none;
+  }
+
+  .login-visual__phone {
+    display: none;
+  }
+
+  .login-visual__dots {
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+    bottom: 1rem;
+  }
+
+  .login-form-side {
+    order: 2;
+    flex: 1;
+    margin-top: -1.75rem;
+    padding: 0 0 calc(1.25rem + env(safe-area-inset-bottom, 0px));
+    align-items: stretch;
+    background: transparent;
+    z-index: 5;
+    position: relative;
+  }
+
+  .login-form-wrap {
+    width: 100%;
+    max-width: none;
+  }
+
+  .login-form-card {
+    border-radius: 28px 28px 0 0;
+    padding: 1.75rem 1.35rem 1.5rem;
+    box-shadow: 0 -12px 48px rgba(0, 0, 0, 0.18);
+    border: none;
+    min-height: min(54vh, 520px);
+  }
+
+  .login-form-card__header {
+    text-align: center;
+  }
+
+  .login-form-card__brand-img {
+    display: none;
+  }
+
+  .login-form-card__header h1 {
+    font-size: 1.65rem;
+    font-weight: 800;
+    color: #0f1f17;
+  }
+
+  .login-field__wrap input {
+    min-height: 48px;
+    font-size: 16px;
+    border-radius: 14px;
+  }
+
+  .login-submit {
+    min-height: 52px;
+    border-radius: 999px;
+    font-size: 1rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #1b7a3d 0%, #228b47 100%);
+    box-shadow: 0 8px 24px rgba(27, 122, 61, 0.32);
+  }
+
+  /* ——— SPLASH mobile ——— */
+  .app-splash__flyer {
+    background-size: cover;
+    background-position: center 25%;
+  }
+
+  .app-splash__shade {
+    background:
+      radial-gradient(ellipse 90% 70% at 50% 35%, rgba(6, 26, 20, 0.2), rgba(6, 26, 20, 0.92) 80%);
+  }
+
+  .app-splash__title {
+    font-size: 1.75rem;
+  }
+
+  /* ——— ACCUEIL navigateur mobile (pas PWA installée) ——— */
+  html:not(.app-pwa-mobile) .bmb-v2 .bmb-page:has(.bmb-role-home) {
+    padding: 0 0 calc(4.75rem + env(safe-area-inset-bottom, 0px));
+    background: #f4f7f5;
+  }
+
+  html:not(.app-pwa-mobile) .bmb-role-home {
+    max-width: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  html:not(.app-pwa-mobile) .bmb-role-home__hero {
+    position: relative;
+    min-height: 220px;
+    overflow: hidden;
+    border-radius: 0 0 24px 24px;
+    box-shadow: 0 8px 32px rgba(15, 31, 23, 0.12);
+  }
+
+  .bmb-role-home__flyer-bg {
+    position: absolute;
+    inset: 0;
+    transform: none;
+    width: 100%;
+    height: 100%;
+    opacity: 1;
+    border-radius: 0;
+  }
+
+  .bmb-role-home__flyer-bg img {
+    object-fit: cover;
+    object-position: center 30%;
+  }
+
+  .bmb-role-home__hero-shade {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      180deg,
+      rgba(13, 40, 71, 0.35) 0%,
+      rgba(20, 90, 46, 0.75) 55%,
+      rgba(20, 90, 46, 0.92) 100%
+    );
+    pointer-events: none;
+  }
+
+  .bmb-role-home__hero-content {
+    position: relative;
+    z-index: 2;
+    padding: 1.25rem 1.25rem 1.75rem;
+    color: #fff;
+  }
+
+  .bmb-role-home__badge {
+    display: inline-flex !important;
+    background: rgba(255, 255, 255, 0.18);
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(8px);
+    margin-bottom: 0.75rem;
+  }
+
+  .bmb-role-home__title {
+    text-align: left;
+    color: #fff;
+    font-size: 1.85rem;
+    margin-bottom: 0.35rem;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+  }
+
+  .bmb-role-home__title-accent {
+    display: none;
+  }
+
+  .bmb-role-home__tagline {
+    color: rgba(255, 255, 255, 0.88) !important;
+    font-size: 0.82rem;
+    margin: 0;
+    text-align: left;
+  }
+
+  .bmb-role-home__body {
+    padding: 1.15rem 1rem 1.5rem;
+  }
+
+  .bmb-role-home__features {
+    display: none;
+  }
+
+  .bmb-role-home__actions {
+    gap: 0.75rem;
+    margin-bottom: 1.15rem;
+  }
+
+  .bmb-role-home__btn {
+    min-height: 76px;
+    border-radius: 18px;
+    box-shadow: 0 8px 24px rgba(15, 31, 23, 0.14);
+  }
+
+  .bmb-role-home__summary {
+    border-radius: 20px;
+    min-height: 110px;
+    background: linear-gradient(135deg, #145a2e 0%, #1b7a3d 100%);
+    border: none;
+    color: #fff;
+    box-shadow: 0 10px 32px rgba(20, 90, 46, 0.28);
+  }
+
+  .bmb-role-home__summary-icon {
+    background: rgba(245, 166, 35, 0.9);
+    color: #fff;
+  }
+
+  .bmb-role-home__summary-text > span {
+    color: rgba(255, 255, 255, 0.85);
+  }
+
+  .bmb-role-home__summary-amount {
+    color: #fff;
+    font-size: 1.65rem;
+  }
+
+  .bmb-role-home__analytics-link {
+    display: block;
+    text-align: center;
+    margin-top: 1rem;
+  }
+
+  /* ——— DASHBOARD mobile ——— */
+  .bmb-dash-trust-bar {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+    padding: 0.85rem 1rem;
+  }
+
+  .bmb-dash-hero__title {
+    font-size: 1.45rem;
+  }
+
+  .bmb-quick-actions {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* ——— CAISSE POS mobile ——— */
+  .app-layout--fullscreen .pos-pro--v3 {
+    min-height: 100dvh;
+  }
+
+  .pos-pro--v3 .pos-pro__header {
+    grid-template-columns: auto 1fr auto;
+    grid-template-areas:
+      "back brand total"
+      "type type type";
+    padding: max(0.5rem, env(safe-area-inset-top, 0px)) 0.75rem 0.55rem;
+  }
+
+  .pos-pro--v3 .pos-pro__meta-block--seller,
+  .pos-pro--v3 .pos-pro__datetime {
+    display: none;
+  }
+
+  .pos-pro__mobile-total {
+    grid-area: total;
+    align-self: center;
+    justify-self: end;
+    padding: 0.35rem 0.85rem;
+    border-radius: 999px;
+    background: rgba(245, 166, 35, 0.95);
+    color: #2a1f08;
+    font-size: 0.82rem;
+    font-weight: 800;
+    white-space: nowrap;
+  }
+
+  .pos-pro--v3 .pos-pro__meta-block--type {
+    grid-area: type;
+    border-right: none;
+    padding: 0.25rem 0 0;
+  }
+
+  .pos-pro--v3 .pos-pro__type-toggle {
+    width: 100%;
+  }
+
+  .pos-pro--v3 .pos-pro__type-btn {
+    flex: 1;
+    font-size: 0.75rem;
+  }
+
+  .pos-pro--v3 .pos-pro__workspace {
+    padding-bottom: 72px;
+  }
+
+  .pos-pro--v3 .pos-pro__client-row {
+    grid-template-columns: 1fr 1fr;
+    padding: 0.55rem 0.75rem;
+  }
+
+  .pos-pro--v3 .pos-pro__client-row .search-select {
+    grid-column: 1 / -1;
+  }
+
+  .pos-pro--v3 .pos-pro__field input,
+  .pos-pro--v3 .pos-pro__add-btn {
+    min-height: 48px;
+  }
+
+  .pos-pro--v3 .pos-pro__shortcuts {
+    display: none;
+  }
+
+  .pos-pro--v3 .pos-pro__toolbar {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .pos-pro--v3 .pos-pro__search,
+  .pos-pro--v3 .pos-pro__add-btn {
+    grid-column: 1 / -1;
+  }
+
+  .pos-pro--v3 .pos-pro__cart-panel {
+    border-left: none;
+    border-top: 1px solid var(--border);
+    border-radius: 14px 14px 0 0;
+    box-shadow: 0 -4px 20px rgba(15, 31, 23, 0.08);
+    max-height: min(38vh, 360px);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .pos-pro--v3 .pos-pro__body--cart {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+  }
+
+  .pos-cart-line {
+    padding: 0.32rem 0.45rem;
+    min-height: 2.1rem;
+  }
+
+  .pos-cart-foot {
+    padding: 0.35rem 0.45rem calc(0.35rem + env(safe-area-inset-bottom, 0px));
+    gap: 0.3rem;
+  }
+
+  .pos-pro--v3 .pos-pro__cart-total .pos-pro__total-amt {
+    font-size: 1rem;
+  }
+
+  .pos-pro--v3 .pos-pro__cart-panel .pos-pro__pay-fields,
+  .pos-pro--v3 .pos-pro__checkout--cart .pos-pro__pay-fields {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .pos-pro--v3 .pos-pro__cart-panel .pos-pro__pay-all-btn,
+  .pos-pro--v3 .pos-pro__checkout--cart .pos-pro__pay-all-btn {
+    grid-column: 1 / -1;
+    width: 100%;
+  }
+
+  .pos-pro--v3 .pos-pro__validate-btn {
+    min-height: 38px;
+    font-size: 0.8rem;
+  }
+
+  .pos-pro__mobile-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 200;
+    padding: 0.65rem 1rem calc(0.65rem + env(safe-area-inset-bottom, 0px));
+    background: rgba(255, 255, 255, 0.96);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-top: 1px solid #dde8e2;
+    box-shadow: 0 -8px 32px rgba(15, 31, 23, 0.1);
+  }
+
+  .pos-pro__mobile-bar-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+  }
+
+  .pos-pro__mobile-bar-info span {
+    font-size: 0.72rem;
+    color: #5a6b63;
+    font-weight: 600;
+  }
+
+  .pos-pro__mobile-bar-info strong {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: #1b7a3d;
+  }
+
+  .pos-pro__mobile-bar-btn {
+    flex-shrink: 0;
+    min-height: 48px;
+    min-width: 130px;
+    padding: 0 1.35rem;
+    border: none;
+    border-radius: 999px;
+    background: linear-gradient(135deg, #1b7a3d 0%, #228b47 100%);
+    color: #fff;
+    font-size: 0.95rem;
+    font-weight: 700;
+    box-shadow: 0 6px 20px rgba(27, 122, 61, 0.35);
+    cursor: pointer;
+  }
+
+  .pos-pro__mobile-bar-btn:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+
+  .pos-page--setup {
+    min-height: 100dvh;
+    padding: 1rem;
+    align-items: flex-end;
+  }
+
+  .vente-pos-setup--premium {
+    max-width: none !important;
+    width: 100%;
+    border-radius: 24px 24px 0 0 !important;
+  }
+
+  .module-tabs {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    scrollbar-width: none;
+  }
+
+  .module-tab {
+    flex-shrink: 0;
+  }
+
+  .mobile-bottom-nav {
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+  .mobile-bottom-nav__item {
+    min-height: 3.75rem;
+    font-weight: 700;
+  }
+}
+
+@media (min-width: 961px) {
+  .pos-pro__mobile-bar,
+  .pos-pro__mobile-total {
+    display: none;
+  }
+
+  /* Ne pas casser l'accueil rôle desktop (évite le flyer plein écran) */
+  .bmb-role-home__hero {
+    display: block;
+  }
+
+  .bmb-role-home__hero-shade {
+    display: block;
+  }
+
+  .bmb-role-home__hero-content,
+  .bmb-role-home__body {
+    display: block;
+  }
+
+  .bmb-role-home__title-accent {
+    display: block;
+    width: 48px;
+    height: 4px;
+    margin: 0.65rem 0 1.75rem;
+    border-radius: 99px;
+    background: linear-gradient(90deg, #f5a623, #e09410);
+  }
+}

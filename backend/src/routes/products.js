@@ -202,6 +202,56 @@ router.get('/:id/price-history', asyncHandler(async (req, res) => {
   res.json(rows);
 }));
 
+/** Favoris caisse : 8 articles les plus vendus (30 jours) au point de vente, complétés par le catalogue. */
+router.get('/pos-favorites', asyncHandler(async (req, res) => {
+  await ensureCatalogSynced();
+  const scopedQuery = applyPvScope(req.user, req.query);
+  const pvId = resolveStockPvId(req.user, scopedQuery);
+  const limit = 8;
+  const params = [limit];
+  let pvFilter = '';
+  if (pvId != null) {
+    params.push(pvId);
+    pvFilter = ' AND sc.delivery_point_id = $2';
+  }
+  const { rows: top } = await pool.query(
+    `SELECT p.id, p.reference, p.name, p.retail_price, p.wholesale_price,
+            SUM(sl.quantity)::float AS sold_qty
+     FROM sale_lines sl
+     JOIN sales_carts sc ON sc.id = sl.cart_id
+     JOIN products p ON p.id = sl.product_id
+     WHERE p.is_active = TRUE
+       AND (sc.status = 'finalise' OR sc.validated_at IS NOT NULL)
+       AND sc.created_at >= NOW() - INTERVAL '30 days'${pvFilter}
+     GROUP BY p.id
+     ORDER BY sold_qty DESC, p.name
+     LIMIT $1`,
+    params
+  );
+  let favorites = top;
+  if (favorites.length < limit) {
+    const exclude = favorites.map((p) => p.id);
+    const moreParams = [limit - favorites.length, exclude];
+    let pvClauseSql = '';
+    if (pvId != null) {
+      const pvClause = pvProductListSqlClause(pvId, moreParams.length + 1);
+      pvClauseSql = pvClause.sql;
+      moreParams.push(...pvClause.params);
+    }
+    const { rows: more } = await pool.query(
+      `SELECT p.id, p.reference, p.name, p.retail_price, p.wholesale_price, 0::float AS sold_qty
+       FROM products p
+       WHERE p.is_active = TRUE AND NOT (p.id = ANY($2::int[]))${pvClauseSql}
+       ORDER BY p.name
+       LIMIT $1`,
+      moreParams
+    );
+    favorites = favorites.concat(more);
+  }
+  res.set('Cache-Control', 'no-store');
+  res.json(favorites);
+}));
+
 router.get('/stock/overview', asyncHandler(async (req, res) => {
   await ensureCatalogSynced();
   const scopedQuery = applyPvScope(req.user, req.query);

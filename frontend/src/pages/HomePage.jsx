@@ -4,6 +4,7 @@ import { getPrimaryHomeRole } from '../utils/homeRole';
 import { getRoleHomeConfig } from './home/roleHomeConfigs';
 import Dashboard from './Dashboard';
 import RoleHome from './home/RoleHome';
+import SellerHome from './home/SellerHome';
 
 /** Accueil adapté au rôle — structure BMB d’origine */
 export default function HomePage() {
@@ -26,6 +27,10 @@ export default function HomePage() {
 
   if (searchParams.get('view') === 'analytics' || (config.analytics && searchParams.get('view') !== 'role')) {
     return <Dashboard fromRoleHome={searchParams.get('view') === 'analytics'} />;
+  }
+
+  if (role === 'vendeur' || role === 'vendeur_caissier') {
+    return <SellerHome />;
   }
 
   return <RoleHome role={role} />;

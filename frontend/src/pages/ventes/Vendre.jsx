@@ -24,26 +24,6 @@ import '../../styles/pos.css';
 
 const emptyLine = { product_id: '', quantity: 1, discount: 0, unit_price: '' };
 
-const QUICK_ADD_KEY = 'besto.pos.quickAdd';
-
-function loadQuickAddPref() {
-  try {
-    const v = localStorage.getItem(QUICK_ADD_KEY);
-    return v == null ? true : v === '1';
-  } catch {
-    return true;
-  }
-}
-
-/** « 3*bask », « 3 x bask », « 3×bask » → { qty: 3, term: 'bask' } */
-export function parseQtyPrefix(input) {
-  const raw = String(input || '');
-  const m = raw.match(/^\s*(\d+(?:[.,]\d+)?)\s*[*xX×]\s*(.*)$/);
-  if (!m) return { qty: null, term: raw };
-  const qty = parseFloat(m[1].replace(',', '.'));
-  return { qty: qty > 0 ? qty : null, term: m[2] };
-}
-
 function clientSelectOption(c, user) {
   return { value: c.id, label: `${clientDisplayLabel(c, user)} — ${c.code}`, raw: c };
 }
@@ -73,13 +53,6 @@ export default function Vendre() {
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
   const [lineAdding, setLineAdding] = useState(false);
-  const [quickAdd, setQuickAdd] = useState(() => loadQuickAddPref());
-  const [favorites, setFavorites] = useState([]);
-  const [pendingQty, setPendingQty] = useState(null);
-  const [lastAdded, setLastAdded] = useState(null);
-  const [cashReceived, setCashReceived] = useState('');
-  const pendingQtyRef = useRef(null);
-  const lastAddedRef = useRef(null);
   const [refsLoaded, setRefsLoaded] = useState(false);
   const [booting, setBooting] = useState(false);
   const [bootError, setBootError] = useState('');
@@ -178,13 +151,9 @@ export default function Vendre() {
 
   const searchProducts = useCallback(async (q) => {
     const pvId = effectivePvId();
-    const { qty: prefixQty, term } = parseQtyPrefix(q);
-    pendingQtyRef.current = prefixQty;
-    setPendingQty(prefixQty);
-    const search = term.trim();
     const { data } = await api.get('/products', {
       params: {
-        search: search || undefined,
+        search: q || undefined,
         pos: 'true',
         ...(pvId ? { delivery_point_id: pvId } : {}),
       },
@@ -529,14 +498,6 @@ export default function Vendre() {
   };
 
   const onProductChange = async (productId, opt) => {
-    const prefixQty = pendingQtyRef.current;
-    pendingQtyRef.current = null;
-    setPendingQty(null);
-    if (productId && cart && quickAdd) {
-      await quickAddProduct(productId, opt?.raw, prefixQty || 1);
-      return;
-    }
-    if (prefixQty) setLineForm((l) => ({ ...l, quantity: prefixQty }));
     setSelectedProductOpt(opt || null);
     setLineForm((l) => ({ ...l, product_id: productId }));
     setStockInfo(null);
@@ -608,59 +569,13 @@ export default function Vendre() {
       setMessage('Choisissez un produit');
       return;
     }
-    await submitLine({
-      productId: lineForm.product_id,
-      qty: parseNumberInput(lineForm.quantity),
-      unitPrice: parseNumberInput(lineForm.unit_price),
-      discount: parseNumberInput(lineForm.discount || 0),
-      product: selectedProductOpt?.raw,
-      knownStock: stockInfo,
-    });
-  };
-
-  /** Prix de vente d'un article selon le type de vente et le PV du panier. */
-  const fetchUnitPrice = async (productId, raw) => {
-    const saleType = prefsRef.current?.sale_type || prefs.sale_type || 'detail';
-    const pvId = cart?.delivery_point_id || prefsRef.current?.delivery_point_id || prefs.delivery_point_id;
-    try {
-      const { data } = await api.get(`/sales/product-price/${productId}`, {
-        params: { sale_type: saleType, ...(pvId ? { delivery_point_id: pvId } : {}) },
-      });
-      if (data?.unit_price > 0) return parseFloat(data.unit_price);
-    } catch {
-      /* repli sur le prix du catalogue */
-    }
-    const fallback = raw ? (saleType === 'gros' ? raw.wholesale_price : raw.retail_price) : 0;
-    return parseFloat(fallback) || 0;
-  };
-
-  /** Ajout direct (scan, Entrée, favoris F1–F8) sans passer par Qté/Prix. */
-  const quickAddProduct = async (productId, raw, qty = 1) => {
-    if (!cart || lineAdding) return;
-    const unitPrice = await fetchUnitPrice(productId, raw);
-    if (unitPrice <= 0) {
-      // Pas de prix : on bascule en saisie classique pour que le prix soit saisi.
-      setSelectedProductOpt(raw ? { value: productId, label: `${raw.reference} — ${raw.name}`, raw } : null);
-      setLineForm({ ...emptyLine, product_id: productId, quantity: qty });
-      setMessage('Prix de vente manquant : saisissez le prix puis Entrée');
-      window.setTimeout(() => quantityInputRef.current?.focus(), 30);
-      return;
-    }
-    await submitLine({ productId, qty, unitPrice, discount: 0, product: raw });
-  };
-
-  const repeatLastLine = async () => {
-    const last = lastAddedRef.current;
-    if (!last || !cart) return;
-    await submitLine({ productId: last.productId, qty: 1, unitPrice: last.unitPrice, discount: last.discount || 0, product: last.product });
-  };
-
-  const submitLine = async ({ productId, qty, unitPrice, discount = 0, product, knownStock = null }) => {
-    if (!cart) return;
-    if (!qty || qty <= 0) {
+    const qty = parseNumberInput(lineForm.quantity);
+    if (qty <= 0) {
       setMessage('Quantité invalide');
       return;
     }
+    const discount = parseNumberInput(lineForm.discount || 0);
+    const unitPrice = parseNumberInput(lineForm.unit_price);
     if (unitPrice <= 0) {
       setMessage('Saisissez le prix de vente');
       return;
@@ -669,9 +584,9 @@ export default function Vendre() {
       setMessage('Remise trop élevée');
       return;
     }
-    let freshStock = knownStock;
+    let freshStock = stockInfo;
     try {
-      const { data } = await api.get(`/sales/carts/${cart.id}/stock/${productId}`);
+      const { data } = await api.get(`/sales/carts/${cart.id}/stock/${lineForm.product_id}`);
       freshStock = data;
       setStockInfo(data);
     } catch {
@@ -689,6 +604,7 @@ export default function Vendre() {
       return;
     }
     if (store?.pos_confirm_add_line) {
+      const product = selectedProductOpt?.raw;
       const ok = await confirm({
         title: 'Ajouter au panier',
         message: product
@@ -702,7 +618,7 @@ export default function Vendre() {
     setMessage('');
     try {
       const { data } = await api.post(`/sales/carts/${cart.id}/lines`, {
-        product_id: productId,
+        product_id: lineForm.product_id,
         unit_price: unitPrice,
         discount,
         quantity: qty,
@@ -712,10 +628,6 @@ export default function Vendre() {
       } else {
         await refreshCart(cart.id);
       }
-      const added = { productId, unitPrice, discount, product, qty, name: product?.name || '', at: Date.now() };
-      lastAddedRef.current = added;
-      setLastAdded(added);
-      setCashReceived('');
       resetLineForm();
       productInputRef.current?.focus();
     } catch (e) {
@@ -1032,55 +944,17 @@ export default function Vendre() {
   const validateLabel = loading ? 'Traitement…' : 'Valider et encaisser';
   const linePreview = (parseFloat(lineForm.unit_price || 0) - parseFloat(lineForm.discount || 0)) * parseFloat(lineForm.quantity || 0);
 
-  // Raccourcis caisse : F10 / Ctrl+Entrée valider, F1–F8 favoris, « + » répéter le dernier article.
-  const quickKeysRef = useRef({});
-  quickKeysRef.current = { favorites, quickAddProduct, repeatLastLine };
   useEffect(() => {
     const onKey = (e) => {
-      if (document.querySelector('.confirm-overlay, .bmb-form-overlay, .bmb-encaisse-modal')) return;
-      if (!cart || awaitingCaisseOpen) return;
-      const validateCombo = e.key === 'F10' || (e.key === 'Enter' && (e.ctrlKey || e.metaKey));
-      if (validateCombo) {
-        if (canValidate && !loading) {
-          e.preventDefault();
-          requestValidate();
-        }
-        return;
-      }
-      const fav = /^F([1-8])$/.exec(e.key);
-      if (fav && !e.altKey && !e.ctrlKey && !e.metaKey) {
-        const item = quickKeysRef.current.favorites[parseInt(fav[1], 10) - 1];
+      if (document.querySelector('.confirm-overlay')) return;
+      if (e.key === 'F10' && cart && !awaitingCaisseOpen && canValidate && !loading) {
         e.preventDefault();
-        if (item && !loading) quickKeysRef.current.quickAddProduct(item.id, item, 1);
-        return;
-      }
-      if (e.key === '+' && document.activeElement === productInputRef.current && !productInputRef.current?.value) {
-        e.preventDefault();
-        quickKeysRef.current.repeatLastLine();
+        requestValidate();
       }
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
   }, [cart, awaitingCaisseOpen, canValidate, loading, requestValidate]);
-
-  // Favoris caisse (articles les plus vendus du PV)
-  useEffect(() => {
-    if (!cart?.id) return undefined;
-    let cancelled = false;
-    const pvId = cart.delivery_point_id || effectivePvId();
-    api.get('/products/pos-favorites', { params: pvId ? { delivery_point_id: pvId } : {} })
-      .then(({ data }) => { if (!cancelled) setFavorites(Array.isArray(data) ? data.slice(0, 8) : []); })
-      .catch(() => { if (!cancelled) setFavorites([]); });
-    return () => { cancelled = true; };
-  }, [cart?.id, cart?.delivery_point_id, effectivePvId]);
-
-  const toggleQuickAdd = () => {
-    setQuickAdd((v) => {
-      const next = !v;
-      try { localStorage.setItem(QUICK_ADD_KEY, next ? '1' : '0'); } catch { /* stockage indisponible */ }
-      return next;
-    });
-  };
 
   const sellerHeaderLabel = cart?.seller_name || mySellerLabel;
 
@@ -1231,15 +1105,6 @@ export default function Vendre() {
       resteActuel={resteActuel}
       validateLabel={validateLabel}
       onQuitCaisse={quitCaisse}
-      quickAdd={quickAdd}
-      onToggleQuickAdd={toggleQuickAdd}
-      favorites={favorites}
-      onFavorite={(p) => quickAddProduct(p.id, p, 1)}
-      pendingQty={pendingQty}
-      lastAdded={lastAdded}
-      onRepeatLast={repeatLastLine}
-      cashReceived={cashReceived}
-      setCashReceived={setCashReceived}
     />
     </>
   );

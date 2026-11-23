@@ -55,15 +55,6 @@ export default function VendrePosView({
   validateLabel,
   createClientFromSearch,
   onQuitCaisse,
-  quickAdd = true,
-  onToggleQuickAdd,
-  favorites = [],
-  onFavorite,
-  pendingQty = null,
-  lastAdded = null,
-  onRepeatLast,
-  cashReceived = '',
-  setCashReceived,
 }) {
   const nowStr = new Date().toLocaleString('fr-FR', {
     day: '2-digit', month: '2-digit', year: 'numeric',
@@ -76,18 +67,6 @@ export default function VendrePosView({
     ? Math.min(resteActuel, advanceAvailable)
     : 0;
   const cashDueAfterAdvance = Math.max(0, resteActuel - advanceApplied);
-  const amountToCollect = parseFloat(String(payment?.amount_paid ?? '').replace(/\s/g, '')) || cashDueAfterAdvance;
-  const receivedNum = parseFloat(String(cashReceived || '').replace(/\D/g, '')) || 0;
-  const changeDue = receivedNum - amountToCollect;
-  const quickCash = (() => {
-    const base = Math.max(0, Math.round(amountToCollect));
-    if (!base) return [];
-    const up50 = Math.ceil(base / 50000) * 50000;
-    const upNext = up50 === base ? base + 50000 : up50;
-    const big = Math.ceil((base + 1) / 500000) * 500000;
-    return [...new Set([base, upNext, big])];
-  })();
-  const showCashHelper = hasLines && cartTotal > 0 && (payment?.payment_mode || 'especes') === 'especes';
 
   const toggleMobileCart = () => {
     if (lineCount > 0) setMobileCartOpen((v) => !v);
@@ -199,7 +178,6 @@ export default function VendrePosView({
         disabled={loading || !canValidate}
       >
         {validateLabel}
-        {!loading && <kbd className="pos-quick__kbd-inline">Ctrl ↵</kbd>}
       </button>
       {showPayLater && hasLines && cartTotal > 0 && (
         <button
@@ -316,7 +294,7 @@ export default function VendrePosView({
                 disabled={loading}
               />
             </div>
-            <div className={`pos-pro__toolbar-line${quickAdd && !lineForm.product_id ? ' pos-pro__toolbar-line--hidden' : ''}`}>
+            <div className="pos-pro__toolbar-line">
               <div className="pos-pro__field pos-pro__field--qty">
                 <label>Qté</label>
                 <input
@@ -353,43 +331,6 @@ export default function VendrePosView({
               </button>
             </div>
           </div>
-          </div>
-
-          <div className="pos-quick">
-            <div className="pos-quick__bar">
-              <label className="pos-quick__toggle">
-                <input type="checkbox" checked={quickAdd} onChange={onToggleQuickAdd} />
-                <span>Ajout direct</span>
-              </label>
-              {pendingQty ? <span className="pos-quick__qty" aria-live="polite">× {formatQty(pendingQty)}</span> : null}
-              <span className="pos-quick__hints" aria-label="Raccourcis clavier">
-                <span><kbd>3*</kbd> quantité</span>
-                <span><kbd>Entrée</kbd> ajouter</span>
-                <span><kbd>F1–F8</kbd> favoris</span>
-                <span><kbd>+</kbd> répéter</span>
-                <span><kbd>Ctrl</kbd><kbd>Entrée</kbd> encaisser</span>
-              </span>
-            </div>
-            {favorites.length > 0 && (
-              <div className="pos-quick__favs" role="group" aria-label="Favoris">
-                {favorites.map((p, i) => (
-                  <button
-                    key={p.id}
-                    type="button"
-                    className="pos-quick__fav"
-                    onClick={() => onFavorite?.(p)}
-                    disabled={loading || lineAdding}
-                    title={`${p.reference} — ${p.name}`}
-                  >
-                    <kbd>F{i + 1}</kbd>
-                    <span className="pos-quick__fav-name">{p.name}</span>
-                    <span className="pos-quick__fav-price">
-                      {formatGNF((prefs?.sale_type || cart?.sale_type) === 'gros' ? p.wholesale_price : p.retail_price)}
-                    </span>
-                  </button>
-                ))}
-              </div>
-            )}
           </div>
 
           {lineForm.product_id && (
@@ -472,18 +413,6 @@ export default function VendrePosView({
             )}
           </div>
 
-          {lastAdded && Date.now() - lastAdded.at < 4000 ? (
-            <div key={lastAdded.at} className="pos-quick__toast" role="status">
-              <span aria-hidden="true">✓</span>
-              {formatQty(lastAdded.qty)} × {lastAdded.name || 'article'} ajouté
-              {onRepeatLast ? (
-                <button type="button" className="pos-quick__toast-btn" onClick={onRepeatLast} disabled={loading || lineAdding}>
-                  +1
-                </button>
-              ) : null}
-            </div>
-          ) : null}
-
           <div className="pos-cart-foot pos-cart-foot--legacy">
             {renderCheckout('cart')}
             {renderCheckoutActions('cart')}
@@ -497,32 +426,6 @@ export default function VendrePosView({
           </div>
           <div className="pos-pro__pay-panel-body">
             {renderCheckout('pay')}
-            {showCashHelper && (
-              <div className="pos-cash">
-                <label htmlFor="pos-cash-received" className="pos-cash__label">Reçu du client (espèces)</label>
-                <input
-                  id="pos-cash-received"
-                  type="text"
-                  inputMode="numeric"
-                  autoComplete="off"
-                  className="pos-cash__input"
-                  placeholder={String(Math.round(amountToCollect))}
-                  value={cashReceived}
-                  onChange={(e) => setCashReceived?.(e.target.value)}
-                />
-                <div className="pos-cash__quick">
-                  {quickCash.map((v, i) => (
-                    <button key={v} type="button" onClick={() => setCashReceived?.(String(v))}>
-                      {i === 0 ? 'Exact' : Math.round(v).toLocaleString('fr-FR')}
-                    </button>
-                  ))}
-                </div>
-                <div className={`pos-cash__change${receivedNum && changeDue < 0 ? ' pos-cash__change--short' : ''}`} aria-live="polite">
-                  <span>{receivedNum && changeDue < 0 ? 'Il manque' : 'Monnaie à rendre'}</span>
-                  <strong>{receivedNum ? formatGNF(Math.abs(changeDue)) : '—'}</strong>
-                </div>
-              </div>
-            )}
           </div>
           <div className="pos-pro__pay-panel-foot">
             {renderCheckoutActions('pay')}

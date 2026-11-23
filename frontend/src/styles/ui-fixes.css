@@ -2,14 +2,6 @@
    BESTO SHOP — Corrections d'affichage (chargé en dernier)
    ============================================================ */
 
-/* ——— Recherche : option surlignée au clavier ——— */
-.search-select__option--highlight {
-  background: var(--primary-soft);
-  color: var(--primary);
-  outline: 2px solid color-mix(in srgb, var(--primary) 35%, transparent);
-  outline-offset: -2px;
-}
-
 /* ——— Tableaux larges : défilement horizontal au lieu d'être coupés ———
    Plusieurs feuilles forçaient overflow: visible sur les conteneurs de
    tableaux ; dans .bmb-page (overflow-x: hidden) les colonnes de droite

@@ -24,8 +24,16 @@ const STOCK_COLUMNS = [
   { key: 'category', label: 'Catégorie' },
   { key: 'total_stock', label: 'Stock total', align: 'right' },
   { key: 'min_stock', label: 'Seuil min', align: 'right' },
+  { key: 'value_purchase', label: 'Valeur achat', align: 'right' },
+  { key: 'value_retail', label: 'Valeur vente', align: 'right' },
   { key: 'state', label: 'État' },
 ];
+
+/** Valeur du stock positif : quantité × prix (achat ou détail). */
+function stockValue(p, priceKey) {
+  const qty = Math.max(0, parseFloat(p.total_stock) || 0);
+  return qty * (parseFloat(p[priceKey]) || 0);
+}
 
 const HISTORY_COLUMNS = [
   { key: 'date', label: 'Date' },
@@ -217,6 +225,8 @@ export default function Stocks() {
   const overviewTotals = useMemo(() => ({
     count: overview.length,
     stock: overview.reduce((s, p) => s + (parseFloat(p.total_stock) || 0), 0),
+    valuePurchase: overview.reduce((s, p) => s + stockValue(p, 'purchase_price'), 0),
+    valueRetail: overview.reduce((s, p) => s + stockValue(p, 'retail_price'), 0),
   }), [overview]);
 
   const stockReportFilters = useMemo(() => [
@@ -230,6 +240,8 @@ export default function Stocks() {
     category: p.category_name || '—',
     total_stock: formatQty(p.total_stock),
     min_stock: formatQty(p.min_stock),
+    value_purchase: formatGNF(stockValue(p, 'purchase_price')),
+    value_retail: formatGNF(stockValue(p, 'retail_price')),
     state: stockState(p),
   })), [overview]);
 
@@ -239,7 +251,10 @@ export default function Stocks() {
         cells: [
           { value: `Total (${overviewTotals.count} produit${overviewTotals.count > 1 ? 's' : ''})`, colSpan: 3 },
           { value: formatQty(overviewTotals.stock), align: 'right' },
-          { value: '', colSpan: 2 },
+          { value: '' },
+          { value: formatGNF(overviewTotals.valuePurchase), align: 'right' },
+          { value: formatGNF(overviewTotals.valueRetail), align: 'right' },
+          { value: '' },
         ],
       }]
       : []
@@ -362,9 +377,9 @@ export default function Stocks() {
         head: STOCK_COLUMNS.map((c) => c.label),
         body: stockReportRows.map((r) => STOCK_COLUMNS.map((c) => r[c.key])),
         foot: overview.length
-          ? [[`Total (${overview.length})`, '', '', formatQty(overviewTotals.stock), '', '']]
+          ? [[`Total (${overview.length})`, '', '', formatQty(overviewTotals.stock), '', formatGNF(overviewTotals.valuePurchase), formatGNF(overviewTotals.valueRetail), '']]
           : [],
-        rightAlignCols: [3, 4],
+        rightAlignCols: [3, 4, 5, 6],
         filename: 'situation-stocks.pdf',
         orientation,
       });
@@ -495,6 +510,27 @@ export default function Stocks() {
         </div>
       )}
 
+      {view === 'global' && !loading && overview.length > 0 && (
+        <div className="reglement-summary-row stocks-value-summary bmb-print-skip" role="group" aria-label="Valeur du stock">
+          <div className="reglement-summary-item">
+            <span className="reglement-summary-label">Quantité en stock</span>
+            <strong className="reglement-summary-value">{formatQty(overviewTotals.stock)}</strong>
+          </div>
+          <div className="reglement-summary-item">
+            <span className="reglement-summary-label">Valeur du stock (prix d&apos;achat)</span>
+            <strong className="reglement-summary-value">{formatGNF(overviewTotals.valuePurchase)}</strong>
+          </div>
+          <div className="reglement-summary-item">
+            <span className="reglement-summary-label">Valeur du stock (prix de vente)</span>
+            <strong className="reglement-summary-value">{formatGNF(overviewTotals.valueRetail)}</strong>
+          </div>
+          <div className="reglement-summary-item">
+            <span className="reglement-summary-label">Marge potentielle</span>
+            <strong className="reglement-summary-value">{formatGNF(overviewTotals.valueRetail - overviewTotals.valuePurchase)}</strong>
+          </div>
+        </div>
+      )}
+
       {view === 'global' && (
         loading ? (
           <TableSkeleton rows={8} columns={4} />
@@ -523,6 +559,8 @@ export default function Stocks() {
                       { label: 'Catégorie', value: p.category_name || '—' },
                       { label: 'Stock total', value: formatQty(p.total_stock), strong: true },
                       { label: 'Seuil min', value: formatQty(p.min_stock) },
+                      { label: 'Valeur achat', value: formatGNF(stockValue(p, 'purchase_price')) },
+                      { label: 'Valeur vente', value: formatGNF(stockValue(p, 'retail_price')) },
                     ]}
                     actions={(epuise || alerte) ? (
                       <button type="button" className="btn btn-accent btn-sm" onClick={() => openRestock(p.id)}>Ravitaillement</button>
@@ -534,10 +572,10 @@ export default function Stocks() {
             table={(
         <div className="bmb-data-table-wrap table-scroll bmb-table-scroll-contained stocks-table-wrap bmb-print-skip">
           <table className="bmb-data-table table-full stocks-table">
-            <thead><tr><th>Réf.</th><th>Produit</th><th>Catégorie</th><th className="col-num">Stock total</th><th className="col-num">Seuil min</th><th>État</th><th>Actions</th></tr></thead>
+            <thead><tr><th>Réf.</th><th>Produit</th><th>Catégorie</th><th className="col-num">Stock total</th><th className="col-num">Seuil min</th><th className="col-num">Valeur achat</th><th className="col-num">Valeur vente</th><th>État</th><th>Actions</th></tr></thead>
             <tbody>
               {overview.length === 0 ? (
-                <tr><td colSpan={7} className="table-empty">Aucun produit en stock</td></tr>
+                <tr><td colSpan={9} className="table-empty">Aucun produit en stock</td></tr>
               ) : overview.map((p) => {
                 const { epuise, alerte } = stockRowFlags(p);
                 return (
@@ -547,6 +585,8 @@ export default function Stocks() {
                     <td>{p.category_name}</td>
                     <td className="col-num"><strong>{formatQty(p.total_stock)}</strong></td>
                     <td className="col-num">{formatQty(p.min_stock)}</td>
+                    <td className="col-num">{formatGNF(stockValue(p, 'purchase_price'))}</td>
+                    <td className="col-num">{formatGNF(stockValue(p, 'retail_price'))}</td>
                     <td>{stockStateBadge(epuise, alerte)}</td>
                     <td className="actions-cell">
                       {(epuise || alerte) && (
@@ -562,7 +602,10 @@ export default function Stocks() {
                 <tr className="bmb-data-table-total-row">
                   <td colSpan={3}><strong>Total ({overviewTotals.count} produit{overviewTotals.count > 1 ? 's' : ''})</strong></td>
                   <td className="col-num"><strong>{formatQty(overviewTotals.stock)}</strong></td>
-                  <td colSpan={3} />
+                  <td />
+                  <td className="col-num"><strong>{formatGNF(overviewTotals.valuePurchase)}</strong></td>
+                  <td className="col-num"><strong>{formatGNF(overviewTotals.valueRetail)}</strong></td>
+                  <td colSpan={2} />
                 </tr>
               </tfoot>
             )}

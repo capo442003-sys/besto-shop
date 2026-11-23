@@ -466,13 +466,6 @@ export default function Magasin() {
                 </div>
                 <div className="mag-form-grid mag-form-grid--2" style={{ marginTop: '0.85rem' }}>
                   <div className="form-group">
-                    <label>Thème</label>
-                    <select value={form.theme} onChange={(e) => setForm({ ...form, theme: e.target.value })}>
-                      <option value="light">Clair</option>
-                      <option value="dark">Sombre</option>
-                    </select>
-                  </div>
-                  <div className="form-group">
                     <label>Déconnexion auto caisse (minutes)</label>
                     <input
                       type="number"

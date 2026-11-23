@@ -31,10 +31,11 @@ export function StoreSettingsProvider({ children }) {
       .finally(() => setLoading(false));
   }, [refreshStore]);
 
+  // Le design « verre clair » remplace l'ancien mode sombre : l'interface est
+  // toujours en thème clair, quel que soit le réglage enregistré en base.
   useEffect(() => {
-    const theme = store?.theme === 'dark' ? 'dark' : 'light';
-    document.documentElement.setAttribute('data-theme', theme);
-  }, [store?.theme]);
+    document.documentElement.setAttribute('data-theme', 'light');
+  }, []);
 
   return (
     <StoreSettingsContext.Provider value={{ store, setStore, loading, refreshStore }}>

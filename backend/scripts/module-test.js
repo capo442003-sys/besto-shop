@@ -74,7 +74,7 @@ async function run() {
   await testModule('Ventes — Caisse', [
     { tab: 'Points de vente', path: '/delivery-points' },
     { tab: 'Liste paniers', path: '/sales/carts' },
-    { tab: 'Client comptoir', path: '/clients?search=COMPTOIR', check: (r) => r.ok && Array.isArray(r.data) && r.data.length > 0 },
+    { tab: 'Client comptoir', path: '/clients?search=COMPTOIR', check: (r) => r.ok && (Array.isArray(r.data) ? r.data : r.data?.clients || []).length > 0 },
     { tab: 'Produits recherche', path: '/products?search=' },
   ]);
 

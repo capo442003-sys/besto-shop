@@ -40,6 +40,7 @@ import './styles/seller-dash.css';
 import './styles/manager-dash.css';
 import './styles/design-harmony.css';
 import './styles/ventes-module-fix.css';
+import './styles/ui-fixes.css';
 import { applyPwaHtmlClasses } from './utils/pwaEnv';
 
 applyPwaHtmlClasses();

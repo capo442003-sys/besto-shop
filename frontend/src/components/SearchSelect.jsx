@@ -45,6 +45,10 @@ const SearchSelect = forwardRef(function SearchSelect({
   const wrapRef = useRef(null);
   const inputRef = useRef(null);
   const timerRef = useRef(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const loadedQueryRef = useRef(null);
+  const pendingEnterRef = useRef(false);
+  const listRef = useRef(null);
   const [listPos, setListPos] = useState(null);
   const dropdownMode = open ? getDropdownMode(wrapRef.current) : { useFixed: false, forceBelow: false };
   const fixedDropdown = dropdownMode.useFixed;
@@ -115,9 +119,18 @@ const SearchSelect = forwardRef(function SearchSelect({
       setLoadError('');
       try {
         const items = await loadOptions(query);
-        setOptions(Array.isArray(items) ? items : []);
+        const list = Array.isArray(items) ? items : [];
+        setOptions(list);
+        setActiveIndex(0);
+        loadedQueryRef.current = query;
+        if (pendingEnterRef.current) {
+          pendingEnterRef.current = false;
+          if (list.length > 0) pickRef.current?.(list[0]);
+        }
       } catch {
         setOptions([]);
+        loadedQueryRef.current = null;
+        pendingEnterRef.current = false;
         setLoadError('Recherche indisponible — vérifiez la connexion');
       } finally {
         setLoading(false);
@@ -136,9 +149,48 @@ const SearchSelect = forwardRef(function SearchSelect({
 
   const pick = (opt) => {
     const v = getValue(opt);
+    pendingEnterRef.current = false;
     onChange(v, opt);
     setQuery('');
     setOpen(false);
+  };
+  const pickRef = useRef(pick);
+  pickRef.current = pick;
+
+  useEffect(() => {
+    if (!open || !listRef.current) return;
+    const el = listRef.current.querySelector('.search-select__option--highlight');
+    el?.scrollIntoView?.({ block: 'nearest' });
+  }, [activeIndex, open]);
+
+  const onKeyDown = (e) => {
+    if (disabled) return;
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      if (!open) { setOpen(true); return; }
+      setActiveIndex((i) => (options.length ? Math.min(i + 1, options.length - 1) : 0));
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      setActiveIndex((i) => Math.max(i - 1, 0));
+    } else if (e.key === 'Enter') {
+      if (!open) return;
+      e.preventDefault();
+      const stale = loading || loadedQueryRef.current !== query;
+      if (stale) {
+        // Résultats pas encore chargés (saisie rapide / lecteur code-barres) : on sélectionne dès réception.
+        pendingEnterRef.current = true;
+        return;
+      }
+      const opt = options[activeIndex] || options[0];
+      if (opt) pick(opt);
+      else if (showCreate) createNew();
+    } else if (e.key === 'Escape') {
+      if (open) {
+        e.preventDefault();
+        pendingEnterRef.current = false;
+        setOpen(false);
+      }
+    }
   };
 
   const createNew = async () => {
@@ -179,6 +231,10 @@ const SearchSelect = forwardRef(function SearchSelect({
           placeholder={placeholder}
           disabled={disabled}
           autoComplete="off"
+          role="combobox"
+          aria-expanded={open}
+          aria-autocomplete="list"
+          onKeyDown={onKeyDown}
           onFocus={() => {
             setOpen(true);
             setQuery('');
@@ -205,6 +261,7 @@ const SearchSelect = forwardRef(function SearchSelect({
         <ul
           className={`search-select__list${fixedDropdown ? ' search-select__list--fixed' : ''}${listClassName ? ` ${listClassName}` : ''}`}
           role="listbox"
+          ref={listRef}
           style={listPos || undefined}
         >
           {loading && <li className="search-select__empty">Recherche…</li>}
@@ -215,13 +272,17 @@ const SearchSelect = forwardRef(function SearchSelect({
               </button>
             </li>
           )}
-          {!loading && options.map((opt) => {
+          {!loading && options.map((opt, idx) => {
             const v = getValue(opt);
             return (
               <li key={v || getLabel(opt)}>
                 <button
                   type="button"
-                  className={`search-select__option${String(value) === v ? ' search-select__option--active' : ''}`}
+                  className={`search-select__option${String(value) === v ? ' search-select__option--active' : ''}${idx === activeIndex ? ' search-select__option--highlight' : ''}`}
+                  role="option"
+                  aria-selected={idx === activeIndex}
+                  tabIndex={-1}
+                  onMouseEnter={() => setActiveIndex(idx)}
                   onClick={() => pick(opt)}
                 >
                   {getLabel(opt)}

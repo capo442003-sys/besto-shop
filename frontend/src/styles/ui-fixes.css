@@ -1,0 +1,160 @@
+/* ============================================================
+   BESTO SHOP — Corrections d'affichage (chargé en dernier)
+   ============================================================ */
+
+/* ——— Recherche : option surlignée au clavier ——— */
+.search-select__option--highlight {
+  background: var(--primary-soft);
+  color: var(--primary);
+  outline: 2px solid color-mix(in srgb, var(--primary) 35%, transparent);
+  outline-offset: -2px;
+}
+
+/* ——— Tableaux larges : défilement horizontal au lieu d'être coupés ———
+   Plusieurs feuilles forçaient overflow: visible sur les conteneurs de
+   tableaux ; dans .bmb-page (overflow-x: hidden) les colonnes de droite
+   devenaient inaccessibles (matrice des droits, listes sur mobile…). */
+html .bmb-v2 .bmb-data-table-wrap,
+html .bmb-v2 .table-scroll,
+html .bmb-v2 .card.table-main .bmb-data-table-wrap,
+html .bmb-v2 .card.table-main .table-scroll,
+html .bmb-v2 .table-main .table-scroll {
+  overflow-x: auto !important;
+  -webkit-overflow-scrolling: touch;
+}
+
+@media print {
+  html .bmb-v2 .bmb-data-table-wrap,
+  html .bmb-v2 .table-scroll {
+    overflow: visible !important;
+  }
+}
+
+/* ——— Case à cocher dans les panneaux de filtres ———
+   Elle héritait du style des champs (largeur 100 %, hauteur 40px). */
+.bmb-filters-panel__item--checkbox {
+  justify-content: flex-end !important;
+}
+
+.bmb-filter-checkbox {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 0.55rem;
+  min-height: 40px;
+  font-size: var(--text-sm, 0.875rem) !important;
+  text-transform: none !important;
+  letter-spacing: normal !important;
+  color: var(--text);
+  cursor: pointer;
+  user-select: none;
+}
+
+.bmb-filter-checkbox input[type='checkbox'] {
+  flex: 0 0 auto;
+  width: 18px !important;
+  min-width: 18px !important;
+  height: 18px !important;
+  min-height: 18px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  accent-color: var(--primary);
+  cursor: pointer;
+}
+
+/* ——— Caisse (POS) : ligne Qté / Prix / Ajouter ———
+   Le prix imposait min-width: 240px, le bouton était écrasé à ~20px
+   et le libellé « AJOUTER » débordait. */
+.pos-pro--v3 .pos-pro__toolbar-line,
+.pos-pro__toolbar-line {
+  grid-template-columns: minmax(72px, 110px) minmax(0, 1fr) auto !important;
+}
+
+.pos-pro--v3 .pos-pro__field--price,
+.pos-pro__field--price {
+  min-width: 0 !important;
+}
+
+.pos-pro--v3 .pos-pro__field input {
+  min-width: 0;
+  width: 100%;
+}
+
+.pos-pro--v3 .pos-pro__add-btn,
+.pos-pro__add-btn {
+  max-width: none !important;
+  min-width: 6.5rem !important;
+  padding: 0 1rem !important;
+}
+
+/* Client : boutons alignés sur la hauteur du champ */
+.pos-pro--v3 .pos-pro__client-actions .pos-pro__client-btn {
+  min-height: 56px;
+}
+
+/* ——— Bon de commande : carte centrée, champs alignés ——— */
+.bc-page > .vente-pos-setup {
+  margin: 1.5rem auto !important;
+  align-self: center;
+}
+
+.bc-page > .vente-pos-setup .vente-pos-setup__seller,
+.bc-page > .vente-pos-setup > .form-group,
+.bc-page > .vente-pos-setup .vente-pos-setup__btn {
+  width: 100%;
+  max-width: 320px;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+.bc-page > .vente-pos-setup .search-select,
+.bc-page > .vente-pos-setup .search-select__input,
+.bc-page > .vente-pos-setup > .form-group input {
+  width: 100%;
+  text-align: left;
+}
+
+/* ——— Cartes KPI : valeurs longues (ex. nom de base) ——— */
+.bmb-kpi__value,
+.bmb-stat__value {
+  overflow-wrap: anywhere;
+}
+
+.stat-card {
+  min-width: 0;
+}
+
+.stat-card .value {
+  overflow-wrap: anywhere;
+  min-width: 0;
+}
+
+/* ——— Barres d'outils des tableaux : les listes ne débordent plus de la carte ——— */
+.bmb-v2 .table-main-toolbar .toolbar-actions {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.bmb-v2 .table-main-toolbar .toolbar-actions .filter-select {
+  width: auto;
+  max-width: 100%;
+  min-width: 160px;
+  flex: 0 1 auto;
+}
+
+/* ——— Suggestions (client / article) : jamais plus larges que l'écran ——— */
+.search-select__list--fixed {
+  max-width: calc(100vw - 20px) !important;
+  box-sizing: border-box;
+}
+
+@media (max-width: 960px) {
+  .pos-pro--v3 .search-select__list--pos-product.search-select__list--fixed,
+  .pos-pro--v3 .search-select__list--pos-client.search-select__list--fixed {
+    min-width: 0 !important;
+  }
+
+  .search-select__list--fixed .search-select__option {
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+}

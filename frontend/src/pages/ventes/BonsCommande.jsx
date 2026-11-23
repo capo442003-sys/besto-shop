@@ -383,7 +383,7 @@ export default function BonsCommande() {
               }}
             />
           </div>
-          <div className="form-group" style={{ maxWidth: 300, margin: '0 auto 1rem' }}>
+          <div className="form-group" style={{ marginBottom: '1rem' }}>
             <label>Notes (optionnel)</label>
             <input
               value={setupNotes}

@@ -22,6 +22,7 @@ import ResponsiveDataView from '../../components/ui/ResponsiveDataView';
 import DataCard from '../../components/ui/DataCard';
 import BmbFormModal from '../../components/BmbFormModal';
 import EncaissementModal from '../../components/EncaissementModal';
+import ClientPaymentHistory from '../../components/ClientPaymentHistory';
 import PrintPreviewModal from '../../components/PrintPreviewModal';
 import SearchSelect from '../../components/SearchSelect';
 import { parseNumberInput } from '../../utils/format';
@@ -1272,6 +1273,10 @@ export default function Reglement() {
                   <strong>{formatGNF(clientDebtInfo.advance_balance)}</strong>
                 </p>
               )}
+
+              {clientBulkClientId && !clientDebtLoading && (
+                <ClientPaymentHistory clientId={clientBulkClientId} refreshKey={clientDebtInfo} />
+              )}
             </div>
           </>
         )}
@@ -1911,7 +1916,27 @@ export default function Reglement() {
         hint={parseFloat(clientDebtInfo?.total_due || 0) > 0.005
           ? 'Le montant sera réparti sur les paniers impayés puis sur les dettes manuelles.'
           : 'Sélectionnez un client avec une dette sur l\'écran principal.'}
-      />
+      >
+        <div className="bmb-encaisse-modal__extras client-bulk-extras">
+          <p className="client-bulk-extras__date">
+            Date d&apos;encaissement :{' '}
+            <strong>
+              {new Date().toLocaleDateString('fr-FR', { weekday: 'long', day: '2-digit', month: 'long', year: 'numeric' })}
+              {' · '}
+              {new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}
+            </strong>
+          </p>
+          {clientBulkOpen && (
+            <ClientPaymentHistory
+              clientId={clientBulkClientId}
+              refreshKey={clientDebtInfo}
+              limit={5}
+              compact
+              title="Derniers encaissements"
+            />
+          )}
+        </div>
+      </EncaissementModal>
 
       <EncaissementModal
         open={clientAdvanceOpen}

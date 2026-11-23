@@ -211,6 +211,7 @@ router.get('/stock/overview', asyncHandler(async (req, res) => {
   const params = [];
   let q = `
     SELECT p.id, p.name, p.reference, p.min_stock,
+           p.purchase_price, p.retail_price,
            ${stockSql} AS total_stock,
            c.name AS category_name
     FROM products p

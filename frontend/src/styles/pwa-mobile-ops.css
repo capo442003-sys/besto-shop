@@ -43,8 +43,6 @@
     min-height: 2.5rem;
   }
 
-  /* Modales : centrées (voir styles/modals.css) — actions tactiles */
-  .confirm-dialog__actions {
   .bmb-data-table-wrap,
   .table-scroll {
     position: relative;

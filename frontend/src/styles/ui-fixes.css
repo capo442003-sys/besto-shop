@@ -1,0 +1,406 @@
+/* ============================================================
+   BESTO SHOP — Corrections d'affichage (chargé en dernier)
+   ============================================================ */
+
+/* ——— Tableaux larges : défilement horizontal au lieu d'être coupés ———
+   Plusieurs feuilles forçaient overflow: visible sur les conteneurs de
+   tableaux ; dans .bmb-page (overflow-x: hidden) les colonnes de droite
+   devenaient inaccessibles (matrice des droits, listes sur mobile…). */
+html .bmb-v2 .bmb-data-table-wrap,
+html .bmb-v2 .table-scroll,
+html .bmb-v2 .card.table-main .bmb-data-table-wrap,
+html .bmb-v2 .card.table-main .table-scroll,
+html .bmb-v2 .table-main .table-scroll {
+  overflow-x: auto !important;
+  -webkit-overflow-scrolling: touch;
+}
+
+@media print {
+  html .bmb-v2 .bmb-data-table-wrap,
+  html .bmb-v2 .table-scroll {
+    overflow: visible !important;
+  }
+}
+
+/* ——— Case à cocher dans les panneaux de filtres ———
+   Elle héritait du style des champs (largeur 100 %, hauteur 40px). */
+.bmb-filters-panel__item--checkbox {
+  justify-content: flex-end !important;
+}
+
+.bmb-filter-checkbox {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 0.55rem;
+  min-height: 40px;
+  font-size: var(--text-sm, 0.875rem) !important;
+  text-transform: none !important;
+  letter-spacing: normal !important;
+  color: var(--text);
+  cursor: pointer;
+  user-select: none;
+}
+
+.bmb-filter-checkbox input[type='checkbox'] {
+  flex: 0 0 auto;
+  width: 18px !important;
+  min-width: 18px !important;
+  height: 18px !important;
+  min-height: 18px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  accent-color: var(--primary);
+  cursor: pointer;
+}
+
+/* ——— Caisse (POS) : ligne Qté / Prix / Ajouter ———
+   Le prix imposait min-width: 240px, le bouton était écrasé à ~20px
+   et le libellé « AJOUTER » débordait. */
+.pos-pro--v3 .pos-pro__toolbar-line,
+.pos-pro__toolbar-line {
+  grid-template-columns: minmax(72px, 110px) minmax(0, 1fr) auto !important;
+}
+
+.pos-pro--v3 .pos-pro__field--price,
+.pos-pro__field--price {
+  min-width: 0 !important;
+}
+
+.pos-pro--v3 .pos-pro__field input {
+  min-width: 0;
+  width: 100%;
+}
+
+.pos-pro--v3 .pos-pro__add-btn,
+.pos-pro__add-btn {
+  max-width: none !important;
+  min-width: 6.5rem !important;
+  padding: 0 1rem !important;
+}
+
+
+/* ——— Bon de commande : carte centrée, champs alignés ——— */
+.bc-page > .vente-pos-setup {
+  margin: 1.5rem auto !important;
+  align-self: center;
+}
+
+.bc-page > .vente-pos-setup .vente-pos-setup__seller,
+.bc-page > .vente-pos-setup > .form-group,
+.bc-page > .vente-pos-setup .vente-pos-setup__btn {
+  width: 100%;
+  max-width: 320px;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+.bc-page > .vente-pos-setup .search-select,
+.bc-page > .vente-pos-setup .search-select__input,
+.bc-page > .vente-pos-setup > .form-group input {
+  width: 100%;
+  text-align: left;
+}
+
+/* ——— Cartes KPI : valeurs longues (ex. nom de base) ——— */
+.bmb-kpi__value,
+.bmb-stat__value {
+  overflow-wrap: anywhere;
+}
+
+.stat-card {
+  min-width: 0;
+}
+
+.stat-card .value {
+  overflow-wrap: anywhere;
+  min-width: 0;
+}
+
+/* ——— Barres d'outils des tableaux : les listes ne débordent plus de la carte ——— */
+.bmb-v2 .table-main-toolbar .toolbar-actions {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.bmb-v2 .table-main-toolbar .toolbar-actions .filter-select {
+  width: auto;
+  max-width: 100%;
+  min-width: 160px;
+  flex: 0 1 auto;
+}
+
+/* ——— Suggestions (client / article) : jamais plus larges que l'écran ——— */
+.search-select__list--fixed {
+  max-width: calc(100vw - 20px) !important;
+  box-sizing: border-box;
+}
+
+@media (max-width: 960px) {
+  .pos-pro--v3 .search-select__list--pos-product.search-select__list--fixed,
+  .pos-pro--v3 .search-select__list--pos-client.search-select__list--fixed {
+    min-width: 0 !important;
+  }
+
+  .search-select__list--fixed .search-select__option {
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+}
+
+/* ——— Caisse : en-tête sans chevauchement (écrans 961px et plus) ———
+   La grille réduisait la colonne « BESTO SHOP / Caisse » sous la largeur
+   de son texte : il passait sous « Type de vente » (≈ 1024–1280px). */
+@media (min-width: 961px) {
+  .pos-pro--v3 .pos-pro__header {
+    display: flex !important;
+    flex-wrap: wrap;
+    align-items: stretch;
+    padding-right: 0 !important;
+  }
+
+  .pos-pro--v3 .pos-pro__header > .pos-pro__back {
+    flex: 0 0 auto;
+    margin-right: 0.5rem;
+  }
+
+  .pos-pro--v3 .pos-pro__header > .pos-pro__brand {
+    flex: 1 1 140px;
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  .pos-pro--v3 .pos-pro__brand strong,
+  .pos-pro--v3 .pos-pro__brand small {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .pos-pro--v3 .pos-pro__header > .pos-pro__meta-block,
+  .pos-pro--v3 .pos-pro__header > .pos-pro__datetime {
+    flex: 0 0 auto;
+    min-width: 0;
+  }
+
+  .pos-pro--v3 .pos-pro__meta-block--seller strong {
+    max-width: 16rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .pos-pro--v3 .pos-pro__header > .pos-pro__mobile-total {
+    display: none;
+  }
+
+  /* Client : champ sur toute la largeur, boutons dessous (nom complet visible) */
+  .pos-pro--v3 .pos-pro__entry-block .pos-pro__client-row {
+    grid-template-columns: minmax(0, 1fr) !important;
+    row-gap: 0.6rem;
+  }
+
+  .pos-pro--v3 .pos-pro__client-actions {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+  }
+
+  .pos-pro--v3 .pos-pro__client-actions .pos-pro__client-btn {
+    min-height: 44px;
+    width: 100%;
+  }
+}
+
+@media (min-width: 961px) and (max-width: 1180px) {
+  .pos-pro--v3 .pos-pro__brand small,
+  .pos-pro--v3 .pos-pro__header > .pos-pro__datetime {
+    display: none;
+  }
+
+  .pos-pro--v3 .pos-pro__type-btn {
+    padding-left: 0.6rem;
+    padding-right: 0.6rem;
+    font-size: 0.72rem;
+  }
+}
+
+/* Champ client de la caisse : pleine largeur (était limité à 260px) */
+.pos-pro--v3 .search-select--pos-client,
+.pos-pro--v3 .search-select--pos-client .search-select__control,
+.pos-pro--v3 .search-select--pos-client .search-select__input {
+  width: 100% !important;
+  max-width: none !important;
+}
+
+/* Bandeaux d'installation / mise à jour : jamais au-dessus de la caisse.
+   Les conseils d'installation sont masqués tant que la caisse est ouverte ;
+   les alertes (hors ligne, mise à jour) passent en haut de l'écran. */
+html:has(.pos-pro) .pwa-banner--install,
+html:has(.pos-pro) .pwa-banner--warning {
+  display: none !important;
+}
+
+html:has(.pos-pro) .pwa-banners {
+  top: 0.75rem;
+  bottom: auto !important;
+}
+
+/* Barre latérale sur écrans peu hauts (portables 720–800px) :
+   la carte magasin recouvrait le dernier lien (« Réglages »). */
+.bmb-sidebar__store-card {
+  flex-shrink: 0 !important;
+}
+
+@media (min-width: 961px) and (max-height: 820px) {
+  .bmb-sidebar__store-card {
+    display: none !important;
+  }
+}
+
+/* ——— Défilement dans les tableaux ———
+   Les listes longues défilent à l'intérieur du tableau ; l'en-tête et la
+   ligne de total restent visibles. */
+html .bmb-v2 .card.table-main .bmb-data-table-wrap.bmb-table-scroll-y,
+html .bmb-v2 .card.table-main > .bmb-data-table-wrap,
+html .bmb-v2 .card.table-main > .table-scroll,
+html .bmb-v2 .card.table-main > .bmb-responsive-data .bmb-data-table-wrap,
+html .bmb-v2 .page-panel > .bmb-data-table-wrap {
+  max-height: min(62vh, 640px) !important;
+  overflow: auto !important;
+  overscroll-behavior: contain;
+}
+
+html .bmb-v2 .card.table-main .bmb-data-table-wrap thead th,
+html .bmb-v2 .page-panel > .bmb-data-table-wrap thead th {
+  position: sticky;
+  top: 0;
+  z-index: 4;
+  background: var(--table-head-bg, #eef2ef);
+}
+
+html .bmb-v2 .card.table-main .bmb-data-table-wrap tfoot td,
+html .bmb-v2 .card.table-main .bmb-data-table-wrap tfoot th {
+  position: sticky;
+  bottom: 0;
+  z-index: 3;
+  background: color-mix(in srgb, var(--primary) 8%, #fff);
+}
+
+@media print {
+  html .bmb-v2 .card.table-main .bmb-data-table-wrap,
+  html .bmb-v2 .card.table-main .table-scroll,
+  html .bmb-v2 .page-panel > .bmb-data-table-wrap {
+    max-height: none !important;
+    overflow: visible !important;
+  }
+
+  html .bmb-v2 .bmb-data-table-wrap thead th,
+  html .bmb-v2 .bmb-data-table-wrap tfoot td {
+    position: static !important;
+  }
+}
+
+/* overflow: hidden sur <table> en faisait le conteneur de défilement :
+   l'en-tête « sticky » ne restait pas visible. clip garde les coins arrondis. */
+html .bmb-v2 .bmb-data-table-wrap > table {
+  overflow: clip !important;
+}
+
+/* ——— Historique des encaissements client ——— */
+.client-pay-history {
+  margin-top: 1rem;
+}
+
+.client-pay-history__count {
+  font-weight: 500;
+  color: var(--text-muted);
+  font-size: 0.85em;
+}
+
+.client-pay-history__time {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+html .bmb-v2 .client-pay-history__table.bmb-table-scroll-y {
+  max-height: min(40vh, 360px) !important;
+  overflow: auto !important;
+}
+
+.client-pay-history--compact .bmb-section-title {
+  font-size: 0.85rem;
+  margin: 0.75rem 0 0.4rem;
+}
+
+.client-pay-history--compact .bmb-data-table {
+  font-size: 0.8rem;
+}
+
+html .bmb-v2 .client-pay-history--compact .client-pay-history__table.bmb-table-scroll-y {
+  max-height: 210px !important;
+}
+
+.client-bulk-extras {
+  padding-top: 0.5rem;
+}
+
+.client-bulk-extras__date {
+  margin: 0;
+  padding: 0.55rem 0.75rem;
+  border-radius: var(--radius-sm);
+  background: var(--primary-soft);
+  color: var(--text);
+  font-size: 0.85rem;
+}
+
+.client-bulk-extras__date strong {
+  text-transform: capitalize;
+}
+
+/* Champs de recherche dans les formulaires / filtres : pleine largeur
+   (la règle générique .search-input les limitait à 260px et coupait le texte). */
+.search-select .search-select__input,
+.bmb-filters-panel__item .search-input {
+  width: 100%;
+  max-width: none;
+}
+
+/* Historique compact (fenêtre d'encaissement) : tient dans la largeur */
+.client-pay-history--compact .bmb-data-table {
+  min-width: 0 !important;
+  width: 100%;
+}
+
+.client-pay-history--compact .bmb-data-table th,
+.client-pay-history--compact .bmb-data-table td {
+  padding: 0.45rem 0.55rem !important;
+}
+
+/* Montants : jamais coupés sur deux lignes */
+.bmb-data-table td.col-num,
+.bmb-data-table th.col-num {
+  white-space: nowrap;
+}
+
+/* Liste clients : la colonne solde était coupée à droite */
+.clients-page-list__scroll {
+  overflow-x: auto !important;
+}
+
+/* Liste clients : largeur de colonnes automatique (la colonne « Dette » était rognée) */
+html .bmb-v2 .clients-page-list__table {
+  table-layout: auto !important;
+  width: 100% !important;
+  min-width: 0 !important;
+}
+
+html .bmb-v2 .clients-page-list__table th,
+html .bmb-v2 .clients-page-list__table td {
+  width: auto !important;
+  max-width: none !important;
+}
+
+html .bmb-v2 .clients-page-list__table .col-num {
+  min-width: 0 !important;
+}

@@ -74,7 +74,7 @@ async function run() {
   }
 
   const comptoir = await req('GET', '/clients?search=COMPTOIR', null, true);
-  ok('Client comptoir existe', comptoir.status === 200 && Array.isArray(comptoir.data) && comptoir.data.length > 0);
+  ok('Client comptoir existe', comptoir.status === 200 && (Array.isArray(comptoir.data) ? comptoir.data : comptoir.data?.clients || []).length > 0);
 
   console.log(`\n=== Résultat : ${passed} OK, ${failed} échec(s) ===\n`);
   process.exit(failed > 0 ? 1 : 0);

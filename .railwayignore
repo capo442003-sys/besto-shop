@@ -1,4 +1,4 @@
-﻿electron/
+electron/
 docs/
 deploy/
 e2e/
@@ -13,15 +13,11 @@ backend/backups/
 backend/certs/
 backend/node_modules/
 frontend/node_modules/
-frontend/src/
-frontend/public/
-frontend/scripts/
-frontend/index.html
-frontend/vite.config.js
 frontend/.env*
 frontend/.vercel/
 node_modules/
 _archive*
 *.md
 *.png
-!frontend/dist/**
+!frontend/public/**
+frontend/dist/

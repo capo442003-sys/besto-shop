@@ -192,7 +192,7 @@ body {
 .bmb-v2 .form-group select {
   border-radius: var(--radius-sm) !important;
   border-color: var(--border) !important;
-  background: #fafcfb;
+  background-color: #fafcfb;
   font-size: var(--text-sm);
   transition: border-color var(--duration-fast), box-shadow var(--duration-fast);
 }
@@ -204,7 +204,7 @@ body {
   border-color: var(--primary) !important;
   box-shadow: var(--focus-ring);
   outline: none;
-  background: #fff;
+  background-color: #fff;
 }
 
 /* ——— Boutons : net, moins “pill / glow” ——— */

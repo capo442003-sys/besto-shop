@@ -1,6 +1,12 @@
 import { useEffect, useState, useMemo, useCallback } from 'react';
 import api from '../../api/client';
-import { formatGNF, formatCashReference, cashTransactionTypeLabel } from '../../utils/format';
+import { formatGNF, formatCashReference, cashTransactionTypeLabel, formatDateOnly } from '../../utils/format';
+
+function txTime(t) {
+  if (!t.created_at) return '';
+  const d = new Date(t.created_at);
+  return Number.isNaN(d.getTime()) ? '' : d.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+}
 import { sumCashTransactionsBreakdown, isExcludedVoidedCashTx } from '../../utils/calculations';
 import EmptyState from '../../components/ui/EmptyState';
 import TableSkeleton from '../../components/ui/TableSkeleton';
@@ -56,6 +62,7 @@ export default function Historique() {
   const [truncated, setTruncated] = useState(false);
   const [filters, setFilters] = useState({ date_from: '', date_to: '', type: '', scope: '' });
   const [loading, setLoading] = useState(false);
+  const [search, setSearch] = useState('');
   const notify = useNotify();
   const confirm = useConfirm();
   const { userRoles, user } = useAuth();
@@ -86,11 +93,27 @@ export default function Historique() {
     if (event === 'dashboard:refresh' || event === 'cash:closed') load();
   });
 
+  const searchTerm = search.trim().toLowerCase();
+  const visibleList = useMemo(() => {
+    if (!searchTerm) return list;
+    return list.filter((t) => [
+      cashTransactionTypeLabel(t),
+      t.description,
+      t.reference_type ? formatCashReference(t) : '',
+      t.cash_date,
+      t.category,
+      String(t.amount ?? ''),
+      formatGNF(t.amount),
+    ].some((v) => v && String(v).toLowerCase().includes(searchTerm)));
+  }, [list, searchTerm]);
+
   const totals = useMemo(() => {
+    // Recherche texte : totaux calculés sur les lignes affichées.
+    if (searchTerm) return sumCashTransactionsBreakdown(visibleList);
     const fromApi = parseSummaryBreakdown(summary);
     if (fromApi) return fromApi;
     return sumCashTransactionsBreakdown(list);
-  }, [summary, list]);
+  }, [summary, list, visibleList, searchTerm]);
 
   const footerLabel = filters.type === 'recette'
     ? 'Total recettes'
@@ -110,7 +133,7 @@ export default function Historique() {
       : '';
     const ok = await confirm({
       title: 'Supprimer cette opération',
-      message: `Supprimer définitivement « ${cashTransactionTypeLabel(tx)} » de ${formatGNF(tx.amount)} (${tx.cash_date}) ?${linked}\n\nLe tableau de bord sera mis à jour.`,
+      message: `Supprimer définitivement « ${cashTransactionTypeLabel(tx)} » de ${formatGNF(tx.amount)} (${formatDateOnly(tx.cash_date)}) ?${linked}\n\nLe tableau de bord sera mis à jour.`,
       confirmLabel: 'Supprimer',
       variant: 'danger',
     });
@@ -160,7 +183,7 @@ export default function Historique() {
               type="button"
               className="btn btn-danger btn-sm"
               onClick={purgeFiltered}
-              disabled={loading || !totals.count}
+              disabled={loading || !totals.count || Boolean(searchTerm)}
               title="Supprimer toutes les opérations correspondant aux filtres"
             >
               Supprimer l&apos;historique filtré
@@ -172,6 +195,17 @@ export default function Historique() {
         Toutes les opérations sont listées. Les ventes annulées restent visibles mais sont exclues des totaux.
       </p>
       <div className="bmb-filters-panel">
+        <div className="bmb-filters-panel__item clients-filters__search">
+          <label htmlFor="fin-history-search">Recherche (type, description, référence, montant)</label>
+          <input
+            id="fin-history-search"
+            type="search"
+            className="search-input search-input--full"
+            placeholder="Rechercher une opération…"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+        </div>
         <div className="bmb-filters-panel__item">
           <label>Date début</label>
           <input type="date" value={filters.date_from} onChange={(e) => setFilters({ ...filters, date_from: e.target.value })} />
@@ -208,12 +242,37 @@ export default function Historique() {
           Liste limitée à 500 lignes — les totaux incluent les {totals.count} opérations correspondant aux filtres.
         </p>
       )}
+      {!loading && (
+        <div className="reglement-summary-row fin-history-summary" role="group" aria-label="Totaux de l'historique">
+          <div className="reglement-summary-item">
+            <span className="reglement-summary-label">Opérations</span>
+            <strong className="reglement-summary-value">{totals.count}</strong>
+          </div>
+          <div className="reglement-summary-item">
+            <span className="reglement-summary-label">Total entrées</span>
+            <strong className="reglement-summary-value" style={{ color: 'var(--success)' }}>+{formatGNF(totals.recettes)}</strong>
+          </div>
+          <div className="reglement-summary-item">
+            <span className="reglement-summary-label">Total sorties</span>
+            <strong className="reglement-summary-value reglement-summary-value--danger">−{formatGNF(totals.depenses)}</strong>
+          </div>
+          <div className="reglement-summary-item">
+            <span className="reglement-summary-label">Solde net</span>
+            <strong className="reglement-summary-value">{formatGNF(totals.net)}</strong>
+          </div>
+        </div>
+      )}
+      {searchTerm && (
+        <p className="bmb-page-hint" style={{ margin: 0 }}>
+          {visibleList.length} opération(s) correspondant à « {search.trim()} » — totaux calculés sur ces lignes.
+        </p>
+      )}
       {loading ? (
         <TableSkeleton rows={8} columns={4} />
       ) : (
         <ResponsiveDataView
           cards={
-            list.length === 0 ? (
+            visibleList.length === 0 ? (
               <EmptyState
                 icon="💰"
                 title="Aucune transaction"
@@ -222,14 +281,14 @@ export default function Historique() {
                   : 'Les recettes et dépenses de caisse apparaîtront ici.'}
                 compact
               />
-            ) : list.map((t) => {
+            ) : visibleList.map((t) => {
               const excluded = isExcludedVoidedCashTx(t);
               const outflow = isOutflow(t);
               return (
                 <DataCard
                   key={t.id}
                   title={cashTransactionTypeLabel(t)}
-                  subtitle={t.cash_date}
+                  subtitle={`${formatDateOnly(t.cash_date)}${txTime(t) ? ` · ${txTime(t)}` : ''}`}
                   badge={(
                     <span className={outflow ? 'bmb-amount--danger' : undefined} style={outflow ? undefined : { color: 'var(--success)' }}>
                       {outflow ? '−' : '+'}
@@ -259,7 +318,7 @@ export default function Historique() {
             })
           }
           table={(
-      <div className="bmb-data-table-wrap table-scroll">
+      <div className="bmb-data-table-wrap table-scroll bmb-table-scroll-y">
         <table className="bmb-data-table table-full">
           <thead>
             <tr>
@@ -271,13 +330,16 @@ export default function Historique() {
             </tr>
           </thead>
           <tbody>
-            {list.length === 0 ? (
+            {visibleList.length === 0 ? (
               <tr><td colSpan={isAdmin ? 5 : 4} className="table-empty">Aucune transaction</td></tr>
-            ) : list.map((t) => {
+            ) : visibleList.map((t) => {
               const excluded = isExcludedVoidedCashTx(t);
               return (
               <tr key={t.id} style={excluded ? { opacity: 0.65 } : undefined}>
-                <td>{t.cash_date}</td>
+                <td style={{ whiteSpace: 'nowrap' }}>
+                  {formatDateOnly(t.cash_date)}
+                  {txTime(t) && <span style={{ display: 'block', fontSize: '0.75rem', color: 'var(--text-muted)' }}>{txTime(t)}</span>}
+                </td>
                 <td>
                   {cashTransactionTypeLabel(t)}
                   {excluded && (
@@ -286,7 +348,7 @@ export default function Historique() {
                     </span>
                   )}
                 </td>
-                <td className="col-num" style={isOutflow(t) ? { color: 'var(--danger)' } : undefined}>
+                <td className="col-num" style={{ whiteSpace: 'nowrap', ...(isOutflow(t) ? { color: 'var(--danger)' } : {}) }}>
                   {isOutflow(t) ? '−' : '+'}
                   {formatGNF(t.amount)}
                 </td>
@@ -327,7 +389,7 @@ export default function Historique() {
                     </span>
                   )}
                 </td>
-                <td className="col-num"><strong>{formatGNF(footerAmount)}</strong></td>
+                <td className="col-num" style={{ whiteSpace: 'nowrap' }}><strong>{formatGNF(footerAmount)}</strong></td>
                 <td colSpan={isAdmin ? 2 : 1} />
               </tr>
               {!filters.type && (

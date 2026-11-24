@@ -404,3 +404,120 @@ html .bmb-v2 .clients-page-list__table td {
 html .bmb-v2 .clients-page-list__table .col-num {
   min-width: 0 !important;
 }
+
+/* ============================================================
+   Écrans bloqués / coupés
+   ============================================================ */
+
+/* Modules Ventes et Catalogue : la page était figée (overflow hidden) pour
+   ne faire défiler que les tableaux. Avec les filtres, les totaux et un
+   écran de portable, le haut ou le bas devenait inaccessible. La page
+   défile désormais normalement ; les longs tableaux gardent leur propre
+   défilement (en-tête et total fixes). La caisse plein écran mobile
+   (app-caisse-active) n'est pas concernée. */
+html:not(.app-caisse-active) .bmb-v2 .bmb-page:has(.module-shell--ventes),
+html:not(.app-caisse-active) .bmb-v2 .bmb-page:has(.module-shell--produits) {
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+  display: block !important;
+}
+
+html:not(.app-caisse-active) .bmb-v2 .module-shell--ventes,
+html:not(.app-caisse-active) .bmb-v2 .module-shell--produits,
+html:not(.app-caisse-active) .bmb-v2 .module-shell--ventes .module-shell__body,
+html:not(.app-caisse-active) .bmb-v2 .module-shell--produits .module-shell__body,
+html:not(.app-caisse-active) .bmb-v2 .module-shell--ventes .module-shell__body > *,
+html:not(.app-caisse-active) .bmb-v2 .module-shell--produits .module-shell__body > *,
+html:not(.app-caisse-active) .bmb-v2 .inventaire-ventes,
+html:not(.app-caisse-active) .bmb-v2 .reglement-page {
+  overflow: visible !important;
+  max-height: none !important;
+  min-height: 0 !important;
+  height: auto !important;
+}
+
+/* La caisse (écran de vente) garde une hauteur confortable sans être coupée */
+html:not(.app-caisse-active) .bmb-v2 .module-shell--ventes .pos-pro--v3 {
+  min-height: min(760px, calc(100dvh - 120px));
+}
+
+/* Barre du haut sur téléphone et tablette : le profil (avatar) sortait de l'écran */
+@media (max-width: 960px) {
+  html .bmb-v2 .bmb-topbar {
+    min-width: 0;
+    gap: 0.4rem !important;
+  }
+
+  html .bmb-v2 .bmb-topbar__left {
+    min-width: 0;
+    flex: 0 1 auto;
+  }
+
+  html .bmb-v2 .bmb-topbar__right {
+    min-width: 0;
+    flex: 1 1 auto;
+    justify-content: flex-end;
+    gap: 0.35rem !important;
+  }
+
+  html .bmb-v2 .bmb-topbar__role-pill,
+  html .bmb-v2 .bmb-topbar__user-info,
+  html .bmb-v2 .topbar__clock,
+  html .bmb-v2 .bmb-topbar__store {
+    display: none !important;
+  }
+
+  html .bmb-v2 .bmb-topbar .bmb-pv-filter--compact {
+    min-width: 0;
+    flex: 0 1 auto;
+  }
+
+  html .bmb-v2 .bmb-topbar .bmb-pv-filter--compact label {
+    display: none !important;
+  }
+
+  html .bmb-v2 .bmb-topbar .bmb-pv-filter--compact select {
+    max-width: 34vw;
+    min-width: 0 !important;
+    width: auto !important;
+  }
+
+  html .bmb-v2 .bmb-topbar__user,
+  html .bmb-v2 .bmb-topbar__user-btn {
+    flex-shrink: 0;
+    min-width: 0;
+  }
+}
+
+/* Listes des barres d'outils sur téléphone : pas de largeur minimale qui déborde */
+@media (max-width: 960px) {
+  html .bmb-v2 .table-main-toolbar .toolbar-actions .filter-select,
+  html .bmb-v2 .table-main-toolbar .toolbar-actions select {
+    min-width: 0 !important;
+    width: 100% !important;
+    max-width: 100%;
+  }
+
+  html .bmb-v2 .table-main-toolbar .toolbar-actions {
+    width: 100%;
+  }
+}
+
+/* Défilement : arrivé en bas d'un tableau, la molette / le doigt continue
+   sur la page (contain bloquait l'utilisateur dans le tableau). */
+html .bmb-v2 .bmb-data-table-wrap,
+html .bmb-v2 .table-scroll,
+html .bmb-v2 .clients-page-list__scroll,
+html .bmb-v2 .clients-page-detail__scroll,
+html .bmb-v2 .clients-history-block .bmb-data-table-wrap,
+html .bmb-v2 .bmb-table-scroll-contained {
+  overscroll-behavior: auto !important;
+}
+
+/* Liste des clients : l'en-tête (Code, Nom, PV, Dette) reste visible au défilement */
+html .bmb-v2 .clients-page-list__table thead th {
+  position: sticky;
+  top: 0;
+  z-index: 3;
+  background: var(--table-head-bg, #eef2ef);
+}

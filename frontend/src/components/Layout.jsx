@@ -12,6 +12,7 @@ import useApiHealth from '../hooks/useApiHealth';
 import CommandPalette from './CommandPalette';
 import { usePwa } from '../context/PwaContext';
 import useIdleLogout from '../hooks/useIdleLogout';
+import useRevealInlineForms from '../hooks/useRevealInlineForms';
 import { formatStoreHeaderLine } from '../utils/storeFormat';
 import { APP_VERSION } from '../constants/version';
 import { canAccessReglement } from '../utils/sellerScope';
@@ -57,6 +58,7 @@ export default function Layout() {
   const onboarding = useOnboarding();
   const [offlineCount, setOfflineCount] = useState(() => getOfflineQueueCount());
   useIdleLogout();
+  useRevealInlineForms();
 
   useEffect(() => {
     const onQueueChange = () => setOfflineCount(getOfflineQueueCount());

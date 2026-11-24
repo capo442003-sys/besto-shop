@@ -50,10 +50,10 @@
 .seller-home__hero::after {
   content: '';
   position: absolute;
-  right: -60px;
+  right: 0;
   top: -80px;
-  width: 280px;
-  height: 280px;
+  width: 210px;
+  height: 210px;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.08);
   pointer-events: none;

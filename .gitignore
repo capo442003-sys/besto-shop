@@ -21,3 +21,7 @@ Thumbs.db
 *.lnk
 test-results/
 playwright-report/
+
+# Skills Claude installés localement (réinstallables via skills-lock.json)
+.agents/
+.claude/skills/

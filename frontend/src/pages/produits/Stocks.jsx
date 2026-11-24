@@ -14,6 +14,7 @@ import { useStoreSettings } from '../../context/StoreSettingsContext';
 import { useConfirm } from '../../context/ConfirmContext';
 import { useAuth } from '../../context/AuthContext';
 import { extractApiItems } from '../../utils/calculations';
+import Etoffe from '../../components/ui/Etoffe';
 import { canAccessAllPvs, isPvScoped, pvDisplayLabel, stockQueryParams } from '../../utils/pvScope';
 
 const emptyRestock = { product_id: '', quantity_add: '', purchase_unit_price: '', notes: '' };
@@ -580,8 +581,8 @@ export default function Stocks() {
                 const { epuise, alerte } = stockRowFlags(p);
                 return (
                   <tr key={p.id}>
-                    <td>{p.reference}</td>
-                    <td>{p.name}</td>
+                    <td className="col-ref">{p.reference}</td>
+                    <td><span className="product-cell"><Etoffe category={p.category_name} name={p.name} photo={p.image_url} mini /><span>{p.name}</span></span></td>
                     <td>{p.category_name}</td>
                     <td className="col-num"><strong>{formatQty(p.total_stock)}</strong></td>
                     <td className="col-num">{formatQty(p.min_stock)}</td>

@@ -652,9 +652,11 @@ export async function getCartById(cartId) {
     `SELECT sl.id, sl.cart_id, sl.product_id, sl.unit_price, sl.discount, sl.quantity, sl.line_total, sl.created_at,
             sl.product_name_snapshot, sl.product_reference_snapshot,
             ${SALE_LINE_PRODUCT_NAME_SQL} AS product_name,
-            ${SALE_LINE_PRODUCT_REFERENCE_SQL} AS product_reference
+            ${SALE_LINE_PRODUCT_REFERENCE_SQL} AS product_reference,
+            p.image_url, cat.name AS category_name
      FROM sale_lines sl
      JOIN products p ON p.id = sl.product_id
+     LEFT JOIN categories cat ON cat.id = p.category_id
      WHERE sl.cart_id = $1 ORDER BY sl.id`,
     [cartId]
   );

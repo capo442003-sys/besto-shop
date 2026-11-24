@@ -1,0 +1,161 @@
+/* ==========================================================================
+   Échantillons de matière (identité « boutique de mode »)
+   ========================================================================== */
+
+.etoffe {
+  --et-c: #2f5f8e;
+  --et-hi: rgba(255, 255, 255, 0.13);
+  --et-lo: rgba(0, 0, 0, 0.14);
+  --et-stitch: rgba(255, 255, 255, 0.55);
+  position: relative;
+  display: inline-block;
+  flex-shrink: 0;
+  width: 100%;
+  height: 100%;
+  min-width: 24px;
+  min-height: 24px;
+  border-radius: 14px;
+  overflow: hidden;
+  background-color: var(--et-c);
+  box-shadow: inset 0 0 0 1px rgba(22, 19, 15, 0.08);
+  isolation: isolate;
+}
+
+.etoffe::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(155deg, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0) 42%, rgba(0, 0, 0, 0.1) 100%);
+  pointer-events: none;
+}
+
+.etoffe:not(.etoffe--mini)::before {
+  content: '';
+  position: absolute;
+  inset: 7px;
+  z-index: 2;
+  border: 1px dashed var(--et-stitch);
+  border-radius: 9px;
+  pointer-events: none;
+}
+
+/* Teintes */
+.etoffe--tone-denim { --et-c: #2f5f8e; }
+.etoffe--tone-terracotta { --et-c: #b5532f; }
+.etoffe--tone-noir { --et-c: #211d19; }
+.etoffe--tone-olive { --et-c: #5e6340; }
+.etoffe--tone-sable,
+.etoffe--tone-ivoire {
+  --et-hi: rgba(80, 60, 35, 0.1);
+  --et-lo: rgba(80, 60, 35, 0.16);
+  --et-stitch: rgba(80, 60, 35, 0.45);
+}
+.etoffe--tone-sable { --et-c: #cdb491; }
+.etoffe--tone-ivoire { --et-c: #eae2d3; }
+
+/* Matières */
+.etoffe--denim {
+  background-image:
+    repeating-linear-gradient(45deg, var(--et-hi) 0 1px, transparent 1px 4px),
+    repeating-linear-gradient(-45deg, var(--et-lo) 0 1px, transparent 1px 7px);
+}
+
+.etoffe--wax {
+  background-image:
+    radial-gradient(circle at 30% 30%, rgba(243, 238, 231, 0.9) 0 2.5px, transparent 3px),
+    radial-gradient(circle at 75% 75%, rgba(22, 19, 15, 0.3) 0 4.5px, transparent 5px),
+    radial-gradient(circle at 75% 75%, transparent 6.5px, rgba(243, 238, 231, 0.35) 7px, transparent 7.5px);
+  background-size: 16px 16px;
+}
+
+.etoffe--lin {
+  background-image:
+    repeating-linear-gradient(0deg, var(--et-lo) 0 1px, transparent 1px 3px),
+    repeating-linear-gradient(90deg, var(--et-lo) 0 1px, transparent 1px 3px);
+}
+
+.etoffe--jersey {
+  background-image: repeating-linear-gradient(90deg, var(--et-hi) 0 2px, transparent 2px 4px);
+}
+
+.etoffe--toile {
+  background-image: radial-gradient(var(--et-lo) 1px, transparent 1.4px);
+  background-size: 5px 5px;
+}
+
+.etoffe--cuir {
+  background-image:
+    radial-gradient(circle at 25% 20%, rgba(255, 255, 255, 0.22), transparent 55%),
+    radial-gradient(var(--et-lo) 0.8px, transparent 1.4px);
+  background-size: 100% 100%, 4px 4px;
+}
+
+.etoffe--serge {
+  background-image: repeating-linear-gradient(60deg, var(--et-hi) 0 1px, transparent 1px 5px);
+}
+
+.etoffe--soie {
+  background-image:
+    linear-gradient(115deg, rgba(255, 255, 255, 0) 28%, rgba(255, 255, 255, 0.38) 46%, rgba(255, 255, 255, 0) 64%),
+    linear-gradient(115deg, rgba(255, 255, 255, 0) 58%, rgba(255, 255, 255, 0.18) 70%, rgba(255, 255, 255, 0) 82%);
+  background-size: 200% 200%;
+  animation: ms-silk 6s var(--ease) infinite alternate;
+}
+
+@keyframes ms-silk { from { background-position: 0% 0%; } to { background-position: 100% 100%; } }
+
+.etoffe__label {
+  position: absolute;
+  left: 12px;
+  bottom: 12px;
+  z-index: 3;
+  height: 22px;
+  padding: 0 9px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--ink);
+  font-size: 0.625rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  display: inline-flex;
+  align-items: center;
+}
+
+/* Photo du produit */
+.etoffe--photo { background: #efe9e0; }
+.etoffe--photo::before,
+.etoffe--photo::after { display: none; }
+
+.etoffe img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.etoffe--mini { border-radius: 10px; }
+
+/* Cellule produit avec échantillon */
+.product-cell { display: inline-flex; align-items: center; gap: 12px; min-width: 0; font-weight: 700; }
+.product-cell .etoffe { width: 40px; height: 40px; min-width: 40px; border-radius: 11px; }
+td.col-ref { white-space: nowrap; color: var(--muted); font-size: var(--fs-sm); }
+
+/* Champ photo du formulaire article */
+.product-photo-field {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 16px;
+  padding: 14px;
+  border-radius: var(--r-lg);
+  border: 2px dashed var(--line-strong);
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.product-photo-field__preview.etoffe { width: 92px; height: 92px; min-width: 92px; border-radius: 18px; }
+.product-photo-field__preview .etoffe__label { left: 8px; bottom: 8px; }
+.product-photo-field__text { display: flex; flex-direction: column; gap: 6px; min-width: 0; font-size: var(--fs-sm); color: var(--muted); }
+.product-photo-field__text strong { color: var(--ink); font-size: var(--fs-md); }
+.product-photo-field__text strong span { color: var(--muted); font-weight: 500; font-size: var(--fs-sm); }

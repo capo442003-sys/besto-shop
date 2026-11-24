@@ -14,6 +14,7 @@ import { canAccessAllPvs, isZoneManager, stockQueryParams } from '../utils/pvSco
 import { usePvFilter } from '../context/PvFilterContext';
 import PvFilterBar from '../components/PvFilterBar';
 import SellerDashView from '../components/dashboard/SellerDashView';
+import Etoffe from '../components/ui/Etoffe';
 import { NavIcon } from '../components/NavIcons';
 import { pvDisplayLabel } from '../utils/pvScope';
 
@@ -977,12 +978,11 @@ function TopProductsTable({ products }) {
             const unitPrice = parseFloat(p.sale_price) || (
               parseFloat(p.quantity) > 0 ? parseFloat(p.total) / parseFloat(p.quantity) : 0
             );
-            const initial = (p.name || '?').trim().charAt(0).toUpperCase();
             return (
               <tr key={p.reference || i}>
                 <td>
                   <div className="bmb-dash-erp-product">
-                    <span className="bmb-dash-erp-product__thumb">{initial}</span>
+                    <span className="bmb-dash-erp-product__thumb"><Etoffe category={p.category} name={p.name} photo={p.image_url} mini /></span>
                     <span>
                       <span className="bmb-dash-erp-product__name">{p.name}</span>
                       {p.reference && <span className="bmb-dash-erp-product__ref">{p.reference}</span>}

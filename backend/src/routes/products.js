@@ -1,5 +1,9 @@
 import { Router } from 'express';
 import multer from 'multer';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { requirePermission } from '../middleware/requirePermission.js';
 import pool from '../db/pool.js';
 import { authenticate, requireAdmin } from '../middleware/auth.js';
 import { generateProductReference, isPgUniqueViolation } from '../utils/codes.js';
@@ -378,6 +382,66 @@ router.post('/', asyncHandler(async (req, res) => {
     }
   }
   return res.status(500).json({ message: 'Impossible de générer une référence produit unique' });
+}));
+
+/* ---------- Photo produit (facultative) ---------- */
+const productUploadsDir = path.join(path.dirname(fileURLToPath(import.meta.url)), '../../uploads');
+if (!fs.existsSync(productUploadsDir)) fs.mkdirSync(productUploadsDir, { recursive: true });
+
+const uploadProductImage = multer({
+  storage: multer.diskStorage({
+    destination: productUploadsDir,
+    filename: (req, file, cb) => {
+      const ext = path.extname(file.originalname).toLowerCase();
+      const safe = ['.png', '.jpg', '.jpeg', '.webp'].includes(ext) ? ext : '.jpg';
+      cb(null, `product-${parseInt(req.params.id, 10) || 0}-${Date.now()}${safe}`);
+    },
+  }),
+  limits: { fileSize: 5 * 1024 * 1024 },
+  fileFilter: (_req, file, cb) => {
+    if (/^image\/(jpeg|png|webp)$/.test(file.mimetype)) cb(null, true);
+    else cb(new Error('Format image invalide (JPG, PNG ou WebP)'));
+  },
+});
+
+function deleteProductImageFile(url) {
+  if (!url?.startsWith('/api/uploads/product-')) return;
+  const filePath = path.join(productUploadsDir, path.basename(url.split('?')[0]));
+  try {
+    if (fs.existsSync(filePath)) fs.unlinkSync(filePath);
+  } catch {
+    /* fichier déjà absent */
+  }
+}
+
+router.post('/:id/image', requirePermission('produits', 'edit'), (req, res, next) => {
+  uploadProductImage.single('image')(req, res, (err) => {
+    if (err) return res.status(400).json({ message: err.message || 'Envoi de la photo impossible' });
+    return next();
+  });
+}, asyncHandler(async (req, res) => {
+  const productId = parseInt(req.params.id, 10);
+  if (!req.file) return res.status(400).json({ message: 'Photo requise' });
+  const { rows: prev } = await pool.query('SELECT image_url FROM products WHERE id = $1', [productId]);
+  if (!prev.length) {
+    deleteProductImageFile(`/api/uploads/${req.file.filename}`);
+    return res.status(404).json({ message: 'Produit introuvable' });
+  }
+  const imageUrl = `/api/uploads/${req.file.filename}`;
+  await pool.query('UPDATE products SET image_url = $1, updated_at = NOW() WHERE id = $2', [imageUrl, productId]);
+  deleteProductImageFile(prev[0].image_url);
+  await logAudit(req.user.id, 'update', 'product', productId, { change: 'image_upload' });
+  res.json({ image_url: imageUrl });
+}));
+
+router.delete('/:id/image', requirePermission('produits', 'edit'), asyncHandler(async (req, res) => {
+  const productId = parseInt(req.params.id, 10);
+  const { rows } = await pool.query('SELECT image_url FROM products WHERE id = $1', [productId]);
+  if (!rows.length) return res.status(404).json({ message: 'Produit introuvable' });
+  await pool.query('UPDATE products SET image_url = NULL, updated_at = NOW() WHERE id = $1', [productId]);
+  deleteProductImageFile(rows[0].image_url);
+  await logAudit(req.user.id, 'update', 'product', productId, { change: 'image_delete' });
+  res.json({ image_url: null });
 }));
 
 router.put('/:id', async (req, res) => {

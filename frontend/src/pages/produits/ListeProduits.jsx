@@ -14,6 +14,7 @@ import BmbFormModal from '../../components/BmbFormModal';
 import EmptyState from '../../components/ui/EmptyState';
 import TableSkeleton from '../../components/ui/TableSkeleton';
 import ResponsiveDataView from '../../components/ui/ResponsiveDataView';
+import Etoffe from '../../components/ui/Etoffe';
 import DataCard from '../../components/ui/DataCard';
 
 const emptyForm = {
@@ -263,11 +264,25 @@ export default function ListeProduits() {
     try {
       if (editId) {
         await api.put(`/products/${editId}`, buildPayload());
+        try {
+          await syncPhoto(editId);
+        } catch (photoErr) {
+          setMsg(photoErr.response?.data?.message || 'Produit modifié — la photo n\'a pas pu être enregistrée');
+          closeForm();
+          load();
+          return;
+        }
         setMsg('Produit modifié');
         closeForm();
       } else {
-        await api.post('/products', buildPayload());
-        setMsg('Produit ajouté');
+        const { data: created } = await api.post('/products', buildPayload());
+        try {
+          await syncPhoto(created?.id);
+          setMsg('Produit ajouté');
+        } catch (photoErr) {
+          setMsg(photoErr.response?.data?.message || 'Produit ajouté — la photo n\'a pas pu être enregistrée');
+        }
+        resetPhoto();
         setForm(emptyForm);
         setEditId(null);
         focusNameField();
@@ -289,10 +304,54 @@ export default function ListeProduits() {
     loadCats();
   };
 
+  const [photoFile, setPhotoFile] = useState(null);
+  const [photoPreview, setPhotoPreview] = useState('');
+  const [existingPhoto, setExistingPhoto] = useState('');
+  const [removePhoto, setRemovePhoto] = useState(false);
+  const photoInputRef = useRef(null);
+
+  const resetPhoto = () => {
+    if (photoPreview) URL.revokeObjectURL(photoPreview);
+    setPhotoFile(null);
+    setPhotoPreview('');
+    setExistingPhoto('');
+    setRemovePhoto(false);
+  };
+
+  const onPickPhoto = (e) => {
+    const file = e.target.files?.[0];
+    e.target.value = '';
+    if (!file) return;
+    if (!/^image\/(jpeg|png|webp)$/.test(file.type)) {
+      setMsg('Photo : format JPG, PNG ou WebP uniquement');
+      return;
+    }
+    if (file.size > 5 * 1024 * 1024) {
+      setMsg('Photo trop lourde (5 Mo maximum)');
+      return;
+    }
+    if (photoPreview) URL.revokeObjectURL(photoPreview);
+    setPhotoFile(file);
+    setPhotoPreview(URL.createObjectURL(file));
+    setRemovePhoto(false);
+  };
+
+  const syncPhoto = async (productId) => {
+    if (!productId) return;
+    if (photoFile) {
+      const fd = new FormData();
+      fd.append('image', photoFile);
+      await api.post(`/products/${productId}/image`, fd, { headers: { 'Content-Type': 'multipart/form-data' } });
+    } else if (removePhoto && existingPhoto) {
+      await api.delete(`/products/${productId}/image`);
+    }
+  };
+
   const closeForm = () => {
     setShowForm(false);
     setEditId(null);
     setForm(emptyForm);
+    resetPhoto();
   };
 
   const openCreate = () => {
@@ -301,6 +360,8 @@ export default function ListeProduits() {
   };
 
   const openEdit = (p) => {
+    resetPhoto();
+    setExistingPhoto(p.image_url || '');
     setEditId(p.id);
     setForm({
       name: p.name,
@@ -427,8 +488,8 @@ export default function ListeProduits() {
                 <tr><td colSpan={9} className="table-empty">Aucun produit — cliquez sur + Ajouter</td></tr>
               ) : list.map((p) => (
                 <tr key={p.id}>
-                  <td>{p.reference}</td>
-                  <td>{p.name}</td>
+                  <td className="col-ref">{p.reference}</td>
+                  <td><span className="product-cell"><Etoffe category={p.category_name} name={p.name} photo={p.image_url} mini /><span>{p.name}</span></span></td>
                   <td>{p.category_name}</td>
                   <td className="col-num">{formatQty(p.total_stock)}</td>
                   <td className="col-num">{formatGNF(p.purchase_price)}</td>
@@ -488,6 +549,38 @@ export default function ListeProduits() {
         title={editId ? 'Modifier le produit' : 'Nouveau produit'}
         titleId="product-form-title"
       >
+            <div className="product-photo-field">
+              <Etoffe
+                className="product-photo-field__preview"
+                category={categories.find((c) => String(c.id) === String(form.category_id))?.name}
+                name={form.name}
+                photo={photoPreview || (!removePhoto && existingPhoto ? existingPhoto : '')}
+              />
+              <div className="product-photo-field__text">
+                <strong>Photo du produit <span>facultatif</span></strong>
+                <span>JPG, PNG ou WebP · 5 Mo max. Sans photo, la matière de la catégorie s&apos;affiche automatiquement.</span>
+                <div className="btn-group">
+                  <button type="button" className="btn btn-secondary btn-sm" onClick={() => photoInputRef.current?.click()}>
+                    {(photoPreview || (!removePhoto && existingPhoto ? existingPhoto : '')) ? 'Changer la photo' : 'Ajouter une photo'}
+                  </button>
+                  {(photoPreview || (!removePhoto && existingPhoto ? existingPhoto : '')) && (
+                    <button
+                      type="button"
+                      className="btn btn-danger btn-sm"
+                      onClick={() => {
+                        if (photoPreview) URL.revokeObjectURL(photoPreview);
+                        setPhotoFile(null);
+                        setPhotoPreview('');
+                        if (existingPhoto) setRemovePhoto(true);
+                      }}
+                    >
+                      Retirer
+                    </button>
+                  )}
+                </div>
+                <input ref={photoInputRef} type="file" accept="image/jpeg,image/png,image/webp" capture="environment" hidden onChange={onPickPhoto} />
+              </div>
+            </div>
             <div className="inline-form-grid form-compact">
               <div className="form-group"><label>Nom</label><input ref={nameInputRef} value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} /></div>
               <div className="form-group">

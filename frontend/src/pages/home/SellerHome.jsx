@@ -4,9 +4,9 @@ import api from '../../api/client';
 import { useAuth } from '../../context/AuthContext';
 import { useStoreSettings } from '../../context/StoreSettingsContext';
 import { formatGNF } from '../../utils/format';
+import Etoffe from '../../components/ui/Etoffe';
 import { canAccessReglement } from '../../utils/sellerScope';
 import { stockQueryParams, pvDisplayLabel } from '../../utils/pvScope';
-import '../../styles/seller-home.css';
 
 const DEFAULT_OBJECTIVE = 5000000;
 const RING_LEN = 339;
@@ -131,7 +131,7 @@ export default function SellerHome() {
         <section className="seller-home__goal" aria-label="Objectif du jour">
           <div className="seller-home__ring">
             <svg aria-hidden="true" width="132" height="132" viewBox="0 0 132 132">
-              <circle cx="66" cy="66" r="54" fill="none" stroke="rgba(15,107,69,0.14)" strokeWidth="14" />
+              <circle cx="66" cy="66" r="54" fill="none" stroke="rgba(22,19,15,0.08)" strokeWidth="14" />
               <circle
                 key={`${pct}-${loading}`}
                 className="seller-home__ring-value"
@@ -139,7 +139,7 @@ export default function SellerHome() {
                 cy="66"
                 r="54"
                 fill="none"
-                stroke="#12804F"
+                stroke="#C4522E"
                 strokeWidth="14"
                 strokeLinecap="round"
                 strokeDasharray={RING_LEN}
@@ -272,9 +272,7 @@ export default function SellerHome() {
             <ul className="seller-home__list">
               {tops.slice(0, 5).map((t) => (
                 <li key={t.reference || t.name} className="seller-home__top-item">
-                  <span className="seller-home__initials" aria-hidden="true">
-                    {(t.name || '?').split(' ').map((w) => w[0]).join('').slice(0, 2).toUpperCase()}
-                  </span>
+                  <Etoffe className="seller-home__initials" category={t.category} name={t.name} photo={t.image_url} mini />
                   <span className="seller-home__top-name">{t.name}</span>
                   <strong>{formatGNF(t.total)}</strong>
                 </li>

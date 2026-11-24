@@ -10,7 +10,6 @@ import { useNotify } from '../../hooks/useNotify';
 import AlertBanner from '../../components/AlertBanner';
 import { formatDate } from '../../utils/format';
 import { downloadBlobResponse } from '../../utils/downloadBlob';
-import '../../styles/magasin.css';
 
 const LOGIN_SLOTS = [
   { slot: '1', label: 'Image principale', hint: 'Grande image de fond — recommandé 1920×1080' },

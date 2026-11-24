@@ -20,7 +20,6 @@ import { useConfirm } from '../../context/ConfirmContext';
 import { logoSrc, useStoreSettings } from '../../context/StoreSettingsContext';
 import VendrePosView from './VendrePosView';
 import { BRAND_LOGO } from '../../config/brandAssets';
-import '../../styles/pos.css';
 
 const emptyLine = { product_id: '', quantity: 1, discount: 0, unit_price: '' };
 

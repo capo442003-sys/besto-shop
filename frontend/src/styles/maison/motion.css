@@ -1,0 +1,130 @@
+/* ==========================================================================
+   Animations (désactivées si l'appareil demande moins de mouvement)
+   ========================================================================== */
+
+@keyframes ms-fade { from { opacity: 0; } to { opacity: 1; } }
+
+@keyframes ms-rise {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes ms-slide-right {
+  from { opacity: 0; transform: translateX(-22px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes ms-slide-down {
+  from { opacity: 0; transform: translateY(-14px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes ms-slide-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes ms-slide-left {
+  from { opacity: 0; transform: translateX(26px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes ms-pop {
+  0% { transform: scale(0.4); opacity: 0; }
+  70% { transform: scale(1.15); opacity: 1; }
+  100% { transform: scale(1); }
+}
+
+@keyframes ms-pop-in {
+  from { opacity: 0; transform: translateY(-6px) scale(0.97); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes ms-modal-in {
+  from { opacity: 0; transform: translateY(24px) scale(0.96); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes ms-toast-in {
+  from { opacity: 0; transform: translateX(40px) scale(0.95); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes ms-grow-y { from { transform: translateY(-50%) scaleY(0); } to { transform: translateY(-50%) scaleY(1); } }
+
+@keyframes ms-grow-bar { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+
+@keyframes ms-grow-x { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+@keyframes ms-spin { to { transform: rotate(360deg); } }
+
+@keyframes ms-shimmer { from { background-position: 200% 0; } to { background-position: -200% 0; } }
+
+@keyframes ms-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes ms-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(196, 82, 46, 0.45); }
+  50% { box-shadow: 0 0 0 6px rgba(196, 82, 46, 0); }
+}
+
+@keyframes ms-drift-a {
+  from { transform: translate(0, 0) scale(1); }
+  to { transform: translate(-120px, 90px) scale(1.12); }
+}
+
+@keyframes ms-drift-b {
+  from { transform: translate(0, 0) scale(1); }
+  to { transform: translate(140px, -80px) scale(1.08); }
+}
+
+@keyframes ms-loading-bar {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(260%); }
+}
+
+@keyframes ms-marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+@keyframes ms-total-bump {
+  0% { transform: scale(1); }
+  35% { transform: scale(1.06); color: var(--terra-light); }
+  100% { transform: scale(1); }
+}
+
+/* Apparition en cascade des grilles de cartes */
+.stat-grid > *,
+.reglement-summary-row > *,
+.bmb-admin-cards > *,
+.bmb-hub__cards > *,
+.import-grid > *,
+.mgr-cockpit__kpis > *,
+.bmb-dash-erp__kpis > *,
+.seller-home__kpis > *,
+.bmb-role-home__kpis > *,
+.bmb-seller-dash__kpis > *,
+.bmb-dash-mgr-actions > *,
+.bmb-dash-mgr-pv-grid > * {
+  animation: ms-rise var(--t-slow) var(--ease) both;
+}
+
+:is(.stat-grid, .bmb-admin-cards, .bmb-hub__cards, .import-grid, .mgr-cockpit__kpis, .bmb-dash-erp__kpis, .seller-home__kpis, .bmb-role-home__kpis, .bmb-seller-dash__kpis, .bmb-dash-mgr-actions, .bmb-dash-mgr-pv-grid) > :nth-child(2) { animation-delay: 60ms; }
+:is(.stat-grid, .bmb-admin-cards, .bmb-hub__cards, .import-grid, .mgr-cockpit__kpis, .bmb-dash-erp__kpis, .seller-home__kpis, .bmb-role-home__kpis, .bmb-seller-dash__kpis, .bmb-dash-mgr-actions, .bmb-dash-mgr-pv-grid) > :nth-child(3) { animation-delay: 120ms; }
+:is(.stat-grid, .bmb-admin-cards, .bmb-hub__cards, .import-grid, .mgr-cockpit__kpis, .bmb-dash-erp__kpis, .seller-home__kpis, .bmb-role-home__kpis, .bmb-seller-dash__kpis, .bmb-dash-mgr-actions, .bmb-dash-mgr-pv-grid) > :nth-child(4) { animation-delay: 180ms; }
+:is(.stat-grid, .bmb-admin-cards, .bmb-hub__cards, .import-grid, .mgr-cockpit__kpis, .bmb-dash-erp__kpis, .seller-home__kpis, .bmb-role-home__kpis, .bmb-seller-dash__kpis, .bmb-dash-mgr-actions, .bmb-dash-mgr-pv-grid) > :nth-child(5) { animation-delay: 240ms; }
+:is(.stat-grid, .bmb-admin-cards, .bmb-hub__cards, .import-grid, .mgr-cockpit__kpis, .bmb-dash-erp__kpis, .seller-home__kpis, .bmb-role-home__kpis, .bmb-seller-dash__kpis, .bmb-dash-mgr-actions, .bmb-dash-mgr-pv-grid) > :nth-child(n + 6) { animation-delay: 300ms; }
+
+/* Lignes de tableau : léger fondu à l'affichage */
+tbody tr { animation: ms-fade var(--t-slow) var(--ease) both; }
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

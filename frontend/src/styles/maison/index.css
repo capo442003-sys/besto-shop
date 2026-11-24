@@ -1,0 +1,12 @@
+/* BESTO SHOP — charte « Maison de mode » (remplace tous les anciens styles) */
+@import './tokens.css';
+@import './motion.css';
+@import './base.css';
+@import './layout.css';
+@import './components.css';
+@import './etoffe.css';
+@import './home.css';
+@import './modules.css';
+@import './caisse.css';
+@import './login.css';
+@import './print.css';

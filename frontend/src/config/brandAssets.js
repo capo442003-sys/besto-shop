@@ -14,7 +14,7 @@ export const BRAND_PHONE = '';
 export const BRAND_PHONE_TEL = '';
 
 export const BRAND_FEATURES = [
-  { label: 'Qualité garantie', color: '#1b7a3d' },
+  { label: 'Qualité garantie', color: '#2e6da4' },
   { label: 'Prix compétitifs', color: '#f5a623' },
   { label: 'Mode & sneakers', color: '#1a4f8b' },
   { label: 'Service client', color: '#228b47' },

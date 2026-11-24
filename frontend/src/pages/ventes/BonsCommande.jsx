@@ -13,8 +13,6 @@ import { extractApiItems } from '../../utils/calculations';
 import { parseClientsListResponse } from '../../utils/clientsApi';
 import { usePvFilter } from '../../context/PvFilterContext';
 import PvFilterBar from '../../components/PvFilterBar';
-import '../../styles/pos.css';
-import '../../styles/bc.css';
 
 const emptyLine = { product_id: '', quantity: 1, unit_price: 0 };
 

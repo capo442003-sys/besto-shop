@@ -15,7 +15,6 @@ import { useConfirm } from '../../context/ConfirmContext';
 import { apiErrorMessage } from '../../utils/apiError';
 import { parseClientsListResponse } from '../../utils/clientsApi';
 import { matchesListSearch } from '../../utils/listSearch';
-import '../../styles/bc.css';
 import EmptyState from '../../components/ui/EmptyState';
 import TableSkeleton from '../../components/ui/TableSkeleton';
 import ResponsiveDataView from '../../components/ui/ResponsiveDataView';
